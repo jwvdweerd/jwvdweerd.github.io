@@ -104,26 +104,11 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.style.display = 'none';
 
-    // Remove keydown event listener when closing the high-res modal
-    if (modalId === 'highResModal') {
-        document.removeEventListener('keydown', handleHighResKeydown);
-    }
-
-    
     // If closing the high-resolution modal, keep the main modal open if it was open before
     if (modalId === 'highResModal' && isMainModalOpen) {
         document.getElementById('modal').style.display = 'block';
     } else if (modalId === 'modal') {
         isMainModalOpen = false; // Reset the flag when closing the main modal
-    }
-}
-
-// Handle keydown events for high-res image navigation
-function handleHighResKeydown(event) {
-    if (event.key === 'ArrowLeft') {
-        navigateHighResImage(-1); // Navigate to the previous image
-    } else if (event.key === 'ArrowRight') {
-        navigateHighResImage(1); // Navigate to the next image
     }
 }
 
