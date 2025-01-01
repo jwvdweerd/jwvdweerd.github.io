@@ -84,7 +84,9 @@ function openHighResImage(index) {
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
     highResImage.src = highResImages[currentHighResIndex];
-    highResModal.style.display = 'block';
+    highResModal.style.display = 'flex'; // Use flex to center the modal
+    highResModal.style.alignItems = 'center'; // Center vertically
+    highResModal.style.justifyContent = 'center'; // Center horizontally
 
     // Add keydown event listener for navigation
     document.addEventListener('keydown', handleHighResKeydown);
