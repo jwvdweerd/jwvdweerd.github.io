@@ -6,9 +6,9 @@
         "year": "1964",
         "genre": "Post Bop",
         "label": "Blue Note",
-        "cover": "resources/profile.jpg",
-        "thumbnails": ["resources/profile.jpg"],
-        "highres": ["resources/profile.jpg"],
+        "cover": "resources/12345/profile.jpg",
+        "thumbnails": ["resources/12345/profile.jpg"],
+        "highres": ["resources/12345/profile.jpg"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
     }
