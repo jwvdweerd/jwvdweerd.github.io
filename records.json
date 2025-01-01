@@ -11,5 +11,18 @@
         "highres": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg","resources/78044-abna-dord/B0000152.jpg","resources/78044-abna-dord/B0000153.jpg","resources/78044-abna-dord/B0000154.jpg","resources/78044-abna-dord/B0000155.jpg"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
+    },
+    {
+        "id": "80015",
+        "title": "Kantoorgebouw Spuiboulevard, Dordrecht",
+        "artist": "..",
+        "year": "1980",
+        "genre": "..",
+        "label": "..",
+        "cover": "resources/80015-spui-dord/schetsontwerp-30.jpg",
+        "thumbnails": [],
+        "highres": [],
+        "info": "...",
+        "release": "..."
     }
 ]
