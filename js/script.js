@@ -85,9 +85,6 @@ function openHighResImage(index) {
     const highResImage = document.getElementById('highResImage');
     highResImage.src = highResImages[currentHighResIndex];
     highResModal.style.display = 'block';
-
-    // Add keydown event listener for navigation
-    document.addEventListener('keydown', handleHighResKeydown);
 }
 
 // Navigate through high-resolution images
@@ -100,15 +97,6 @@ function navigateHighResImage(direction) {
     }
     const highResImage = document.getElementById('highResImage');
     highResImage.src = highResImages[currentHighResIndex];
-}
-
-// Handle keydown events for high-res image navigation
-function handleHighResKeydown(event) {
-    if (event.key === 'ArrowLeft') {
-        navigateHighResImage(-1); // Navigate to the previous image
-    } else if (event.key === 'ArrowRight') {
-        navigateHighResImage(1); // Navigate to the next image
-    }
 }
 
 // Close modal function
@@ -127,6 +115,15 @@ function closeModal(modalId) {
         document.getElementById('modal').style.display = 'block';
     } else if (modalId === 'modal') {
         isMainModalOpen = false; // Reset the flag when closing the main modal
+    }
+}
+
+// Handle keydown events for high-res image navigation
+function handleHighResKeydown(event) {
+    if (event.key === 'ArrowLeft') {
+        navigateHighResImage(-1); // Navigate to the previous image
+    } else if (event.key === 'ArrowRight') {
+        navigateHighResImage(1); // Navigate to the next image
     }
 }
 
