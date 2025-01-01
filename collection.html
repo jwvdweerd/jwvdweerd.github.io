@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Collection</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>My Vinyl Collection</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="oevre.html">Collection</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Oevre</h2>
+        <p>...</p>
+        <!-- Search Bar -->
+        <input type="text" id="searchInput" placeholder="Search for albums..." onkeyup="filterAlbums()">
+        
+        <div id="collection-grid"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 R. van der Weerd - Netherlands. <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal')">&times;</span>
+            <div id="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- High-Resolution Image Modal Structure -->
+    <div id="highResModal" class="modal">
+        <div class="modal-content high-res-modal-content">
+            <span class="close" onclick="closeModal('highResModal')">&times;</span>
+            <button id="prevImage" class="nav-btn" onclick="navigateHighResImage(-1)">&#9664;</button>
+            <img id="highResImage" src="" alt="High Resolution Image">
+            <button id="nextImage" class="nav-btn" onclick="navigateHighResImage(1)">&#9654;</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

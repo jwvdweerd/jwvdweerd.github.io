@@ -1,0 +1,15 @@
+[
+    {
+        "id": "12345",
+        "title": "Black Fire",
+        "artist": "Andrew Hill",
+        "year": "1964",
+        "genre": "Post Bop",
+        "label": "Blue Note",
+        "cover": "resources/profile.jpg",
+        "thumbnails": ["resources/profile.jpg"],
+        "highres": ["resources/profile.jpg"],
+        "info": "...",
+        "release": "https://wimvanderweerd.weebly.com/"
+    }
+]
