@@ -7,8 +7,8 @@
         "genre": "..",
         "label": "..",
         "cover": "resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg",
-        "thumbnails": ["resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg"],
-        "highres": ["resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg"],
+        "thumbnails": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg","resources/78044-abna-dord/B0000152-40.jpg","resources/78044-abna-dord/B0000153-40.jpg","resources/78044-abna-dord/B0000154-40.jpg","resources/78044-abna-dord/B0000155-40.jpg"],
+        "highres": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg","resources/78044-abna-dord/B0000152.jpg","resources/78044-abna-dord/B0000153.jpg","resources/78044-abna-dord/B0000154.jpg","resources/78044-abna-dord/B0000155.jpg"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
     }
