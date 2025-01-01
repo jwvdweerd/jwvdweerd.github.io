@@ -108,29 +108,26 @@ footer img {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    text-align: left; /* CHECK */
+    text-align: left;
 }
 
 .close {
     position: absolute;
     top: 10px;
     right: 10px;
-    color: #aaa; /* Change the color to white */
+    color: #aaa;
     float: right;
-    font-size: 28px; /* Increase the font size */
+    font-size: 28px;
     font-weight: bold;
-    background-color: transparent; /* Add a background color */
-    border: none /*2px solid #fff; /* Add a border */
-    /*border-radius: 50%; /* Make it circular */
-    padding: 0/*5px 10px; /* Add some padding */
-    cursor: pointer; /* Change the cursor to pointer */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: #000; /* Keep the color white on hover/focus */
-    /*background-color: #c00; /* Darken the background color on hover/focus */
-    /*border-color: #fff; /* Keep the border color white on hover/focus */
+    color: #000;
     text-decoration: none;
     cursor: pointer;
 }
@@ -142,9 +139,11 @@ footer img {
 }
 
 .thumbnail {
-    max-width: 150px;
+    height: 150px; /* Set a fixed height */
+    width: auto; /* Keep the aspect ratio */
+    object-fit: contain; /* Ensure the image fits within the fixed height while preserving aspect ratio */
     margin: 10px;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 
 /* High-Resolution Image Modal Styles */
