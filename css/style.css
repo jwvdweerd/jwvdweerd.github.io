@@ -152,18 +152,14 @@ footer img {
 
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
-    width: 90%; /* Use a percentage for width */
-    max-width: 90vh; /* Maximum width */
-    height: auto; /* Adjust height based on content */
-    max-height: 90vh; /* Maximum height */
+    width: 80vh; /*auto;*/
+    height: 80vh; /* Adjust height based on screen size */
     background-color: transparent;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    overflow: hidden; /* Ensure content fits within the modal */
-    margin: auto; /* Center the modal */
+    position: relative; /* Add this line */
 }
 
 /*.high-res-modal-content*/ 
