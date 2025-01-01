@@ -71,12 +71,9 @@ footer img {
 }
 
 .album-cover {
-    /*width: 100%;
+    width: 100%;
     height: auto;
-    max-width: 150px;*/
-    height: 150px;
-    width: auto;
-    object-fit: contain;
+    max-width: 150px;
     margin-bottom: 1rem;
     align-self: center;
 }
