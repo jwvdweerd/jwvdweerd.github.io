@@ -1,14 +1,14 @@
 [
     {
-        "id": "12345",
-        "title": "Black Fire",
-        "artist": "Andrew Hill",
-        "year": "1964",
-        "genre": "Post Bop",
-        "label": "Blue Note",
-        "cover": "resources/12345/profile.jpg",
-        "thumbnails": ["resources/12345/profile.jpg"],
-        "highres": ["resources/12345/profile.jpg"],
+        "id": "78044",
+        "title": "ABN Amro, Dordrecht",
+        "artist": "..",
+        "year": "1979",
+        "genre": "..",
+        "label": "..",
+        "cover": "resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg",
+        "thumbnails": ["resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg"],
+        "highres": ["resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
     }
