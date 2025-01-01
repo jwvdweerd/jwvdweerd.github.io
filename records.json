@@ -20,9 +20,13 @@
         "genre": "..",
         "label": "..",
         "cover": "resources/80015-spui-dord/schetsontwerp-30.jpg",
-        "thumbnails": [],
-        "highres": [],
+        "thumbnails": ["resources/80015-spui-dord/schetsontwerp-30.jpg","resources/80015-spui-dord/perspectief-10.jpg","resources/80015-spui-dord/luchtfoto-kleur-30.jpg","resources/80015-spui-dord/tek1-10.jpg","resources/80015-spui-dord/tek2-10.jpg","resources/80015-spui-dord/tek3-10.jpg","resources/80015-spui-dord/tek4-10.jpg","resources/80015-spui-dord/tek5-10.jpg","resources/80015-spui-dord/f1-20.jpg","resources/80015-spui-dord/f2-20.jpg","resources/80015-spui-dord/f3-20.jpg","resources/80015-spui-dord/f4-30.jpg","resources/80015-spui-dord/f5-20.jpg"],
+        "highres": ["resources/80015-spui-dord/schetsontwerp.jpg","resources/80015-spui-dord/perspectief-70.jpg","resources/80015-spui-dord/luchtfoto-kleur.jpg","resources/80015-spui-dord/tek1.jpg","resources/80015-spui-dord/tek2.jpg","resources/80015-spui-dord/tek3.jpg","resources/80015-spui-dord/tek4.jpg","resources/80015-spui-dord/tek5.jpg","resources/80015-spui-dord/f1.jpg","resources/80015-spui-dord/f2.jpg","resources/80015-spui-dord/f3.jpg","resources/80015-spui-dord/f4.jpg","resources/80015-spui-dord/f5.jpg"],
         "info": "...",
         "release": "..."
     }
 ]
+
+
+
+
