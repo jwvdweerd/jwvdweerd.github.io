@@ -142,7 +142,10 @@ footer img {
 }
 
 .thumbnail {
-    max-width: 150px;
+    height: 150px;
+    /*max-width: 150px;*/
+    width: auto;
+    object-fit: contain;
     margin: 10px;
     /*cursor: pointer;*/
 }
