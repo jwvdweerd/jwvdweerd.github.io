@@ -64,7 +64,7 @@ function openModal(record) {
         <p><strong>Year:</strong> ${year}</p>
         <p><strong>Genre:</strong> ${genre}</p>
         <p><strong>Record Label:</strong> ${label}</p>
-        <p><strong>Release:</strong> <a href="${release}" target="_blank">View on Discogs</a></p>
+        <p><strong>Release:</strong> <a href="${release}" target="_blank">Link</a></p>
         <div class="thumbnails">`;
 
     // Add the thumbnails
