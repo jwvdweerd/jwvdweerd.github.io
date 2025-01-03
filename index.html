@@ -5,49 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jan Willem van der Weerd (1943-2024) - architect</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Add this style to your CSS file or inside a <style> tag */
-        .image-container {
-            display: flex;
-            flex-wrap: wrap; /* Allows the images to wrap to the next line */
-            justify-content: flex-start; /* Aligns images to the left */
-            gap: 20px; /* Space between the images */
-        }
-        .image-container figure {
-            margin: 0;
-            text-align: left;
-        }
-        .image-container img {
-            height: 250px;
-            width: auto;
-            /*max-width: 250px; /* Ensures images do not exceed their original size */*/
-        }
-        .image-container figcaption {
-            font-family: Arial, sans-serif;
-            font-size: small;
-            width: 100%;
-            max-width: 100%; /* Same width as the image height */
-            word-wrap: break-word;
-            margin-top: 5px;
-            text-align: left; /* Aligns caption text to the left */
+        <style>
+        /* Ensure consistent box-sizing for all elements */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
-        /* Media query for devices with a max width of 600px */
-        @media (max-width: 600px) {
-            .image-container {
-                flex-direction: column; /* Stacks the images vertically */
-                align-items: left; /* Centers the images */
-            }
-            .image-container img {
-                height: 250px;
-                width: auto; /* Allows images to resize based on their natural width */
-                max-width: 100%;
-            }
-            .image-container figcaption {
-                /*max-width: none; Removes max-width restriction for captions */
-                width: 100%;
-                text-align: left; /* Centers the caption text */
-            }
+
+        body {
+            display: flex;
+            justify-content: flex-start; /* Align content to the start (left) */
+            align-items: flex-start; /* Align items to the top */
+            height: 100vh;
+            margin: 0;
+            padding: 20px; /* Add padding around the body */
+            background-color: #f0f0f0;
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column; /* Stack images vertically */
+            gap: 20px; /* Add space between each image-box */
+            justify-content: flex-start; /* Align images to the start (left) */
+        }
+
+        .image-box {
+            display: flex;
+            flex-direction: column; /* Stack image and caption vertically */
+            align-items: flex-start; /* Align items to the left */
+            border: 1px solid #ccc; /* Added border to the box */
+            padding: 10px;
+            box-sizing: border-box; /* Ensure padding is included in the size */
+            text-align: left; /* Align the caption text to the left */
+        }
+
+        .image {
+            height: 250px; /* Fixed height */
+            width: auto;   /* Maintain aspect ratio */
+            border: none;  /* Removed the border */
+            display: block; /* Ensure the image takes up the full width of its container */
+            margin: 0; /* Remove auto margin */
+        }
+
+        .caption {
+            display: block; /* Make caption a block element */
+            margin: 10px 0 0 0; /* Add 10px margin at the top */
+            padding: 0; /* Remove default padding */
+            text-align: left; /* Align the caption text to the left */
+            font-family: Arial, sans-serif; /* Set font to Arial */
+            font-size: small; /* Set font size to small */
         }
     </style>
 </head>
@@ -65,14 +72,15 @@
         <p>Intro tekst.</p>
         <!-- Container for images -->
         <div class="image-container">
-            <figure>
-                <img src="resources/jan-vs.jpg" alt="Jan van der Weerd">
-                <figcaption>Jan van der Weerd tijdens zijn studie bouwkunde, ca. 1970</figcaption>
-            </figure>
-            <figure>
-                <img src="resources/janenherman-scaled.jpg" alt="Jan van der Weerd met Herman Haan (Atelier Aa)">
-                <figcaption>Jan van der Weerd en Herman Haan (Atelier Aa) werkend aan Sterrenburg 3 (Dordrecht), ca. 1974</figcaption>
-            </figure>
+            <div class="image-box">
+                <img src="jan-vs.jpg" alt="Jan VS" class="image">
+                <p class="caption">Caption for Jan VS. This is an extended description to make the caption twice as long as before.</p>
+            </div>
+            <div class="image-box">
+                <img src="janenherman-scaled.jpg" alt="Jan and Herman" class="image">
+                <p class="caption">Caption for Jan and Herman. This is an extended description to make the caption twice as long as before.</p>
+            </div>
+            <!-- Add more image-box divs as needed -->
         </div>
     </main>
     <footer>
