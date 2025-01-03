@@ -20,7 +20,7 @@
         .image-container img {
             height: 250px;
             width: 100%;
-            max-width: 250px; /* Ensures images do not exceed their original size */
+            /*max-width: 250px; /* Ensures images do not exceed their original size */*/
         }
         .image-container figcaption {
             font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
         @media (max-width: 600px) {
             .image-container {
                 flex-direction: column; /* Stacks the images vertically */
-                align-items: center; /* Centers the images */
+                align-items: left; /* Centers the images */
             }
             .image-container img {
                 width: auto; /* Allows images to resize based on their natural width */
@@ -42,7 +42,7 @@
             .image-container figcaption {
                 max-width: none; /* Removes max-width restriction for captions */
                 width: 100%;
-                text-align: center; /* Centers the caption text */
+                text-align: left; /* Centers the caption text */
             }
         }
     </style>
