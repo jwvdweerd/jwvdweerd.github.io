@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    padding: 20px; /* Add padding around the container */
+    padding: 0;/*20px;*/ /* Add padding around the container */
 }
 
 header {
