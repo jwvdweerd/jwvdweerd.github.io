@@ -2,6 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f0f0f0; /* Add background color */
+}
+
+.container {
+    padding: 20px; /* Add padding around the container */
 }
 
 header {
@@ -39,16 +44,46 @@ footer p {
 }
 
 footer img {
-    margin-left: 10px; /* Adjust the margin as needed */
+    margin-left: 10px;
     vertical-align: middle;
 }
 
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
     footer {
-        padding: 0.5rem; /* Reduce padding */
-        font-size: 0.8rem; /* Reduce font size */
+        padding: 0.5rem;
+        font-size: 0.8rem;
     }
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.image-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.image {
+    height: 250px;
+    width: auto;
+    display: block;
+}
+
+.caption {
+    margin: 10px 0 0 0;
+    padding: 0;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: small;
 }
 
 #collection-grid {
