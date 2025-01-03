@@ -5,84 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jan Willem van der Weerd (1943-2024) - architect</title>
     <link rel="stylesheet" href="css/style.css">
-        <style>
-        /* Ensure consistent box-sizing for all elements */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            justify-content: flex-start; /* Align content to the start (left) */
-            align-items: flex-start; /* Align items to the top */
-            height: 100vh;
-            margin: 0;
-            padding: 20px; /* Add padding around the body */
-            background-color: #f0f0f0;
-        }
-
-        .image-container {
-            display: flex;
-            flex-direction: column; /* Stack images vertically */
-            gap: 20px; /* Add space between each image-box */
-            justify-content: flex-start; /* Align images to the start (left) */
-        }
-
-        .image-box {
-            display: flex;
-            flex-direction: column; /* Stack image and caption vertically */
-            align-items: flex-start; /* Align items to the left */
-            border: 1px solid #ccc; /* Added border to the box */
-            padding: 10px;
-            box-sizing: border-box; /* Ensure padding is included in the size */
-            text-align: left; /* Align the caption text to the left */
-        }
-
-        .image {
-            height: 250px; /* Fixed height */
-            width: auto;   /* Maintain aspect ratio */
-            border: none;  /* Removed the border */
-            display: block; /* Ensure the image takes up the full width of its container */
-            margin: 0; /* Remove auto margin */
-        }
-
-        .caption {
-            display: block; /* Make caption a block element */
-            margin: 10px 0 0 0; /* Add 10px margin at the top */
-            padding: 0; /* Remove default padding */
-            text-align: left; /* Align the caption text to the left */
-            font-family: Arial, sans-serif; /* Set font to Arial */
-            font-size: small; /* Set font size to small */
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Jan van der Weerd (1943-2024) - architect</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="collection.html">Oevre</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Introductie</h2>
-        <p>Intro tekst.</p>
-        <!-- Container for images -->
-        <div class="image-container">
-            <div class="image-box">
-                <img src="resources/jan-vs.jpg" alt="Jan VS" class="image">
-                <p class="caption">Caption for Jan VS. This is an extended description to make the caption twice as long as before.</p>
+    <div class="container">
+        <header>
+            <h1>Jan van der Weerd (1943-2024) - architect</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="collection.html">Oevre</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+        <main>
+            <h2>Introductie</h2>
+            <p>Intro tekst.</p>
+            <!-- Container for images -->
+            <div class="image-container">
+                <div class="image-box">
+                    <img src="resources/jan-vs.jpg" alt="Jan VS" class="image">
+                    <p class="caption">Caption for Jan VS. This is an extended description to make the caption twice as long as before.</p>
+                </div>
+                <div class="image-box">
+                    <img src="resources/janenherman-scaled.jpg" alt="Jan and Herman" class="image">
+                    <p class="caption">Caption for Jan and Herman. This is an extended description to make the caption twice as long as before.</p>
+                </div>
+                <!-- Add more image-box divs as needed -->
             </div>
-            <div class="image-box">
-                <img src="resources/janenherman-scaled.jpg" alt="Jan and Herman" class="image">
-                <p class="caption">Caption for Jan and Herman. This is an extended description to make the caption twice as long as before.</p>
-            </div>
-            <!-- Add more image-box divs as needed -->
-        </div>
-    </main>
+        </main>
+    </div>
     <footer>
         <p>&copy; 2024 R. van der Weerd - Netherlands. <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
     </footer>
