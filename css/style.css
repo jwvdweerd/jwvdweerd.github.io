@@ -144,6 +144,9 @@ footer img {
 .thumbnail {
     max-width: 150px;
     margin: 10px;
+    height: 150px;
+    width: auto;
+    object-fit: contain;
     /*cursor: pointer;*/
 }
 
