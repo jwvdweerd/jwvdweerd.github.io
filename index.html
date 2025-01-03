@@ -12,8 +12,19 @@
             justify-content: flex-start;/*center;*/
             gap: 20px; /* Space between the images */
         }
+        .image-container figure {
+            margin: 0;
+            text-align: center;
+        }
         .image-container img {
             height: 250px;
+        }
+        .image-container figcaption {
+            font-family: Arial, sans-serif;
+            font-size: small;
+            max-width: 250px; /* Same width as the image height */
+            word-wrap: break-word;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -31,8 +42,14 @@
         <p>Intro tekst.</p>
         <!-- Container for images -->
         <div class="image-container">
-            <img src="resources/jan-vs.jpg" alt="Jan van der Weerd">
-            <img src="resources/janenherman-scaled.jpg" alt="Jan van der Weerd met Herman Haan (Atelier Aa)">
+            <figure>
+                <img src="resources/jan-vs.jpg" alt="Jan van der Weerd">
+                <figcaption>Jan van der Weerd tijdens zijn studie bouwkunde, ca. 1970</figcaption>
+            </figure>
+            <figure>
+                <img src="resources/janenherman-scaled.jpg" alt="Jan van der Weerd met Herman Haan (Atelier Aa)">
+                <figcaption>Jan van der Weerd en Herman Haan (Atelier Aa) werkend aan Sterrenburg 3 (Dordrecht), ca. 1974</figcaption>
+            </figure>
         </div>
     </main>
     <footer>
