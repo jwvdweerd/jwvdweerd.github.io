@@ -6,9 +6,9 @@
         "year": "1974",
         "genre": "..",
         "label": "..",
-        "cover": "resources/744/Stedenbouw/sat-10.png",
-        "thumbnails": ["resources/744/Stedenbouw/sat-10.png"],
-        "highres": ["resources/744/Stedenbouw/sat-50.png"],
+        "cover": "resources/744/Stedenbouw/deelplan 1B Z-10.jpg",
+        "thumbnails": ["resources/744/Stedenbouw/deelplan 1B Z-10.jpg","resources/744/Stedenbouw/H1 situatie-10.jpg","resources/744/Stedenbouw/sat-10.png"],
+        "highres": ["resources/744/Stedenbouw/deelplan 1B Z-80.jpg","resources/744/Stedenbouw/H1 situatie-70.jpg","resources/744/Stedenbouw/sat-50.png"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
     },
