@@ -1,4 +1,31 @@
 [
+    
+    {
+        "id": "744",
+        "title": "Sterrenburg 3, Dordrecht - Stedenbouw",
+        "artist": "..",
+        "year": "1974",
+        "genre": "..",
+        "label": "..",
+        "cover": "resources/744/Stedenbouw/sat-10.jpg",
+        "thumbnails": ["resources/744/Stedenbouw/sat-10.jpg"],
+        "highres": ["resources/744/Stedenbouw/sat-50.jpg"],
+        "info": "...",
+        "release": "https://wimvanderweerd.weebly.com/"
+    },
+    {
+        "id": "744",
+        "title": "Sterrenburg 3, Dordrecht - H1 Hoogbouw",
+        "artist": "..",
+        "year": "1974",
+        "genre": "..",
+        "label": "..",
+        "cover": ""resources/744/H1-hoogbouw/H1-perspectief-Z-10.jpg"",
+        "thumbnails": ["resources/744/H1-hoogbouw/H1-perspectief-Z-10.jpg"],
+        "highres": ["resources/744/H1-hoogbouw/H1-perspectief-Z-70.jpg"],
+        "info": "...",
+        "release": "https://wimvanderweerd.weebly.com/"
+    },
     {
         "id": "78044",
         "title": "ABN Amro, Dordrecht",
