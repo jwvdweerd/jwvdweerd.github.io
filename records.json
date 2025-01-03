@@ -1,5 +1,4 @@
-[
-    
+[  
     {
         "id": "744",
         "title": "Sterrenburg 3, Dordrecht - Stedenbouw",
@@ -20,7 +19,7 @@
         "year": "1974",
         "genre": "..",
         "label": "..",
-        "cover": ""resources/744/H1-hoogbouw/H1-perspectief-Z-10.jpg"",
+        "cover": "resources/744/H1-hoogbouw/H1-perspectief-Z-10.jpg",
         "thumbnails": ["resources/744/H1-hoogbouw/H1-perspectief-Z-10.jpg"],
         "highres": ["resources/744/H1-hoogbouw/H1-perspectief-Z-70.jpg"],
         "info": "...",
@@ -53,7 +52,3 @@
         "release": "..."
     }
 ]
-
-
-
-
