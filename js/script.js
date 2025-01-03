@@ -179,3 +179,17 @@ function filterAlbums() {
         }
     });
 }
+
+window.addEventListener('load', function() {
+    // Get all image-box elements
+    const imageBoxes = document.querySelectorAll('.image-box');
+
+    imageBoxes.forEach(box => {
+        // Get the image and caption elements
+        const image = box.querySelector('.image');
+        const caption = box.querySelector('.caption');
+
+        // Set the caption width to match the image width
+        caption.style.width = `${image.clientWidth}px`;
+    });
+});
