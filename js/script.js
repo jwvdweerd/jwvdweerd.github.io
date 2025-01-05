@@ -23,7 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-release', record.release); // Add release data attribute
 
                 recordDiv.innerHTML = `
-                    <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
+                    <div style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
+                        <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
+                    </div>
                     <div class="info">
                         <h3 class="data-title">${record.title}</h3>
                         <p><strong>Artist:</strong> <span class="data-artist">${record.artist}</span></p>
