@@ -22,10 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-info', record.info);
                 recordDiv.setAttribute('data-release', record.release); // Add release data attribute
 
-/*                recordDiv.innerHTML = `
-                    <div style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
-                        <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
-                    </div> */
                 recordDiv.innerHTML = `
                     <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
                     <div class="info">
@@ -75,7 +71,7 @@ function openModal(record) {
     thumbnails.forEach((thumbnail, index) => {
         if (thumbnail.endsWith('.pdf')) {
             content += `<div class="pdf-thumbnail" onclick="openHighResImage(${index})">
-                            <embed src="${thumbnail}" width="150" height="200">
+                            <img src="path/to/pdf-icon.png" alt="PDF Thumbnail"> <!-- Placeholder for PDF icon -->
                         </div>`;
         } else {
             content += `<img src="${thumbnail}" alt="${title} Thumbnail ${index + 1}" class="thumbnail" onclick="openHighResImage(${index})">`;
@@ -93,13 +89,39 @@ function openHighResImage(index) {
     currentHighResIndex = index; // Set the current high-res image index
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
-    //highResImage.src = highResImages[currentHighResIndex];
     highResModal.style.display = 'block';
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" width="100%" height="100%">`;
+        renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
         highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
     }
+}
+
+// Render PDF using pdf.js
+function renderPDF(url, container) {
+    container.innerHTML = ''; // Clear previous content
+
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    container.appendChild(canvas);
+    const context = canvas.getContext('2d');
+
+    // Load the PDF
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+        // Fetch the first page
+        pdf.getPage(1).then(page => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render the page into the canvas context
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            page.render(renderContext);
+        });
+    });
 }
 
 // Navigate through high-resolution images
@@ -111,9 +133,8 @@ function navigateHighResImage(direction) {
         currentHighResIndex = 0;
     }
     const highResImage = document.getElementById('highResImage');
-    //highResImage.src = highResImages[currentHighResIndex];
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" width="100%" height="100%">`;
+        renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
         highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
     }
