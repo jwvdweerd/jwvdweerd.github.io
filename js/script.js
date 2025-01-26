@@ -96,9 +96,9 @@ function openHighResImage(index) {
     //highResImage.src = highResImages[currentHighResIndex];
     highResModal.style.display = 'block';
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        highResContent.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" type="application/pdf" width="100%" height="100%">`;
+        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" type="application/pdf" width="100%" height="100%">`;
     } else {
-        highResContent.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
+        highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
     }
 }
 
