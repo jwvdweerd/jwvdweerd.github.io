@@ -73,7 +73,13 @@ function openModal(record) {
 
     // Add the thumbnails
     thumbnails.forEach((thumbnail, index) => {
-        content += `<img src="${thumbnail}" alt="${title} Thumbnail ${index + 1}" class="thumbnail" onclick="openHighResImage(${index})">`;
+        if (thumbnail.endsWith('.pdf')) {
+            content += `<div class="pdf-thumbnail" onclick="openHighResImage(${index})">
+                            <iframe src="${thumbnail}" width="150" height="200"></iframe>
+                        </div>`;
+        } else {
+            content += `<img src="${thumbnail}" alt="${title} Thumbnail ${index + 1}" class="thumbnail" onclick="openHighResImage(${index})">`;
+        }
     });
 
     content += `</div>
@@ -87,8 +93,13 @@ function openHighResImage(index) {
     currentHighResIndex = index; // Set the current high-res image index
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
-    highResImage.src = highResImages[currentHighResIndex];
+    //highResImage.src = highResImages[currentHighResIndex];
     highResModal.style.display = 'block';
+    if (highResImages[currentHighResIndex].endsWith('.pdf')) {
+        highResContent.innerHTML = `<iframe src="${highResImages[currentHighResIndex]}" width="100%" height="100%"></iframe>`;
+    } else {
+        highResContent.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
+    }
 }
 
 // Navigate through high-resolution images
