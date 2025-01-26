@@ -5,6 +5,14 @@ body {
     background-color: #f0f0f0; /* Add background color */
 }
 
+.pdf-thumbnail {
+    width: 150px;
+    height: 200px;
+    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+}
+
 .container {
     padding: 0;/*20px;*/ /* Add padding around the container */
 }
