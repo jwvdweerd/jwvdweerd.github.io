@@ -111,7 +111,12 @@ function navigateHighResImage(direction) {
         currentHighResIndex = 0;
     }
     const highResImage = document.getElementById('highResImage');
-    highResImage.src = highResImages[currentHighResIndex];
+    //highResImage.src = highResImages[currentHighResIndex];
+    if (highResImages[currentHighResIndex].endsWith('.pdf')) {
+        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" type="application/pdf" width="100%" height="100%">`;
+    } else {
+        highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
+    }
 }
 
 // Close modal function
