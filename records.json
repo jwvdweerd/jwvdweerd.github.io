@@ -50,5 +50,18 @@
         "highres": ["resources/80015-spui-dord/schetsontwerp.jpg","resources/80015-spui-dord/perspectief-70.jpg","resources/80015-spui-dord/luchtfoto-kleur.jpg","resources/80015-spui-dord/tek1.jpg","resources/80015-spui-dord/tek2.jpg","resources/80015-spui-dord/tek3.jpg","resources/80015-spui-dord/tek4.jpg","resources/80015-spui-dord/tek5.jpg","resources/80015-spui-dord/f1.jpg","resources/80015-spui-dord/f2.jpg","resources/80015-spui-dord/f3.jpg","resources/80015-spui-dord/f4.jpg","resources/80015-spui-dord/f5.jpg"],
         "info": "...",
         "release": "..."
+    },
+    {
+        "id": "WHT",
+        "title": "Westelijk Handelsterrein, Rotterdam",
+        "artist": "..",
+        "year": "1998",
+        "genre": "..",
+        "label": "..",
+        "cover": "resources/WHT/wht-doorsneden-gevels.pdf",
+        "thumbnails": ["resources/WHT/wht-doorsneden-gevels.pdf"],
+        "highres": ["resources/WHT/wht-doorsneden-gevels.pdf"],
+        "info": "...",
+        "release": "https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/1265/prj_id/1576"
     }
 ]
