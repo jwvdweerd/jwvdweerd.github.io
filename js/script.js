@@ -75,7 +75,7 @@ function openModal(record) {
     thumbnails.forEach((thumbnail, index) => {
         if (thumbnail.endsWith('.pdf')) {
             content += `<div class="pdf-thumbnail" onclick="openHighResImage(${index})">
-                            <embed src="${thumbnail}" type="application/pdf" width="150" height="200">
+                            <embed src="${thumbnail}" width="150" height="200">
                         </div>`;
         } else {
             content += `<img src="${thumbnail}" alt="${title} Thumbnail ${index + 1}" class="thumbnail" onclick="openHighResImage(${index})">`;
@@ -96,7 +96,7 @@ function openHighResImage(index) {
     //highResImage.src = highResImages[currentHighResIndex];
     highResModal.style.display = 'block';
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" type="application/pdf" width="100%" height="100%">`;
+        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" width="100%" height="100%">`;
     } else {
         highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
     }
@@ -113,7 +113,7 @@ function navigateHighResImage(direction) {
     const highResImage = document.getElementById('highResImage');
     //highResImage.src = highResImages[currentHighResIndex];
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" type="application/pdf" width="100%" height="100%">`;
+        highResImage.innerHTML = `<embed src="${highResImages[currentHighResIndex]}" width="100%" height="100%">`;
     } else {
         highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
     }
