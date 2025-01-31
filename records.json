@@ -20,8 +20,8 @@
         "genre": "..",
         "label": "..",
         "cover": "resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg",
-        "thumbnails": ["resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg"],
-        "highres": ["resources/744/H1-Hoogbouw/H1 perspectief Z-70.jpg"],
+        "thumbnails": ["resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg","resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],
+        "highres": ["resources/744/H1-Hoogbouw/H1 perspectief Z-70.jpg","resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],
         "info": "...",
         "release": "https://wimvanderweerd.weebly.com/"
     },
