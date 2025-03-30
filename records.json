@@ -2,33 +2,33 @@
     {
         "id": "744",
         "title": "Sterrenburg 3, Dordrecht - Stedenbouw",
-        "artist": "..",
+        "artist": "Herman Haan & Jan van der Weerd",
         "year": "1974",
         "genre": "..",
-        "label": "..",
+        "label": "Atelier Aa",
         "cover": "resources/744/Stedenbouw/deelplan 1B Z-10.jpg",
         "thumbnails": ["resources/744/Stedenbouw/deelplan 1B Z-10.jpg","resources/744/Stedenbouw/H1 situatie-10.jpg","resources/744/Stedenbouw/sat-10.png"],
         "highres": ["resources/744/Stedenbouw/deelplan 1B Z-80.jpg","resources/744/Stedenbouw/H1 situatie-70.jpg","resources/744/Stedenbouw/sat-50.png"],
         "info": "...",
-        "release": "https://wimvanderweerd.weebly.com/"
+        "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
     },
     {
         "id": "744",
         "title": "Sterrenburg 3, Dordrecht - H1 Hoogbouw",
-        "artist": "..",
+        "artist": "Herman Haan & Jan van der Weerd",
         "year": "1974",
         "genre": "..",
-        "label": "..",
+        "label": "Atelier Aa",
         "cover": "resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg",
         "thumbnails": ["resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg","resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],
         "highres": ["resources/744/H1-Hoogbouw/H1 perspectief Z-70.jpg","resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],
         "info": "...",
-        "release": "https://wimvanderweerd.weebly.com/"
+        "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
     },
     {
         "id": "78044",
         "title": "ABN Amro, Dordrecht",
-        "artist": "..",
+        "artist": "Jan van der Weerd",
         "year": "1979",
         "genre": "..",
         "label": "..",
@@ -36,12 +36,12 @@
         "thumbnails": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg","resources/78044-abna-dord/B0000152-40.jpg","resources/78044-abna-dord/B0000153-40.jpg","resources/78044-abna-dord/B0000154-40.jpg","resources/78044-abna-dord/B0000155-40.jpg"],
         "highres": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg","resources/78044-abna-dord/B0000152.jpg","resources/78044-abna-dord/B0000153.jpg","resources/78044-abna-dord/B0000154.jpg","resources/78044-abna-dord/B0000155.jpg"],
         "info": "...",
-        "release": "https://wimvanderweerd.weebly.com/"
+        "release": ".."
     },
     {
         "id": "80015",
         "title": "Kantoorgebouw Spuiboulevard, Dordrecht",
-        "artist": "..",
+        "artist": "Jan van der Weerd",
         "year": "1980",
         "genre": "..",
         "label": "..",
@@ -54,7 +54,7 @@
     {
         "id": "WHT",
         "title": "Westelijk Handelsterrein, Rotterdam",
-        "artist": "..",
+        "artist": "Jan van der Weerd & Henk Klunder",
         "year": "1998",
         "genre": "..",
         "label": "..",
@@ -67,7 +67,7 @@
     {
         "id": "NLR-TRS",
         "title": "NLR, Amsterdam",
-        "artist": "..",
+        "artist": "Jan van der Weerd",
         "year": "1999",
         "genre": "..",
         "label": "Tower Research Simulator (TRS/NARSIM)",
