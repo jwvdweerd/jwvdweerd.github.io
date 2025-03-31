@@ -142,7 +142,7 @@ footer img {
     background-color: rgba(0,0,0,0.4);
 }
 
-.modal-content p {
+.modal-content-p {
     text-align: justify; /* Justify text alignment */
     text-indent: 2em; /* Indent the first line */
     margin: 0 0 1rem 0; /* Adjust the margin as needed */
@@ -152,14 +152,11 @@ footer img {
 .modal-content {
     position: relative;
     background-color: #fefefe;
-    /*margin: 15% auto;*/
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    text-align: justify; /* was left CHECK */
-    word-break: break-word;
-    text-indent: 2em;
-    margin: 0 0 1rem 0;
+    text-align: left; /* CHECK */
 }
 
 .close {
