@@ -142,7 +142,7 @@ footer img {
     background-color: rgba(0,0,0,0.4);
 }
 
-.modal-content p {
+.modal-content-p {
     text-align: justify; /* Justify text alignment */
     text-indent: 2em; /* Indent the first line */
     margin: 0 0 1rem 0; /* Adjust the margin as needed */
