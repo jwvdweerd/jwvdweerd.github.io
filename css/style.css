@@ -152,11 +152,14 @@ footer img {
 .modal-content {
     position: relative;
     background-color: #fefefe;
-    margin: 15% auto;
+    /*margin: 15% auto;*/
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    text-align: left; /* CHECK */
+    text-align: justify; /* was left CHECK */
+    word-break: break-word;
+    text-indent: 2em;
+    margin: 0 0 1rem 0;
 }
 
 .close {
