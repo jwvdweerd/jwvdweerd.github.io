@@ -143,8 +143,10 @@ footer img {
 }
 
 .modal-content p {
-    text-align: justify;
+    text-align: justify; /* Justify text alignment */
+    text-indent: 2em; /* Indent the first line */
     margin: 0 0 1rem 0; /* Adjust the margin as needed */
+    word-break: break-word; /* Ensure long words break properly */
 }
 
 .modal-content {
