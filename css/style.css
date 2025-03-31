@@ -142,6 +142,11 @@ footer img {
     background-color: rgba(0,0,0,0.4);
 }
 
+.modal-content p {
+    text-align: justify;
+    margin: 0 0 1rem 0; /* Adjust the margin as needed */
+}
+
 .modal-content {
     position: relative;
     background-color: #fefefe;
