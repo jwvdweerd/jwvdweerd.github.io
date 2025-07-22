@@ -22,6 +22,11 @@ header {
     color: #fff;
     padding: 1rem;
     text-align: left; /* Change from center to left */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
 nav a {
@@ -32,6 +37,8 @@ nav a {
 
 main {
     padding: 2rem;
+    margin-top: 80px; /* Add space for fixed header */
+    margin-bottom: 80px; /* Add space for fixed footer */
 }
 
 footer {
@@ -42,6 +49,8 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
 footer p {
@@ -58,6 +67,16 @@ footer img {
     footer {
         padding: 0.5rem;
         font-size: 0.8rem;
+    }
+    
+    header {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    main {
+        margin-top: 70px; /* Adjust for smaller header on mobile */
+        margin-bottom: 60px; /* Adjust for smaller footer on mobile */
     }
 }
 
