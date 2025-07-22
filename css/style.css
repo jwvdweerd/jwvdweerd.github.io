@@ -33,6 +33,17 @@ nav a {
     color: #fff;
     margin: 0 1rem;
     text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 3px solid transparent;
+    transition: border-bottom-color 0.3s ease;
+}
+
+nav a:hover {
+    border-bottom-color: #ff8c00;
+}
+
+nav a.active {
+    border-bottom: 3px solid #ff8c00;
 }
 
 main {
