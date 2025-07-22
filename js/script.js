@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
                     <div class="info">
                         <h3 class="data-title">${record.title}</h3>
-                        <p><strong>Artist:</strong> <span class="data-artist">${record.artist}</span></p>
+                        <p><strong>Artist:</strong> <span class="data-artist">${record.artist.replace(/&/g, '&<br>')}</span></p>
                         <p><strong>Year:</strong> <span class="data-year">${record.year}</span></p>
                         <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
                         <p><strong>Record Label:</strong> <span class="data-label">${record.label}</span></p>
