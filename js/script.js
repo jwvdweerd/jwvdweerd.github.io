@@ -44,6 +44,7 @@ function openModal(record) {
     const modal = document.getElementById('modal');
     const modalBody = document.getElementById('modal-body');
     modal.style.display = 'block';
+    document.body.classList.add('modal-open');
     isMainModalOpen = true; // Set the flag to true
 
     // Get the data for the selected album
@@ -90,6 +91,7 @@ function openHighResImage(index) {
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
     highResModal.style.display = 'block';
+    document.body.classList.add('modal-open');
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
@@ -150,6 +152,9 @@ function closeModal(modalId) {
         document.getElementById('modal').style.display = 'block';
     } else if (modalId === 'modal') {
         isMainModalOpen = false; // Reset the flag when closing the main modal
+        document.body.classList.remove('modal-open');
+    } else if (modalId === 'highResModal' && !isMainModalOpen) {
+        document.body.classList.remove('modal-open');
     }
 }
 
@@ -161,10 +166,13 @@ window.ontouchstart = function(event) {
         highResModal.style.display = 'none';
         if (isMainModalOpen) {
             modal.style.display = 'block';
+        } else {
+            document.body.classList.remove('modal-open');
         }
     } else if (event.target == modal) {
         modal.style.display = 'none';
         isMainModalOpen = false;
+        document.body.classList.remove('modal-open');
     }
 }
 
@@ -176,10 +184,13 @@ window.onclick = function(event) {
         highResModal.style.display = 'none';
         if (isMainModalOpen) {
             modal.style.display = 'block';
+        } else {
+            document.body.classList.remove('modal-open');
         }
     } else if (event.target == modal) {
         modal.style.display = 'none';
         isMainModalOpen = false;
+        document.body.classList.remove('modal-open');
     }
 }
 
@@ -192,10 +203,13 @@ document.addEventListener('keydown', function(event) {
             highResModal.style.display = 'none';
             if (isMainModalOpen) {
                 modal.style.display = 'block';
+            } else {
+                document.body.classList.remove('modal-open');
             }
         } else {
             modal.style.display = 'none';
             isMainModalOpen = false;
+            document.body.classList.remove('modal-open');
         }
     }
 });

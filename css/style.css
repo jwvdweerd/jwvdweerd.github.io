@@ -201,7 +201,7 @@ footer img {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -209,6 +209,11 @@ footer img {
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+}
+
+/* Prevent body scrolling when modal is open */
+body.modal-open {
+    overflow: hidden;
 }
 
 .modal-content-p {
@@ -269,27 +274,24 @@ footer img {
 
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
-    width: 80vh; /*auto;*/
-    height: 80vh; /* Adjust height based on screen size */
+    width: 90vw;
+    height: 90vh;
+    max-width: 90vw;
+    max-height: 90vh;
     background-color: transparent;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* Add this line */
-}
-
-/*.high-res-modal-content*/ 
-.close {
-    position: absolute; /* Add this line */
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    position: relative;
+    overflow: hidden;
 }
 
 #highResImage {
     max-height: 100%;
     max-width: 100%;
     object-fit: contain;
+    pointer-events: auto;
 }
 
 form {
@@ -329,18 +331,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* High-Resolution Image Modal Styles */
-.high-res-modal-content {
-    width: 80vh;
-    height: 80vh;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
 .nav-btn {
     position: absolute;
     top: 50%;
@@ -351,6 +341,7 @@ button:hover {
     font-size: 24px;
     padding: 10px;
     cursor: pointer;
+    z-index: 1001;
 }
 
 #prevImage {
@@ -359,10 +350,4 @@ button:hover {
 
 #nextImage {
     right: 10px;
-}
-
-#highResImage {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
 }
