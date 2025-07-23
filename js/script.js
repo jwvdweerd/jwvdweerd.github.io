@@ -61,11 +61,6 @@ function openModal(record) {
     // Generate the content for the modal
     let content = `
         <h2>${title}</h2>
-        <p class="modal-content-p"><strong>Artist:</strong> ${artist}</p>
-        <p class="modal-content-p"><strong>Year:</strong> ${year}</p>
-        <p class="modal-content-p"><strong>Genre:</strong> ${genre}</p>
-        <p class="modal-content-p"><strong>Record Label:</strong> ${label}</p>
-        <p class="modal-content-p"><strong>Release:</strong> <a href="${release}" target="_blank">Link</a></p>
         <div class="thumbnails">`;
 
     // Add the thumbnails
