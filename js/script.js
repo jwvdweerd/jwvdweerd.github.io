@@ -85,6 +85,82 @@ function openModal(record) {
     modalBody.innerHTML = content;
 }
 
+// Helper function to create a properly sized image that fits the screen
+function createScreenFittedImage(imageSrc) {
+    return new Promise((resolve) => {
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = "High Resolution Image";
+        
+        img.onload = function() {
+            const highResImage = document.getElementById('highResImage');
+            const container = highResImage;
+            
+            // Get available container dimensions
+            const containerRect = container.getBoundingClientRect();
+            const availableWidth = containerRect.width;
+            const availableHeight = containerRect.height;
+            
+            // Get image natural dimensions
+            const imageWidth = img.naturalWidth;
+            const imageHeight = img.naturalHeight;
+            
+            // Calculate scale to fit within available space while maintaining aspect ratio
+            const scaleX = availableWidth / imageWidth;
+            const scaleY = availableHeight / imageHeight;
+            const scale = Math.min(scaleX, scaleY);
+            
+            // Calculate the fitted dimensions
+            const fittedWidth = imageWidth * scale;
+            const fittedHeight = imageHeight * scale;
+            
+            if (isMobileDevice()) {
+                // Mobile: Use fitted dimensions with native zoom capabilities
+                img.style.cssText = `
+                    width: ${fittedWidth}px;
+                    height: ${fittedHeight}px;
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                    object-position: center;
+                    display: block;
+                    margin: auto;
+                    touch-action: manipulation;
+                    user-select: none;
+                `;
+            } else {
+                // Desktop: Use fitted dimensions with custom zoom controls
+                img.style.cssText = `
+                    width: ${fittedWidth}px;
+                    height: ${fittedHeight}px;
+                    object-fit: contain;
+                    object-position: center;
+                    display: block;
+                    transition: transform 0.3s ease;
+                    cursor: grab;
+                    margin: auto;
+                `;
+            }
+            
+            resolve(img);
+        };
+        
+        img.onerror = function() {
+            // Fallback if image fails to load
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                display: block;
+                margin: auto;
+            `;
+            resolve(img);
+        };
+    });
+}
+
 // Open high-resolution image modal
 function openHighResImage(index) {
     currentHighResIndex = index; // Set the current high-res image index
@@ -101,43 +177,13 @@ function openHighResImage(index) {
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
-        // Create responsive image with proper sizing
-        const img = document.createElement('img');
-        img.src = highResImages[currentHighResIndex];
-        img.alt = "High Resolution Image";
-        
-        if (isMobileDevice()) {
-            // Mobile: Allow native zoom and pan
-            img.style.cssText = `
-                max-width: 100%;
-                max-height: 100%;
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                object-position: center;
-                display: block;
-                margin: auto;
-                touch-action: manipulation;
-                user-select: none;
-            `;
-        } else {
-            // Desktop: Custom zoom controls and dragging
-            img.style.cssText = `
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                display: block;
-                transition: transform 0.3s ease;
-                cursor: grab;
-                margin: 100px auto;
-                min-width: calc(100% - 200px);
-                min-height: calc(100% - 200px);
-            `;
-        }
-        
-        // Clear container and add the image
+        // Clear container first
         highResImage.innerHTML = '';
-        highResImage.appendChild(img);
+        
+        // Create and add screen-fitted image
+        createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
+            highResImage.appendChild(img);
+        });
     }
 }
 
@@ -154,7 +200,7 @@ function renderPDF(url, container) {
     pdfjsLib.getDocument(url).promise.then(pdf => {
         // Fetch the first page
         pdf.getPage(1).then(page => {
-            // Get container dimensions (accounting for padding)
+            // Get container dimensions
             const containerRect = container.getBoundingClientRect();
             const availableWidth = containerRect.width;
             const availableHeight = containerRect.height;
@@ -171,14 +217,17 @@ function renderPDF(url, container) {
             canvas.height = viewport.height;
             canvas.width = viewport.width;
             
-            // Apply responsive styling to canvas
+            // Calculate the fitted dimensions for screen fitting
+            const fittedWidth = viewport.width;
+            const fittedHeight = viewport.height;
+            
             if (isMobileDevice()) {
-                // Mobile: Allow native zoom and pan
+                // Mobile: Use fitted dimensions with native zoom capabilities
                 canvas.style.cssText = `
+                    width: ${fittedWidth}px;
+                    height: ${fittedHeight}px;
                     max-width: 100%;
                     max-height: 100%;
-                    width: auto;
-                    height: auto;
                     object-fit: contain;
                     display: block;
                     margin: auto;
@@ -186,17 +235,15 @@ function renderPDF(url, container) {
                     user-select: none;
                 `;
             } else {
-                // Desktop: Custom zoom controls and dragging
+                // Desktop: Use fitted dimensions with custom zoom controls
                 canvas.style.cssText = `
-                    width: auto;
-                    height: auto;
+                    width: ${fittedWidth}px;
+                    height: ${fittedHeight}px;
                     object-fit: contain;
                     display: block;
                     transition: transform 0.3s ease;
                     cursor: grab;
-                    margin: 100px auto;
-                    min-width: calc(100% - 200px);
-                    min-height: calc(100% - 200px);
+                    margin: auto;
                 `;
             }
 
@@ -231,44 +278,13 @@ function navigateHighResImage(direction) {
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
-        // Create responsive image with proper sizing
-        const img = document.createElement('img');
-        img.src = highResImages[currentHighResIndex];
-        img.alt = "High Resolution Image";
-        
-        if (isMobileDevice()) {
-            // Mobile: Allow native zoom and pan
-            img.style.cssText = `
-                max-width: 100%;
-                max-height: 100%;
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                object-position: center;
-                display: block;
-                margin: auto;
-                touch-action: manipulation;
-                user-select: none;
-            `;
-        } else {
-            // Desktop: Custom zoom controls and dragging
-            img.style.cssText = `
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                object-position: center;
-                display: block;
-                transition: transform 0.3s ease;
-                cursor: grab;
-                margin: 100px auto;
-                min-width: calc(100% - 200px);
-                min-height: calc(100% - 200px);
-            `;
-        }
-        
-        // Clear container and add the image
+        // Clear container first
         highResImage.innerHTML = '';
-        highResImage.appendChild(img);
+        
+        // Create and add screen-fitted image
+        createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
+            highResImage.appendChild(img);
+        });
     }
 }
 
@@ -448,47 +464,62 @@ function applyZoom() {
     const scale = currentZoom / 100;
     
     if (img) {
-        // Instead of using transform scale, adjust actual dimensions
-        if (scale > 1) {
-            // Get natural dimensions and scale them
-            const naturalWidth = img.naturalWidth;
-            const naturalHeight = img.naturalHeight;
-            
-            img.style.width = (naturalWidth * scale) + 'px';
-            img.style.height = (naturalHeight * scale) + 'px';
-            img.style.maxWidth = 'none';
-            img.style.maxHeight = 'none';
-            img.style.transform = 'none';
-        } else {
-            // For zoom levels <= 100%, use original responsive behavior
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '100%';
-            img.style.transform = `scale(${scale})`;
-        }
+        // Calculate screen-fitted dimensions (100% zoom baseline)
+        const containerRect = highResImage.getBoundingClientRect();
+        const availableWidth = containerRect.width;
+        const availableHeight = containerRect.height;
+        
+        const naturalWidth = img.naturalWidth;
+        const naturalHeight = img.naturalHeight;
+        
+        // Calculate scale to fit within available space (this is our 100% baseline)
+        const baseScaleX = availableWidth / naturalWidth;
+        const baseScaleY = availableHeight / naturalHeight;
+        const baseScale = Math.min(baseScaleX, baseScaleY);
+        
+        // Calculate the baseline fitted dimensions (100% zoom)
+        const baseFittedWidth = naturalWidth * baseScale;
+        const baseFittedHeight = naturalHeight * baseScale;
+        
+        // Apply the zoom scale to the baseline fitted dimensions
+        const finalWidth = baseFittedWidth * scale;
+        const finalHeight = baseFittedHeight * scale;
+        
+        img.style.width = finalWidth + 'px';
+        img.style.height = finalHeight + 'px';
+        img.style.maxWidth = 'none';
+        img.style.maxHeight = 'none';
+        img.style.transform = 'none';
     }
     
     if (canvas) {
         // For canvas, we need to handle scaling differently
-        if (scale > 1) {
-            // Get current canvas dimensions and scale them
-            const currentWidth = canvas.width;
-            const currentHeight = canvas.height;
-            
-            canvas.style.width = (currentWidth * scale) + 'px';
-            canvas.style.height = (currentHeight * scale) + 'px';
-            canvas.style.maxWidth = 'none';
-            canvas.style.maxHeight = 'none';
-            canvas.style.transform = 'none';
-        } else {
-            // For zoom levels <= 100%, use transform scale
-            canvas.style.width = 'auto';
-            canvas.style.height = 'auto';
-            canvas.style.maxWidth = '100%';
-            canvas.style.maxHeight = '100%';
-            canvas.style.transform = `scale(${scale})`;
-        }
+        // Get the original dimensions that the canvas was rendered at
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        
+        // Calculate scale to fit within available space (this is our 100% baseline)
+        const containerRect = highResImage.getBoundingClientRect();
+        const availableWidth = containerRect.width;
+        const availableHeight = containerRect.height;
+        
+        const baseScaleX = availableWidth / canvasWidth;
+        const baseScaleY = availableHeight / canvasHeight;
+        const baseScale = Math.min(baseScaleX, baseScaleY);
+        
+        // Calculate the baseline fitted dimensions (100% zoom)
+        const baseFittedWidth = canvasWidth * baseScale;
+        const baseFittedHeight = canvasHeight * baseScale;
+        
+        // Apply the zoom scale to the baseline fitted dimensions
+        const finalWidth = baseFittedWidth * scale;
+        const finalHeight = baseFittedHeight * scale;
+        
+        canvas.style.width = finalWidth + 'px';
+        canvas.style.height = finalHeight + 'px';
+        canvas.style.maxWidth = 'none';
+        canvas.style.maxHeight = 'none';
+        canvas.style.transform = 'none';
     }
 }
 
