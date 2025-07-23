@@ -397,9 +397,16 @@ let currentZoom = 100;
 let isDragging = false;
 let startX, startY, scrollLeft, scrollTop;
 
-// Mobile detection
+// Touch device detection - prioritizes touch capability over screen size
 function isMobileDevice() {
-    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // Check for touch capability first
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    
+    // Check for mobile/tablet user agents
+    const isMobileUserAgent = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent);
+    
+    // Return true if device has touch capability OR is a known mobile/tablet
+    return hasTouchScreen || isMobileUserAgent;
 }
 
 // Zoom in/out function
@@ -616,4 +623,9 @@ function drag(e) {
 // Initialize dragging when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeDragging();
+    
+    // Add touch-device class to body for touch-capable devices
+    if (isMobileDevice()) {
+        document.body.classList.add('touch-device');
+    }
 });

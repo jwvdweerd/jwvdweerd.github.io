@@ -588,6 +588,11 @@ button:hover {
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* Hide zoom controls for touch devices - use native touch gestures instead */
+.touch-device .zoom-controls {
+    display: none !important;
+}
+
 /* Mobile and tablet zoom controls adjustments */
 @media (max-width: 1024px) {
     /* Hide zoom controls on mobile and tablet - use native touch gestures instead */
