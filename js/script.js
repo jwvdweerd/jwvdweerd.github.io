@@ -92,14 +92,32 @@ function openHighResImage(index) {
     const highResImage = document.getElementById('highResImage');
     highResModal.style.display = 'block';
     document.body.classList.add('modal-open');
+    
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
-        highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
+        // Create responsive image with proper sizing
+        const img = document.createElement('img');
+        img.src = highResImages[currentHighResIndex];
+        img.alt = "High Resolution Image";
+        img.style.cssText = `
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            margin: auto;
+        `;
+        
+        // Clear container and add the image
+        highResImage.innerHTML = '';
+        highResImage.appendChild(img);
     }
 }
 
-// Render PDF using pdf.js
+// Render PDF using pdf.js with responsive sizing
 function renderPDF(url, container) {
     container.innerHTML = ''; // Clear previous content
 
@@ -112,9 +130,33 @@ function renderPDF(url, container) {
     pdfjsLib.getDocument(url).promise.then(pdf => {
         // Fetch the first page
         pdf.getPage(1).then(page => {
-            const viewport = page.getViewport({ scale: 1.5 });
+            // Get container dimensions (accounting for padding)
+            const containerRect = container.getBoundingClientRect();
+            const availableWidth = containerRect.width;
+            const availableHeight = containerRect.height;
+            
+            // Get initial viewport to calculate dimensions
+            const initialViewport = page.getViewport({ scale: 1 });
+            
+            // Calculate scale to fit within available space while maintaining aspect ratio
+            const scaleX = availableWidth / initialViewport.width;
+            const scaleY = availableHeight / initialViewport.height;
+            const scale = Math.min(scaleX, scaleY);
+            
+            const viewport = page.getViewport({ scale: scale });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
+            
+            // Apply responsive styling to canvas
+            canvas.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                display: block;
+                margin: auto;
+            `;
 
             // Render the page into the canvas context
             const renderContext = {
@@ -123,6 +165,9 @@ function renderPDF(url, container) {
             };
             page.render(renderContext);
         });
+    }).catch(error => {
+        console.error('Error loading PDF:', error);
+        container.innerHTML = '<p style="color: white; text-align: center;">Error loading PDF</p>';
     });
 }
 
@@ -135,10 +180,28 @@ function navigateHighResImage(direction) {
         currentHighResIndex = 0;
     }
     const highResImage = document.getElementById('highResImage');
+    
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
-        highResImage.innerHTML = `<img src="${highResImages[currentHighResIndex]}" alt="High Resolution Image" style="max-height: 100%; max-width: 100%; object-fit: contain;">`;
+        // Create responsive image with proper sizing
+        const img = document.createElement('img');
+        img.src = highResImages[currentHighResIndex];
+        img.alt = "High Resolution Image";
+        img.style.cssText = `
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            margin: auto;
+        `;
+        
+        // Clear container and add the image
+        highResImage.innerHTML = '';
+        highResImage.appendChild(img);
     }
 }
 

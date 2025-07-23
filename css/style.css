@@ -126,6 +126,47 @@ footer img {
     .nav-btn {
         z-index: 3400;
     }
+    
+    /* Enhanced modal responsiveness for mobile */
+    .modal-content {
+        width: 95vw;
+        height: 95vh;
+        max-width: 95vw;
+        max-height: 95vh;
+        padding: 10px;
+        margin: 0;
+    }
+    
+    .high-res-modal-content {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 80px 10px 10px 10px; /* More top padding for mobile close button */
+        margin: 0;
+    }
+}
+
+/* Tablet and small desktop adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .high-res-modal-content {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 60px 15px 15px 15px;
+    }
+}
+
+/* Large desktop optimizations */
+@media (min-width: 1025px) {
+    .high-res-modal-content {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 60px 20px 20px 20px;
+    }
 }
 
 .image-container {
@@ -326,10 +367,10 @@ body.modal-open {
 
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
-    width: 90vw;
-    height: 90vh;
-    max-width: 90vw;
-    max-height: 90vh;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
     background-color: transparent;
     border: none;
     display: flex;
@@ -337,13 +378,35 @@ body.modal-open {
     align-items: center;
     position: relative;
     overflow: hidden;
+    padding: 60px 20px 20px 20px; /* Top padding for close button */
+    margin: 0;
+    box-sizing: border-box;
 }
 
 #highResImage {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     pointer-events: auto;
+}
+
+#highResImage img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+}
+
+#highResImage canvas {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
 
 form {
