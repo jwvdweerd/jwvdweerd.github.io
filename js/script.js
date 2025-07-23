@@ -75,7 +75,8 @@ function openModal(record) {
     });
 
     content += `</div>
-        <p class="modal-content-p">${info}</p>`;
+        <p class="modal-content-p"><strong>Project info: </strong>${info}</p>
+        <p class="modal-content-p"><strong>Externe info:</strong> <a href="${release}" target="_blank">Link</a></p>`;
 
     modalBody.innerHTML = content;
 }
