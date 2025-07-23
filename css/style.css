@@ -131,11 +131,13 @@ footer img {
     /* Enhanced modal responsiveness for mobile */
     .modal-content {
         width: 95vw;
-        height: 95vh;
+        min-height: 95vh;
         max-width: 95vw;
-        max-height: 95vh;
+        max-height: none;
         padding: 10px;
         margin: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
     }
     
     .high-res-modal-content {
@@ -611,5 +613,17 @@ button:hover {
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
+    }
+    
+    /* Optimize thumbnails for mobile */
+    .thumbnails {
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .thumbnail {
+        height: 120px;
+        margin: 5px;
+        max-width: calc(50% - 10px);
     }
 }
