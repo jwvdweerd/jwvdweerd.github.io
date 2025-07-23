@@ -111,8 +111,7 @@ function createScreenFittedImage(imageSrc) {
             const fittedHeight = imageHeight * scale;
             
             if (isMobileDevice()) {
-                // Mobile: Use full available dimensions with native zoom capabilities
-                // Account for mobile padding and ensure full screen usage
+                // Mobile/tablet: Use full available dimensions with native zoom capabilities
                 img.style.cssText = `
                     width: 100%;
                     height: 100%;
@@ -127,6 +126,8 @@ function createScreenFittedImage(imageSrc) {
                 `;
             } else {
                 // Desktop: Use fitted dimensions with custom zoom controls
+                // Enable touch gestures for hybrid devices (touch laptops)
+                const touchAction = hasTouchCapability() ? 'touch-action: manipulation;' : '';
                 img.style.cssText = `
                     width: ${fittedWidth}px;
                     height: ${fittedHeight}px;
@@ -136,6 +137,7 @@ function createScreenFittedImage(imageSrc) {
                     transition: transform 0.3s ease;
                     cursor: grab;
                     margin: auto;
+                    ${touchAction}
                 `;
             }
             
@@ -219,7 +221,7 @@ function renderPDF(url, container) {
             const fittedHeight = viewport.height;
             
             if (isMobileDevice()) {
-                // Mobile: Use full available dimensions with native zoom capabilities
+                // Mobile/tablet: Use full available dimensions with native zoom capabilities
                 canvas.style.cssText = `
                     width: 100%;
                     height: 100%;
@@ -233,6 +235,8 @@ function renderPDF(url, container) {
                 `;
             } else {
                 // Desktop: Use fitted dimensions with custom zoom controls
+                // Enable touch gestures for hybrid devices (touch laptops)
+                const touchAction = hasTouchCapability() ? 'touch-action: manipulation;' : '';
                 canvas.style.cssText = `
                     width: ${fittedWidth}px;
                     height: ${fittedHeight}px;
@@ -241,6 +245,7 @@ function renderPDF(url, container) {
                     transition: transform 0.3s ease;
                     cursor: grab;
                     margin: auto;
+                    ${touchAction}
                 `;
             }
 
@@ -397,7 +402,7 @@ let currentZoom = 100;
 let isDragging = false;
 let startX, startY, scrollLeft, scrollTop;
 
-// Mobile/tablet device detection - prioritizes mobile user agents and small screens
+// Device detection - distinguishes between mobile/tablet and desktop with optional touch
 function isMobileDevice() {
     // Check for mobile/tablet user agents first (most reliable)
     const isMobileUserAgent = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent);
@@ -405,11 +410,13 @@ function isMobileDevice() {
     // Check for small screen sizes (mobile/tablet sized)
     const isSmallScreen = window.innerWidth <= 1024;
     
-    // Check for touch capability
-    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-    
-    // Return true if it's a known mobile/tablet OR has a small screen with touch
-    return isMobileUserAgent || (isSmallScreen && hasTouchScreen);
+    // Return true only for genuine mobile/tablet devices
+    return isMobileUserAgent || isSmallScreen;
+}
+
+// Check if device has touch capability (for hybrid desktop/laptop devices)
+function hasTouchCapability() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
 
 // Zoom in/out function
@@ -627,8 +634,13 @@ function drag(e) {
 document.addEventListener('DOMContentLoaded', function() {
     initializeDragging();
     
-    // Add touch-device class to body for touch-capable devices
+    // Add touch-device class only for mobile/tablet devices (not hybrid desktops)
     if (isMobileDevice()) {
         document.body.classList.add('touch-device');
+    }
+    
+    // Add hybrid-device class for desktop devices with touch capability
+    if (!isMobileDevice() && hasTouchCapability()) {
+        document.body.classList.add('hybrid-device');
     }
 });

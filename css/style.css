@@ -593,6 +593,20 @@ button:hover {
     display: none !important;
 }
 
+/* Hybrid devices (desktop/laptop with touch) keep zoom controls AND get native touch support */
+.hybrid-device .zoom-controls {
+    display: flex !important;
+}
+
+/* Add a subtle indicator for hybrid devices that touch gestures are also available */
+.hybrid-device .zoom-controls::after {
+    content: "👆";
+    font-size: 12px;
+    margin-left: 8px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
 /* Mobile and tablet zoom controls adjustments */
 @media (max-width: 1024px) {
     /* Hide zoom controls on mobile and tablet - use native touch gestures instead */
