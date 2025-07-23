@@ -617,13 +617,16 @@ button:hover {
     
     /* Optimize thumbnails for mobile */
     .thumbnails {
-        justify-content: center;
-        gap: 5px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
     
     .thumbnail {
-        height: 120px;
-        margin: 5px;
-        max-width: calc(50% - 10px);
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
+        object-fit: contain;
     }
 }
