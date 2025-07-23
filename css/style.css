@@ -393,13 +393,16 @@ body.modal-open {
 #highResImage {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     pointer-events: auto;
     overflow: auto;
     position: relative;
     touch-action: manipulation; /* Enable pinch-zoom and pan on mobile */
+    cursor: grab;
+    display: block;
+}
+
+#highResImage:active {
+    cursor: grabbing;
 }
 
 #highResImage img {
@@ -408,10 +411,13 @@ body.modal-open {
     width: auto;
     height: auto;
     object-fit: contain;
-    object-position: center;
     transition: transform 0.3s ease;
     cursor: grab;
     touch-action: manipulation;
+    display: block;
+    margin: 100px auto; /* Center with scrollable margins */
+    min-width: calc(100% - 200px);
+    min-height: calc(100% - 200px);
 }
 
 #highResImage img:active {
@@ -427,6 +433,10 @@ body.modal-open {
     transition: transform 0.3s ease;
     cursor: grab;
     touch-action: manipulation;
+    display: block;
+    margin: 100px auto; /* Center with scrollable margins */
+    min-width: calc(100% - 200px);
+    min-height: calc(100% - 200px);
 }
 
 #highResImage canvas:active {
@@ -577,11 +587,11 @@ button:hover {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Mobile zoom controls adjustments */
-@media (max-width: 768px) {
-    /* Hide zoom controls on mobile - use native touch gestures instead */
+/* Mobile and tablet zoom controls adjustments */
+@media (max-width: 1024px) {
+    /* Hide zoom controls on mobile and tablet - use native touch gestures instead */
     .zoom-controls {
-        display: none;
+        display: none !important;
     }
     
     /* Enable native mobile zoom and pan */

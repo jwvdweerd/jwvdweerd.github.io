@@ -121,18 +121,17 @@ function openHighResImage(index) {
                 user-select: none;
             `;
         } else {
-            // Desktop: Custom zoom controls
+            // Desktop: Custom zoom controls and dragging
             img.style.cssText = `
-                max-width: 100%;
-                max-height: 100%;
                 width: auto;
                 height: auto;
                 object-fit: contain;
-                object-position: center;
                 display: block;
-                margin: auto;
                 transition: transform 0.3s ease;
                 cursor: grab;
+                margin: 100px auto;
+                min-width: calc(100% - 200px);
+                min-height: calc(100% - 200px);
             `;
         }
         
@@ -187,17 +186,17 @@ function renderPDF(url, container) {
                     user-select: none;
                 `;
             } else {
-                // Desktop: Custom zoom controls
+                // Desktop: Custom zoom controls and dragging
                 canvas.style.cssText = `
-                    max-width: 100%;
-                    max-height: 100%;
                     width: auto;
                     height: auto;
                     object-fit: contain;
                     display: block;
-                    margin: auto;
                     transition: transform 0.3s ease;
                     cursor: grab;
+                    margin: 100px auto;
+                    min-width: calc(100% - 200px);
+                    min-height: calc(100% - 200px);
                 `;
             }
 
@@ -252,18 +251,18 @@ function navigateHighResImage(direction) {
                 user-select: none;
             `;
         } else {
-            // Desktop: Custom zoom controls
+            // Desktop: Custom zoom controls and dragging
             img.style.cssText = `
-                max-width: 100%;
-                max-height: 100%;
                 width: auto;
                 height: auto;
                 object-fit: contain;
                 object-position: center;
                 display: block;
-                margin: auto;
                 transition: transform 0.3s ease;
                 cursor: grab;
+                margin: 100px auto;
+                min-width: calc(100% - 200px);
+                min-height: calc(100% - 200px);
             `;
         }
         
@@ -449,24 +448,46 @@ function applyZoom() {
     const scale = currentZoom / 100;
     
     if (img) {
-        img.style.transform = `scale(${scale})`;
+        // Instead of using transform scale, adjust actual dimensions
         if (scale > 1) {
+            // Get natural dimensions and scale them
+            const naturalWidth = img.naturalWidth;
+            const naturalHeight = img.naturalHeight;
+            
+            img.style.width = (naturalWidth * scale) + 'px';
+            img.style.height = (naturalHeight * scale) + 'px';
             img.style.maxWidth = 'none';
             img.style.maxHeight = 'none';
+            img.style.transform = 'none';
         } else {
+            // For zoom levels <= 100%, use original responsive behavior
+            img.style.width = 'auto';
+            img.style.height = 'auto';
             img.style.maxWidth = '100%';
             img.style.maxHeight = '100%';
+            img.style.transform = `scale(${scale})`;
         }
     }
     
     if (canvas) {
-        canvas.style.transform = `scale(${scale})`;
+        // For canvas, we need to handle scaling differently
         if (scale > 1) {
+            // Get current canvas dimensions and scale them
+            const currentWidth = canvas.width;
+            const currentHeight = canvas.height;
+            
+            canvas.style.width = (currentWidth * scale) + 'px';
+            canvas.style.height = (currentHeight * scale) + 'px';
             canvas.style.maxWidth = 'none';
             canvas.style.maxHeight = 'none';
+            canvas.style.transform = 'none';
         } else {
+            // For zoom levels <= 100%, use transform scale
+            canvas.style.width = 'auto';
+            canvas.style.height = 'auto';
             canvas.style.maxWidth = '100%';
             canvas.style.maxHeight = '100%';
+            canvas.style.transform = `scale(${scale})`;
         }
     }
 }
@@ -510,28 +531,58 @@ function initializeDragging() {
 }
 
 function startDragging(e) {
-    if (currentZoom > 100) {
+    // Enable dragging for all zoom levels on desktop, not just when zoomed in
+    if (!isMobileDevice()) {
         isDragging = true;
-        startX = e.pageX - document.getElementById('highResImage').offsetLeft;
-        startY = e.pageY - document.getElementById('highResImage').offsetTop;
-        scrollLeft = document.getElementById('highResImage').scrollLeft;
-        scrollTop = document.getElementById('highResImage').scrollTop;
+        const highResImage = document.getElementById('highResImage');
+        
+        // Use clientX/clientY for more accurate positioning
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollLeft = highResImage.scrollLeft;
+        scrollTop = highResImage.scrollTop;
+        
+        // Prevent default behavior to avoid text selection
+        e.preventDefault();
+        
+        // Change cursor to grabbing
+        const img = highResImage.querySelector('img');
+        const canvas = highResImage.querySelector('canvas');
+        if (img) img.style.cursor = 'grabbing';
+        if (canvas) canvas.style.cursor = 'grabbing';
     }
 }
 
 function stopDragging() {
     isDragging = false;
+    
+    // Reset cursor back to grab
+    if (!isMobileDevice()) {
+        const highResImage = document.getElementById('highResImage');
+        const img = highResImage.querySelector('img');
+        const canvas = highResImage.querySelector('canvas');
+        if (img) img.style.cursor = 'grab';
+        if (canvas) canvas.style.cursor = 'grab';
+    }
 }
 
 function drag(e) {
-    if (!isDragging) return;
+    if (!isDragging || isMobileDevice()) return;
     e.preventDefault();
-    const x = e.pageX - document.getElementById('highResImage').offsetLeft;
-    const y = e.pageY - document.getElementById('highResImage').offsetTop;
-    const walkX = (x - startX) * 2;
-    const walkY = (y - startY) * 2;
-    document.getElementById('highResImage').scrollLeft = scrollLeft - walkX;
-    document.getElementById('highResImage').scrollTop = scrollTop - walkY;
+    
+    const highResImage = document.getElementById('highResImage');
+    
+    // Calculate the distance moved using clientX/clientY
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    // Calculate movement delta (how much the mouse moved)
+    const deltaX = x - startX;
+    const deltaY = y - startY;
+    
+    // Apply the movement to scroll position (opposite direction for natural dragging)
+    highResImage.scrollLeft = scrollLeft - deltaX;
+    highResImage.scrollTop = scrollTop - deltaY;
 }
 
 // Initialize dragging when DOM is loaded
