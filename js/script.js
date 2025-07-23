@@ -115,16 +115,17 @@ function createScreenFittedImage(imageSrc) {
             const fittedHeight = imageHeight * scale;
             
             if (isMobileDevice()) {
-                // Mobile: Use fitted dimensions with native zoom capabilities
+                // Mobile: Use full available dimensions with native zoom capabilities
+                // Account for mobile padding and ensure full screen usage
                 img.style.cssText = `
-                    width: ${fittedWidth}px;
-                    height: ${fittedHeight}px;
+                    width: 100%;
+                    height: 100%;
                     max-width: 100%;
                     max-height: 100%;
                     object-fit: contain;
                     object-position: center;
                     display: block;
-                    margin: auto;
+                    margin: 0;
                     touch-action: manipulation;
                     user-select: none;
                 `;
@@ -222,15 +223,15 @@ function renderPDF(url, container) {
             const fittedHeight = viewport.height;
             
             if (isMobileDevice()) {
-                // Mobile: Use fitted dimensions with native zoom capabilities
+                // Mobile: Use full available dimensions with native zoom capabilities
                 canvas.style.cssText = `
-                    width: ${fittedWidth}px;
-                    height: ${fittedHeight}px;
+                    width: 100%;
+                    height: 100%;
                     max-width: 100%;
                     max-height: 100%;
                     object-fit: contain;
                     display: block;
-                    margin: auto;
+                    margin: 0;
                     touch-action: manipulation;
                     user-select: none;
                 `;

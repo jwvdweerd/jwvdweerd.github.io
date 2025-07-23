@@ -143,7 +143,7 @@ footer img {
         height: 100vh;
         max-width: 100vw;
         max-height: 100vh;
-        padding: 80px 10px 10px 10px; /* More top padding for mobile close button */
+        padding: 60px 5px 5px 5px; /* Reduced padding for more image space */
         margin: 0;
     }
 }
@@ -598,6 +598,10 @@ button:hover {
     #highResImage {
         overflow: visible;
         touch-action: manipulation;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
     }
     
     #highResImage img,
