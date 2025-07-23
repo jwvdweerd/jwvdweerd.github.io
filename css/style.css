@@ -118,8 +118,9 @@ footer img {
         width: 44px;
         height: 44px;
         font-size: 20px;
-        background-color: rgba(0, 0, 0, 0.8);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(2px);
     }
     
     /* Ensure navigation buttons don't interfere */
@@ -281,6 +282,7 @@ footer img {
 /* High-resolution modal needs to be above everything */
 #highResModal {
     z-index: 3000;
+    background-color: rgba(0, 0, 0, 1); /* Solid black background */
 }
 
 /* Prevent body scrolling when modal is open */
@@ -326,7 +328,8 @@ body.modal-open {
     top: 15px;
     right: 15px;
     color: #fff;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -335,6 +338,8 @@ body.modal-open {
     justify-content: center;
     font-size: 24px;
     z-index: 4000;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s ease;
 }
 
 .close:hover,
@@ -347,7 +352,9 @@ body.modal-open {
 #highResModal .close:hover,
 #highResModal .close:focus {
     color: #fff;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
 }
 
 .thumbnails {
@@ -390,23 +397,40 @@ body.modal-open {
     justify-content: center;
     align-items: center;
     pointer-events: auto;
+    overflow: auto;
+    position: relative;
+    touch-action: manipulation; /* Enable pinch-zoom and pan on mobile */
 }
 
 #highResImage img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: none;
+    max-height: none;
     width: auto;
     height: auto;
     object-fit: contain;
     object-position: center;
+    transition: transform 0.3s ease;
+    cursor: grab;
+    touch-action: manipulation;
+}
+
+#highResImage img:active {
+    cursor: grabbing;
 }
 
 #highResImage canvas {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: none;
+    max-height: none;
     width: auto;
     height: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: grab;
+    touch-action: manipulation;
+}
+
+#highResImage canvas:active {
+    cursor: grabbing;
 }
 
 form {
@@ -450,13 +474,26 @@ button:hover {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     color: white;
-    border: none;
+    border-radius: 50%;
     font-size: 24px;
-    padding: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     z-index: 3100;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-50%) scale(1.1);
 }
 
 #prevImage {
@@ -465,4 +502,100 @@ button:hover {
 
 #nextImage {
     right: 10px;
+}
+
+/* Zoom Controls */
+.zoom-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    padding: 8px 15px;
+    backdrop-filter: blur(4px);
+    z-index: 4000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.zoom-btn {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.zoom-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+}
+
+.zoom-select {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
+    min-width: 80px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+
+.zoom-select option {
+    background-color: #222;
+    color: white;
+}
+
+.zoom-input {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
+    width: 60px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+
+.zoom-input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mobile zoom controls adjustments */
+@media (max-width: 768px) {
+    /* Hide zoom controls on mobile - use native touch gestures instead */
+    .zoom-controls {
+        display: none;
+    }
+    
+    /* Enable native mobile zoom and pan */
+    #highResImage {
+        overflow: visible;
+        touch-action: manipulation;
+    }
+    
+    #highResImage img,
+    #highResImage canvas {
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
 }

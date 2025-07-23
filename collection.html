@@ -54,6 +54,25 @@
             <button id="prevImage" class="nav-btn" onclick="navigateHighResImage(-1)">&#9664;</button>
             <div id="highResImage" class="high-res-content"></div>
             <button id="nextImage" class="nav-btn" onclick="navigateHighResImage(1)">&#9654;</button>
+            
+            <!-- Zoom Controls -->
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomImage('-')" title="Zoom Out">-</button>
+                <select class="zoom-select" id="zoomSelect" onchange="setZoomLevel(this.value)">
+                    <option value="25">25%</option>
+                    <option value="50">50%</option>
+                    <option value="75">75%</option>
+                    <option value="100" selected>100%</option>
+                    <option value="125">125%</option>
+                    <option value="150">150%</option>
+                    <option value="200">200%</option>
+                    <option value="300">300%</option>
+                    <option value="400">400%</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="number" class="zoom-input" id="customZoom" placeholder="%" min="10" max="1000" style="display: none;" onchange="setCustomZoom(this.value)">
+                <button class="zoom-btn" onclick="zoomImage('+')" title="Zoom In">+</button>
+            </div>
         </div>
     </div>
 

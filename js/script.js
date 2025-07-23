@@ -93,6 +93,11 @@ function openHighResImage(index) {
     highResModal.style.display = 'block';
     document.body.classList.add('modal-open');
     
+    // Reset zoom when opening new image (desktop only)
+    if (!isMobileDevice()) {
+        resetZoom();
+    }
+    
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
@@ -100,16 +105,36 @@ function openHighResImage(index) {
         const img = document.createElement('img');
         img.src = highResImages[currentHighResIndex];
         img.alt = "High Resolution Image";
-        img.style.cssText = `
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            object-position: center;
-            display: block;
-            margin: auto;
-        `;
+        
+        if (isMobileDevice()) {
+            // Mobile: Allow native zoom and pan
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                display: block;
+                margin: auto;
+                touch-action: manipulation;
+                user-select: none;
+            `;
+        } else {
+            // Desktop: Custom zoom controls
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                display: block;
+                margin: auto;
+                transition: transform 0.3s ease;
+                cursor: grab;
+            `;
+        }
         
         // Clear container and add the image
         highResImage.innerHTML = '';
@@ -148,15 +173,33 @@ function renderPDF(url, container) {
             canvas.width = viewport.width;
             
             // Apply responsive styling to canvas
-            canvas.style.cssText = `
-                max-width: 100%;
-                max-height: 100%;
-                width: auto;
-                height: auto;
-                object-fit: contain;
-                display: block;
-                margin: auto;
-            `;
+            if (isMobileDevice()) {
+                // Mobile: Allow native zoom and pan
+                canvas.style.cssText = `
+                    max-width: 100%;
+                    max-height: 100%;
+                    width: auto;
+                    height: auto;
+                    object-fit: contain;
+                    display: block;
+                    margin: auto;
+                    touch-action: manipulation;
+                    user-select: none;
+                `;
+            } else {
+                // Desktop: Custom zoom controls
+                canvas.style.cssText = `
+                    max-width: 100%;
+                    max-height: 100%;
+                    width: auto;
+                    height: auto;
+                    object-fit: contain;
+                    display: block;
+                    margin: auto;
+                    transition: transform 0.3s ease;
+                    cursor: grab;
+                `;
+            }
 
             // Render the page into the canvas context
             const renderContext = {
@@ -181,6 +224,11 @@ function navigateHighResImage(direction) {
     }
     const highResImage = document.getElementById('highResImage');
     
+    // Reset zoom when navigating to new image (desktop only)
+    if (!isMobileDevice()) {
+        resetZoom();
+    }
+    
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
     } else {
@@ -188,16 +236,36 @@ function navigateHighResImage(direction) {
         const img = document.createElement('img');
         img.src = highResImages[currentHighResIndex];
         img.alt = "High Resolution Image";
-        img.style.cssText = `
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            object-position: center;
-            display: block;
-            margin: auto;
-        `;
+        
+        if (isMobileDevice()) {
+            // Mobile: Allow native zoom and pan
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                display: block;
+                margin: auto;
+                touch-action: manipulation;
+                user-select: none;
+            `;
+        } else {
+            // Desktop: Custom zoom controls
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                display: block;
+                margin: auto;
+                transition: transform 0.3s ease;
+                cursor: grab;
+            `;
+        }
         
         // Clear container and add the image
         highResImage.innerHTML = '';
@@ -310,4 +378,163 @@ window.addEventListener('load', function() {
         // Set the caption width to match the image width
         caption.style.width = `${image.clientWidth}px`;
     });
+});
+
+// Zoom functionality variables
+let currentZoom = 100;
+let isDragging = false;
+let startX, startY, scrollLeft, scrollTop;
+
+// Mobile detection
+function isMobileDevice() {
+    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Zoom in/out function
+function zoomImage(direction) {
+    // Skip zoom functionality on mobile devices
+    if (isMobileDevice()) return;
+    
+    const zoomStep = 25;
+    
+    if (direction === '+') {
+        currentZoom = Math.min(currentZoom + zoomStep, 1000);
+    } else if (direction === '-') {
+        currentZoom = Math.max(currentZoom - zoomStep, 10);
+    }
+    
+    applyZoom();
+    updateZoomSelect();
+}
+
+// Set zoom level from dropdown
+function setZoomLevel(level) {
+    // Skip zoom functionality on mobile devices
+    if (isMobileDevice()) return;
+    
+    const customInput = document.getElementById('customZoom');
+    
+    if (level === 'custom') {
+        customInput.style.display = 'inline-block';
+        customInput.focus();
+    } else {
+        customInput.style.display = 'none';
+        currentZoom = parseInt(level);
+        applyZoom();
+    }
+}
+
+// Set custom zoom level
+function setCustomZoom(level) {
+    // Skip zoom functionality on mobile devices
+    if (isMobileDevice()) return;
+    
+    const zoom = parseInt(level);
+    if (zoom >= 10 && zoom <= 1000) {
+        currentZoom = zoom;
+        applyZoom();
+        updateZoomSelect();
+    }
+}
+
+// Apply zoom transformation
+function applyZoom() {
+    // Skip zoom functionality on mobile devices
+    if (isMobileDevice()) return;
+    
+    const highResImage = document.getElementById('highResImage');
+    const img = highResImage.querySelector('img');
+    const canvas = highResImage.querySelector('canvas');
+    
+    const scale = currentZoom / 100;
+    
+    if (img) {
+        img.style.transform = `scale(${scale})`;
+        if (scale > 1) {
+            img.style.maxWidth = 'none';
+            img.style.maxHeight = 'none';
+        } else {
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+        }
+    }
+    
+    if (canvas) {
+        canvas.style.transform = `scale(${scale})`;
+        if (scale > 1) {
+            canvas.style.maxWidth = 'none';
+            canvas.style.maxHeight = 'none';
+        } else {
+            canvas.style.maxWidth = '100%';
+            canvas.style.maxHeight = '100%';
+        }
+    }
+}
+
+// Update zoom select dropdown
+function updateZoomSelect() {
+    const zoomSelect = document.getElementById('zoomSelect');
+    const customInput = document.getElementById('customZoom');
+    
+    // Check if current zoom matches any preset value
+    const presetValues = ['25', '50', '75', '100', '125', '150', '200', '300', '400'];
+    const matchingPreset = presetValues.find(val => parseInt(val) === currentZoom);
+    
+    if (matchingPreset) {
+        zoomSelect.value = matchingPreset;
+        customInput.style.display = 'none';
+    } else {
+        zoomSelect.value = 'custom';
+        customInput.style.display = 'inline-block';
+        customInput.value = currentZoom;
+    }
+}
+
+// Reset zoom when opening new image
+function resetZoom() {
+    currentZoom = 100;
+    updateZoomSelect();
+}
+
+// Add drag functionality for zoomed images (desktop only)
+function initializeDragging() {
+    // Skip dragging functionality on mobile devices
+    if (isMobileDevice()) return;
+    
+    const highResImage = document.getElementById('highResImage');
+    
+    highResImage.addEventListener('mousedown', startDragging);
+    highResImage.addEventListener('mouseleave', stopDragging);
+    highResImage.addEventListener('mouseup', stopDragging);
+    highResImage.addEventListener('mousemove', drag);
+}
+
+function startDragging(e) {
+    if (currentZoom > 100) {
+        isDragging = true;
+        startX = e.pageX - document.getElementById('highResImage').offsetLeft;
+        startY = e.pageY - document.getElementById('highResImage').offsetTop;
+        scrollLeft = document.getElementById('highResImage').scrollLeft;
+        scrollTop = document.getElementById('highResImage').scrollTop;
+    }
+}
+
+function stopDragging() {
+    isDragging = false;
+}
+
+function drag(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - document.getElementById('highResImage').offsetLeft;
+    const y = e.pageY - document.getElementById('highResImage').offsetTop;
+    const walkX = (x - startX) * 2;
+    const walkY = (y - startY) * 2;
+    document.getElementById('highResImage').scrollLeft = scrollLeft - walkX;
+    document.getElementById('highResImage').scrollTop = scrollTop - walkY;
+}
+
+// Initialize dragging when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDragging();
 });
