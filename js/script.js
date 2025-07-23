@@ -397,16 +397,19 @@ let currentZoom = 100;
 let isDragging = false;
 let startX, startY, scrollLeft, scrollTop;
 
-// Touch device detection - prioritizes touch capability over screen size
+// Mobile/tablet device detection - prioritizes mobile user agents and small screens
 function isMobileDevice() {
-    // Check for touch capability first
-    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-    
-    // Check for mobile/tablet user agents
+    // Check for mobile/tablet user agents first (most reliable)
     const isMobileUserAgent = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent);
     
-    // Return true if device has touch capability OR is a known mobile/tablet
-    return hasTouchScreen || isMobileUserAgent;
+    // Check for small screen sizes (mobile/tablet sized)
+    const isSmallScreen = window.innerWidth <= 1024;
+    
+    // Check for touch capability
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    
+    // Return true if it's a known mobile/tablet OR has a small screen with touch
+    return isMobileUserAgent || (isSmallScreen && hasTouchScreen);
 }
 
 // Zoom in/out function
