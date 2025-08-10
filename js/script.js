@@ -1,6 +1,18 @@
 let isMainModalOpen = false; // Track if the main modal is open
 let currentHighResIndex = 0; // Track the current high-resolution image index
 let highResImages = []; // Store the list of high-resolution images
+// PDF rendering state (for high quality vector-based re-rendering on zoom)
+const pdfState = {
+    doc: null,
+    page: null,
+    url: null,
+    baseFitScale: 1, // scale that fits page to container (defines 100%)
+    isActive: false,
+    canvas: null,
+    rendering: false,
+    pendingZoom: null,
+    pinch: { active: false, startDist: 0, startZoom: 100 }
+};
 
 // Fetch and display records
 document.addEventListener("DOMContentLoaded", function() {
@@ -199,6 +211,8 @@ function openHighResImage(index) {
     if (!isMobileDevice()) {
         resetZoom();
     }
+    // Reset PDF state
+    resetPdfState();
     
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
@@ -216,78 +230,120 @@ function openHighResImage(index) {
 // Render PDF using pdf.js with responsive sizing
 function renderPDF(url, container) {
     container.innerHTML = ''; // Clear previous content
-
+    resetPdfState();
+    pdfState.url = url;
     // Create a canvas element
     const canvas = document.createElement('canvas');
+    pdfState.canvas = canvas;
     container.appendChild(canvas);
     const context = canvas.getContext('2d');
 
-    // Load the PDF
     pdfjsLib.getDocument(url).promise.then(pdf => {
-        // Fetch the first page
-        pdf.getPage(1).then(page => {
-            // Get container dimensions
-            const containerRect = container.getBoundingClientRect();
-            const availableWidth = containerRect.width;
-            const availableHeight = containerRect.height;
-            
-            // Get initial viewport to calculate dimensions
-            const initialViewport = page.getViewport({ scale: 1 });
-            
-            // Calculate scale to fit within available space while maintaining aspect ratio
-            const scaleX = availableWidth / initialViewport.width;
-            const scaleY = availableHeight / initialViewport.height;
-            const scale = Math.min(scaleX, scaleY);
-            
-            const viewport = page.getViewport({ scale: scale });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            // Calculate the fitted dimensions for screen fitting
-            const fittedWidth = viewport.width;
-            const fittedHeight = viewport.height;
-            
-            if (isMobileDevice()) {
-                // Mobile/tablet: Use full available dimensions with native zoom capabilities
-                canvas.style.cssText = `
-                    width: 100%;
-                    height: 100%;
-                    max-width: 100%;
-                    max-height: 100%;
-                    object-fit: contain;
-                    display: block;
-                    margin: 0;
-                    touch-action: manipulation;
-                    user-select: none;
-                `;
-            } else {
-                // Desktop: Use fitted dimensions with custom zoom controls
-                // Enable touch gestures for hybrid devices (touch laptops)
-                const touchAction = hasTouchCapability() ? 'touch-action: manipulation;' : '';
-                canvas.style.cssText = `
-                    width: ${fittedWidth}px;
-                    height: ${fittedHeight}px;
-                    object-fit: contain;
-                    display: block;
-                    transition: transform 0.3s ease;
-                    cursor: grab;
-                    margin: auto;
-                    ${touchAction}
-                `;
-            }
-
-            // Render the page into the canvas context
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            page.render(renderContext);
-        });
-    }).catch(error => {
-        console.error('Error loading PDF:', error);
+        pdfState.doc = pdf;
+        return pdf.getPage(1);
+    }).then(page => {
+        pdfState.page = page;
+        pdfState.isActive = true;
+        // Determine fit scale
+        const containerRect = container.getBoundingClientRect();
+        const initialViewport = page.getViewport({ scale: 1 });
+        const scaleX = containerRect.width / initialViewport.width;
+        const scaleY = containerRect.height / initialViewport.height;
+        pdfState.baseFitScale = Math.min(scaleX, scaleY);
+        // Render at base (100%)
+        renderPdfAtCurrentZoom();
+        // Enable pinch zoom on mobile for PDF
+        if (isMobileDevice()) attachPdfPinchHandlers();
+    }).catch(err => {
+        console.error('Error loading PDF:', err);
         container.innerHTML = '<p style="color: white; text-align: center;">Error loading PDF</p>';
+        resetPdfState();
     });
 }
+
+function renderPdfAtCurrentZoom() {
+    if (!pdfState.isActive || !pdfState.page || !pdfState.canvas) return;
+    if (pdfState.rendering) { // throttle: queue latest zoom
+        pdfState.pendingZoom = currentZoom;
+        return;
+    }
+    pdfState.rendering = true;
+    const desiredScale = pdfState.baseFitScale * (currentZoom / 100);
+    const viewport = pdfState.page.getViewport({ scale: desiredScale });
+    const canvas = pdfState.canvas;
+    const ctx = canvas.getContext('2d');
+    // Support high DPI
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = viewport.width * dpr;
+    canvas.height = viewport.height * dpr;
+    canvas.style.width = viewport.width + 'px';
+    canvas.style.height = viewport.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Style
+    const touchAction = hasTouchCapability() ? 'touch-action: manipulation;' : '';
+    canvas.style.cursor = 'grab';
+    canvas.style.margin = 'auto';
+    canvas.style.display = 'block';
+    canvas.style.transition = 'none';
+    if (isMobileDevice()) {
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
+    }
+    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
+    renderTask.promise.then(() => {
+        pdfState.rendering = false;
+        if (pdfState.pendingZoom && pdfState.pendingZoom !== currentZoom) {
+            pdfState.pendingZoom = null;
+            renderPdfAtCurrentZoom();
+        }
+    }).catch(e => { pdfState.rendering = false; console.error('PDF render error', e); });
+}
+
+function resetPdfState() {
+    pdfState.doc = null;
+    pdfState.page = null;
+    pdfState.url = null;
+    pdfState.baseFitScale = 1;
+    pdfState.isActive = false;
+    pdfState.canvas = null;
+    pdfState.rendering = false;
+    pdfState.pendingZoom = null;
+    pdfState.pinch.active = false;
+}
+
+// Mobile pinch zoom support for PDFs (re-renders at new scale)
+function attachPdfPinchHandlers() {
+    const container = document.getElementById('highResImage');
+    if (!container) return;
+    container.addEventListener('touchstart', onPdfTouchStart, { passive: false });
+    container.addEventListener('touchmove', onPdfTouchMove, { passive: false });
+    container.addEventListener('touchend', onPdfTouchEnd);
+}
+function onPdfTouchStart(e) {
+    if (!pdfState.isActive) return;
+    if (e.touches.length === 2) {
+        pdfState.pinch.active = true;
+        pdfState.pinch.startDist = getTouchDistance(e.touches[0], e.touches[1]);
+        pdfState.pinch.startZoom = currentZoom;
+    }
+}
+function onPdfTouchMove(e) {
+    if (!pdfState.isActive || !pdfState.pinch.active || e.touches.length !== 2) return;
+    e.preventDefault();
+    const newDist = getTouchDistance(e.touches[0], e.touches[1]);
+    const ratio = newDist / pdfState.pinch.startDist;
+    const target = Math.min(1000, Math.max(10, Math.round(pdfState.pinch.startZoom * ratio)));
+    if (Math.abs(target - currentZoom) >= 5) { // update when change significant
+        currentZoom = target;
+        renderPdfAtCurrentZoom();
+    }
+}
+function onPdfTouchEnd(e) {
+    if (e.touches.length < 2) {
+        pdfState.pinch.active = false;
+    }
+}
+function getTouchDistance(t1, t2) { const dx = t2.clientX - t1.clientX; const dy = t2.clientY - t1.clientY; return Math.hypot(dx, dy); }
 
 // Navigate through high-resolution images
 function navigateHighResImage(direction) {
@@ -303,6 +359,7 @@ function navigateHighResImage(direction) {
     if (!isMobileDevice()) {
         resetZoom();
     }
+    resetPdfState();
     
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
@@ -515,8 +572,8 @@ function setCustomZoom(level) {
 
 // Apply zoom transformation
 function applyZoom() {
-    // Skip zoom functionality on mobile devices
-    if (isMobileDevice()) return;
+    // For images we skip zoom on mobile; for PDFs we still re-render (pinch zoom sets currentZoom)
+    if (isMobileDevice() && !pdfState.isActive) return;
     
     const highResImage = document.getElementById('highResImage');
     const img = highResImage.querySelector('img');
@@ -524,7 +581,7 @@ function applyZoom() {
     
     const scale = currentZoom / 100;
     
-    if (img) {
+    if (img && !pdfState.isActive) {
         // Calculate screen-fitted dimensions (100% zoom baseline)
         const containerRect = highResImage.getBoundingClientRect();
         const availableWidth = containerRect.width;
@@ -553,34 +610,21 @@ function applyZoom() {
         img.style.transform = 'none';
     }
     
-    if (canvas) {
-        // For canvas, we need to handle scaling differently
-        // Get the original dimensions that the canvas was rendered at
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
-        
-        // Calculate scale to fit within available space (this is our 100% baseline)
+    if (canvas && pdfState.isActive) {
+        // Re-render PDF at new zoom for crisp vector display
+        renderPdfAtCurrentZoom();
+    } else if (canvas) {
+        // Non-PDF (should not happen) fallback scaling
         const containerRect = highResImage.getBoundingClientRect();
         const availableWidth = containerRect.width;
         const availableHeight = containerRect.height;
-        
-        const baseScaleX = availableWidth / canvasWidth;
-        const baseScaleY = availableHeight / canvasHeight;
+        const baseScaleX = availableWidth / canvas.width;
+        const baseScaleY = availableHeight / canvas.height;
         const baseScale = Math.min(baseScaleX, baseScaleY);
-        
-        // Calculate the baseline fitted dimensions (100% zoom)
-        const baseFittedWidth = canvasWidth * baseScale;
-        const baseFittedHeight = canvasHeight * baseScale;
-        
-        // Apply the zoom scale to the baseline fitted dimensions
-        const finalWidth = baseFittedWidth * scale;
-        const finalHeight = baseFittedHeight * scale;
-        
+        const finalWidth = canvas.width * baseScale * scale;
+        const finalHeight = canvas.height * baseScale * scale;
         canvas.style.width = finalWidth + 'px';
         canvas.style.height = finalHeight + 'px';
-        canvas.style.maxWidth = 'none';
-        canvas.style.maxHeight = 'none';
-        canvas.style.transform = 'none';
     }
 }
 
