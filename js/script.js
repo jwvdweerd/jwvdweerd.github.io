@@ -762,9 +762,8 @@ function renderInfoMarkdown(raw) {
 function initializeDragging() {
     // Skip dragging functionality on mobile devices
     if (isMobileDevice()) return;
-    
     const highResImage = document.getElementById('highResImage');
-    
+    if (!highResImage) return; // Not present on pages without the high-res modal structure
     highResImage.addEventListener('mousedown', startDragging);
     highResImage.addEventListener('mouseleave', stopDragging);
     highResImage.addEventListener('mouseup', stopDragging);

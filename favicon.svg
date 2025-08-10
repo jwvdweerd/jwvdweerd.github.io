@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="jw">
+  <!-- Anthracite background -->
+  <rect width="64" height="64" rx="10" fill="#26292B"/>
+  <!-- Text: 'jw' in orange small caps style -->
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="600"
+        fill="#ff8c00" style="font-variant: small-caps; letter-spacing:1px;">jw</text>
+</svg>
