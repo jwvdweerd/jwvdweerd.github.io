@@ -301,6 +301,7 @@ body.modal-open {
     text-align: justify; /* Justify text alignment */
     margin: 0 0 1rem 0; /* Adjust the margin as needed */
     word-break: break-word; /* Ensure long words break properly */
+    font-size: small;
 }
 
 .modal-content {
@@ -649,3 +650,4 @@ button:hover {
         object-fit: contain;
     }
 }
+
