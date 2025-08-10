@@ -410,18 +410,38 @@ function filterAlbums() {
     });
 }
 
-window.addEventListener('load', function() {
-    // Get all image-box elements
+// Ensure caption width matches corresponding image width (especially on mobile where container is wider)
+function setCaptionWidths() {
     const imageBoxes = document.querySelectorAll('.image-box');
-
     imageBoxes.forEach(box => {
-        // Get the image and caption elements
         const image = box.querySelector('.image');
         const caption = box.querySelector('.caption');
-
-        // Set the caption width to match the image width
-        caption.style.width = `${image.clientWidth}px`;
+        if (!image || !caption) return;
+        // Use clientWidth (after layout). Guard against 0 (not yet rendered) by retrying on next frame
+        const w = image.clientWidth;
+        if (w === 0) {
+            requestAnimationFrame(() => setCaptionWidths());
+            return;
+        }
+        caption.style.width = w + 'px';
     });
+}
+
+// Initial set after full load (all images, including lazy if already in viewport)
+window.addEventListener('load', setCaptionWidths);
+
+// Recalculate when any tracked image finishes loading (covers late lazy loads)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.image-box .image').forEach(img => {
+        img.addEventListener('load', setCaptionWidths, { once: true });
+    });
+});
+
+// Debounced resize/orientation handling
+let captionResizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(captionResizeTimeout);
+    captionResizeTimeout = setTimeout(setCaptionWidths, 120);
 });
 
 // Zoom functionality variables
