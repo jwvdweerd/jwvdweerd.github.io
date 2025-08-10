@@ -4,6 +4,11 @@ document.getElementById('contactForm').addEventListener('submit', function(event
 
     const form = event.target;
     const formData = new FormData(form);
+    // Honeypot check
+    if (formData.get('company')) {
+        document.getElementById('formResponse').textContent = 'Submission blocked.';
+        return;
+    }
 
     // Replace 'your-formspree-endpoint' with your actual Formspree endpoint
     fetch('https://formspree.io/f/xkggjlyo', {

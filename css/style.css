@@ -6,11 +6,16 @@ body {
 }
 
 .pdf-thumbnail {
-    width: 150px;
-    height: 200px;
+    width: 120px;
+    height: 80px;
     overflow: hidden;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    background:#eee;
+    border:1px solid #ccc;
+    font-weight:600;
 }
 
 .container {
@@ -507,13 +512,9 @@ button:hover {
     transform: translateY(-50%) scale(1.1);
 }
 
-#prevImage {
-    left: 10px;
-}
-
-#nextImage {
-    right: 10px;
-}
+#prevImage { left: 10px; }
+#nextImage { right: 10px; }
+#prevImage:focus-visible, #nextImage:focus-visible, .zoom-btn:focus-visible, .pdf-thumbnail:focus-visible { outline:3px solid #ff8c00; outline-offset:2px; }
 
 /* Zoom Controls */
 .zoom-controls {

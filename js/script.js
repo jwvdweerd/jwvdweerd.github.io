@@ -4,14 +4,34 @@ let highResImages = []; // Store the list of high-resolution images
 
 // Fetch and display records
 document.addEventListener("DOMContentLoaded", function() {
+    const collectionGrid = document.getElementById('collection-grid');
+    if (!collectionGrid) return; // Only run on collection page
+    const statusEl = document.createElement('div');
+    statusEl.id = 'collection-status';
+    statusEl.setAttribute('role','status');
+    statusEl.style.margin = '1rem 0';
+    statusEl.textContent = 'Laden...';
+    collectionGrid.parentNode.insertBefore(statusEl, collectionGrid);
+
     fetch('records.json')
-        .then(response => response.json())
+        .then(response => {
+            if(!response.ok) throw new Error('Netwerkfout');
+            return response.json();
+        })
         .then(data => {
-            const collectionGrid = document.getElementById('collection-grid');
+            if (!Array.isArray(data) || data.length === 0) {
+                statusEl.textContent = 'Geen projecten gevonden.';
+                return;
+            }
+            statusEl.textContent = '';
             data.forEach(record => {
                 const recordDiv = document.createElement('div');
                 recordDiv.className = 'record';
-                recordDiv.setAttribute('onclick', 'openModal(this)');
+                recordDiv.tabIndex = 0;
+                recordDiv.setAttribute('role','button');
+                recordDiv.setAttribute('aria-label', `Project: ${record.title}. Klik voor details.`);
+                recordDiv.addEventListener('click', () => openModal(recordDiv));
+                recordDiv.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(recordDiv);} });
                 recordDiv.setAttribute('data-title', record.title);
                 recordDiv.setAttribute('data-artist', record.artist);
                 recordDiv.setAttribute('data-year', record.year);
@@ -20,23 +40,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-thumbnails', JSON.stringify(record.thumbnails));
                 recordDiv.setAttribute('data-highres', JSON.stringify(record.highres));
                 recordDiv.setAttribute('data-info', record.info);
-                recordDiv.setAttribute('data-release', record.release); // Add release data attribute
+                recordDiv.setAttribute('data-release', record.release);
 
+                const safeTitle = record.title.replace(/&/g, '&amp;');
                 recordDiv.innerHTML = `
-                    <img src="${record.cover}" alt="${record.title} Cover" class="album-cover">
+                    <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
                     <div class="info">
-                        <h3 class="data-title">${record.title}</h3>
+                        <h3 class="data-title">${safeTitle}</h3>
                         <p><strong>Artist:</strong> <span class="data-artist">${record.artist.replace(/&/g, '&<br>')}</span></p>
                         <p><strong>Year:</strong> <span class="data-year">${record.year}</span></p>
                         <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
                         <p><strong>Record Label:</strong> <span class="data-label">${record.label}</span></p>
-                        <p><strong>Release:</strong> <span class="data-release">Click for details</span></p>
-                    </div>
-                `;
+                        <p><strong>Release:</strong> <span class="data-release">Klik voor details</span></p>
+                    </div>`;
                 collectionGrid.appendChild(recordDiv);
             });
         })
-        .catch(error => console.error('Error fetching records:', error));
+        .catch(error => {
+            console.error('Error fetching records:', error);
+            statusEl.textContent = 'Kon projecten niet laden.';
+        });
 });
 
 // Open modal function for album details
@@ -66,17 +89,21 @@ function openModal(record) {
     // Add the thumbnails
     thumbnails.forEach((thumbnail, index) => {
         if (thumbnail.endsWith('.pdf')) {
-            content += `<div class="pdf-thumbnail" onclick="openHighResImage(${index})">
-                            <img src="path/to/pdf-icon.png" alt="PDF Thumbnail"> <!-- Placeholder for PDF icon -->
-                        </div>`;
+            content += `<button class="pdf-thumbnail" aria-label="Open PDF ${index + 1}" onclick="openHighResImage(${index})">
+                            <span style="display:block;font-size:12px;">PDF</span>
+                        </button>`;
         } else {
-            content += `<img src="${thumbnail}" alt="${title} Thumbnail ${index + 1}" class="thumbnail" onclick="openHighResImage(${index})">`;
+            content += `<img src="${thumbnail}" alt="${title} miniatuur ${index + 1}" class="thumbnail" loading="lazy" onclick="openHighResImage(${index})">`;
         }
     });
 
+    let releaseMarkup = '';
+    if (release && release !== '.' && release !== '#') {
+        releaseMarkup = `<p class="modal-content-p"><strong>Externe info:</strong> <a href="${release}" target="_blank" rel="noopener">Link</a></p>`;
+    }
     content += `</div>
-        <p class="modal-content-p"><strong><br>Project info: </strong>${info}</p>
-        <p class="modal-content-p"><strong>Externe info:</strong> <a href="${release}" target="_blank">Link</a></p>`;
+        <p class="modal-content-p"><strong><br>Project info: </strong>${info || ''}</p>
+        ${releaseMarkup}`;
 
     modalBody.innerHTML = content;
 }
@@ -373,9 +400,9 @@ function filterAlbums() {
         const artist = record.getAttribute('data-artist').toLowerCase();
         const year = record.getAttribute('data-year').toLowerCase();
         const genre = record.getAttribute('data-genre').toLowerCase();
-        const label = record.getAttribute('data-label').toLowerCase();
-
-        if (title.includes(filter) || artist.includes(filter) || year.includes(filter) || genre.includes(filter) || label.includes(filter)) {
+    const label = record.getAttribute('data-label').toLowerCase();
+    const info = record.getAttribute('data-info')?.toLowerCase() || '';
+    if (title.includes(filter) || artist.includes(filter) || year.includes(filter) || genre.includes(filter) || label.includes(filter) || info.includes(filter)) {
             record.style.display = '';
         } else {
             record.style.display = 'none';
