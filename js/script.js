@@ -1,6 +1,7 @@
 let isMainModalOpen = false; // Track if the main modal is open
 let currentHighResIndex = 0; // Track the current high-resolution image index
 let highResImages = []; // Store the list of high-resolution images
+let lastFocusedElement = null; // For returning focus after closing modal
 // PDF rendering state (for high quality vector-based re-rendering on zoom)
 const pdfState = {
     doc: null,
@@ -81,6 +82,7 @@ function openModal(record) {
     modal.style.display = 'block';
     document.body.classList.add('modal-open');
     isMainModalOpen = true; // Set the flag to true
+    lastFocusedElement = document.activeElement;
 
     // Get the data for the selected album
     const title = record.getAttribute('data-title');
@@ -93,31 +95,89 @@ function openModal(record) {
     const info = record.getAttribute('data-info');
     const release = record.getAttribute('data-release'); // Get the release URL
 
-    // Generate the content for the modal
-    let content = `
-        <h2>${title}</h2>
-        <div class="thumbnails">`;
+    // Clear previous
+    modalBody.innerHTML = '';
 
-    // Add the thumbnails
+    // Build header (focus target)
+    const heading = document.createElement('h2');
+    heading.textContent = title;
+    heading.tabIndex = -1; // allow programmatic focus
+    modalBody.appendChild(heading);
+
+    // Thumbnails container
+    const thumbWrapper = document.createElement('div');
+    thumbWrapper.className = 'thumbnails';
     thumbnails.forEach((thumbnail, index) => {
         if (thumbnail.endsWith('.pdf')) {
-            content += `<button class="pdf-thumbnail" aria-label="Open PDF ${index + 1}" onclick="openHighResImage(${index})">
-                            <span style="display:block;font-size:12px;">PDF</span>
-                        </button>`;
+            const btn = document.createElement('button');
+            btn.className = 'pdf-thumbnail';
+            btn.setAttribute('aria-label', `Open PDF ${index + 1}`);
+            btn.addEventListener('click', () => openHighResImage(index));
+            const span = document.createElement('span');
+            span.style.display = 'block';
+            span.style.fontSize = '12px';
+            span.textContent = 'PDF';
+            btn.appendChild(span);
+            thumbWrapper.appendChild(btn);
         } else {
-            content += `<img src="${thumbnail}" alt="${title} miniatuur ${index + 1}" class="thumbnail" loading="lazy" onclick="openHighResImage(${index})">`;
+            const img = document.createElement('img');
+            img.src = thumbnail;
+            img.alt = `${title} miniatuur ${index + 1}`;
+            img.className = 'thumbnail';
+            img.loading = 'lazy';
+            img.addEventListener('click', () => openHighResImage(index));
+            thumbWrapper.appendChild(img);
         }
     });
+    modalBody.appendChild(thumbWrapper);
 
-    let releaseMarkup = '';
-    if (release && release !== '.' && release !== '#') {
-        releaseMarkup = `<p class="modal-content-p"><strong>Externe info:</strong> <a href="${release}" target="_blank" rel="noopener">Link</a></p>`;
+    // Details heading
+    const detailsHeading = document.createElement('h3');
+    detailsHeading.textContent = 'Details';
+    modalBody.appendChild(detailsHeading);
+
+    // Info paragraph (with markdown -> sanitized HTML) if not placeholder
+    const isPlaceholder = !info || /^(\.|\.\.|\.\.\.|\s*)$/.test(info.trim());
+    let infoId = null;
+    if (!isPlaceholder) {
+        infoId = 'project-info-' + Math.random().toString(36).slice(2, 9);
+        const infoPara = document.createElement('p');
+        infoPara.className = 'modal-content-p';
+        infoPara.id = infoId;
+        const strongLabel = document.createElement('strong');
+        strongLabel.textContent = 'Project info: ';
+        infoPara.appendChild(strongLabel);
+        const spanWrapper = document.createElement('span');
+        spanWrapper.innerHTML = renderInfoMarkdown(info); // sanitized inline HTML
+        infoPara.appendChild(spanWrapper);
+        modalBody.appendChild(infoPara);
     }
-    content += `</div>
-        <p class="modal-content-p"><strong><br>Project info: </strong>${info || ''}</p>
-        ${releaseMarkup}`;
 
-    modalBody.innerHTML = content;
+    // External link
+    if (release && release !== '.' && release !== '..' && release !== '#') {
+        const linkPara = document.createElement('p');
+        linkPara.className = 'modal-content-p';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Externe info: ';
+        linkPara.appendChild(strong);
+        const a = document.createElement('a');
+        a.href = release;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = 'Link';
+        linkPara.appendChild(a);
+        modalBody.appendChild(linkPara);
+    }
+
+    // aria-describedby for modal content (if info present)
+    if (infoId) {
+        modalBody.setAttribute('aria-describedby', infoId);
+    } else {
+        modalBody.removeAttribute('aria-describedby');
+    }
+
+    // Focus the heading for accessibility
+    setTimeout(() => heading.focus(), 0);
 }
 
 // Helper function to create a properly sized image that fits the screen
@@ -385,8 +445,15 @@ function closeModal(modalId) {
     } else if (modalId === 'modal') {
         isMainModalOpen = false; // Reset the flag when closing the main modal
         document.body.classList.remove('modal-open');
+        // Restore focus to previously focused element if still in DOM
+        if (lastFocusedElement && document.contains(lastFocusedElement)) {
+            lastFocusedElement.focus();
+        }
     } else if (modalId === 'highResModal' && !isMainModalOpen) {
         document.body.classList.remove('modal-open');
+        if (lastFocusedElement && document.contains(lastFocusedElement)) {
+            lastFocusedElement.focus();
+        }
     }
 }
 
@@ -437,11 +504,28 @@ document.addEventListener('keydown', function(event) {
                 modal.style.display = 'block';
             } else {
                 document.body.classList.remove('modal-open');
+                if (lastFocusedElement && document.contains(lastFocusedElement)) lastFocusedElement.focus();
             }
         } else {
             modal.style.display = 'none';
             isMainModalOpen = false;
             document.body.classList.remove('modal-open');
+            if (lastFocusedElement && document.contains(lastFocusedElement)) lastFocusedElement.focus();
+        }
+    }
+    // Basic focus trap when main modal is open and highRes not covering it
+    if (isMainModalOpen && modal.style.display === 'block' && event.key === 'Tab') {
+        const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length) {
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
         }
     }
 });
@@ -651,6 +735,27 @@ function updateZoomSelect() {
 function resetZoom() {
     currentZoom = 100;
     updateZoomSelect();
+}
+
+// --- Info markdown rendering & sanitization ---
+function renderInfoMarkdown(raw) {
+    if (!raw) return '';
+    // Escape HTML special chars first
+    let text = raw.replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;');
+    // Convert line breaks (double newline to paragraph separation handled later)
+    text = text.replace(/\r\n?/g, '\n');
+    // Basic link syntax [text](http(s)://...)
+    text = text.replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    // Bold **text**
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Italic *text*
+    text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    // Split paragraphs on blank lines
+    const paragraphs = text.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+    if (paragraphs.length === 0) return '';
+    return paragraphs.map(p => `<span>${p.replace(/\n/g, '<br>')}</span>`).join('<br>');
 }
 
 // Add drag functionality for zoomed images (desktop only)
