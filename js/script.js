@@ -2,6 +2,10 @@ let isMainModalOpen = false; // Track if the main modal is open
 let currentHighResIndex = 0; // Track the current high-resolution image index
 let highResImages = []; // Store the list of high-resolution images
 let lastFocusedElement = null; // For returning focus after closing modal
+let currentRecordId = null; // Track current open project id for deep linking
+let generatedSlugCounts = {}; // For ensuring unique fallback slugs
+let pendingHashUpdate = null; // Debounce frame id for hash updates
+let pendingPdfRerender = null; // Debounce frame id for pdf re-render
 // PDF rendering state (for high quality vector-based re-rendering on zoom)
 const pdfState = {
     doc: null,
@@ -45,6 +49,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('aria-label', `Project: ${record.title}. Klik voor details.`);
                 recordDiv.addEventListener('click', () => openModal(recordDiv));
                 recordDiv.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(recordDiv);} });
+                // Ensure we have an id / slug for deep linking
+                let recId = record.id || generateSlug(record.title || 'project');
+                recordDiv.setAttribute('data-id', recId);
                 recordDiv.setAttribute('data-title', record.title);
                 recordDiv.setAttribute('data-artist', record.artist);
                 recordDiv.setAttribute('data-year', record.year);
@@ -68,6 +75,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>`;
                 collectionGrid.appendChild(recordDiv);
             });
+            // After building grid, process deep link (hash) if any
+            processDeepLink();
+            window.addEventListener('hashchange', handleHashChange);
         })
         .catch(error => {
             console.error('Error fetching records:', error);
@@ -83,6 +93,15 @@ function openModal(record) {
     document.body.classList.add('modal-open');
     isMainModalOpen = true; // Set the flag to true
     lastFocusedElement = document.activeElement;
+    currentRecordId = record.getAttribute('data-id') || null;
+    if (currentRecordId) {
+        const raw = decodeURIComponent(location.hash.replace('#',''));
+        const { pid } = parseHash(raw);
+        const desiredHash = '#'+encodeURIComponent(currentRecordId);
+        if (pid !== currentRecordId) {
+            history.replaceState(null,'',desiredHash);
+        }
+    }
 
     // Get the data for the selected album
     const title = record.getAttribute('data-title');
@@ -135,6 +154,22 @@ function openModal(record) {
     const detailsHeading = document.createElement('h3');
     detailsHeading.textContent = 'Details';
     modalBody.appendChild(detailsHeading);
+
+    // Share link button (project level)
+    if (currentRecordId) {
+        const shareWrap = document.createElement('div');
+        shareWrap.style.display = 'flex';
+        shareWrap.style.gap = '0.5rem';
+        shareWrap.style.margin = '0.25rem 0 0.75rem';
+    const copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'share-project-link icon-copy-btn';
+    copyBtn.setAttribute('aria-label','Kopieer projectlink');
+    copyBtn.innerHTML = getCopyIconSVG();
+    copyBtn.addEventListener('click', ()=> copyProjectLink(false, copyBtn));
+        shareWrap.appendChild(copyBtn);
+        modalBody.appendChild(shareWrap);
+    }
 
     // Info paragraph (with markdown -> sanitized HTML) if not placeholder
     const isPlaceholder = !info || /^(\.|\.\.|\.\.\.|\s*)$/.test(info.trim());
@@ -265,6 +300,10 @@ function openHighResImage(index) {
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
     highResModal.style.display = 'block';
+    // ARIA semantics for accessibility
+    highResModal.setAttribute('role','dialog');
+    highResModal.setAttribute('aria-modal','true');
+    highResModal.setAttribute('aria-label','High resolution viewer');
     document.body.classList.add('modal-open');
     
     // Reset zoom when opening new image (desktop only)
@@ -285,6 +324,13 @@ function openHighResImage(index) {
             highResImage.appendChild(img);
         });
     }
+    // Update hash with image index (#id:index)
+    if (currentRecordId) {
+        const combined = '#'+encodeURIComponent(currentRecordId)+':'+currentHighResIndex;
+        if (location.hash !== combined) scheduleHashUpdate(combined);
+    }
+    ensureHighResShareButton();
+    preloadAdjacentHighRes();
 }
 
 // Render PDF using pdf.js with responsive sizing
@@ -395,7 +441,7 @@ function onPdfTouchMove(e) {
     const target = Math.min(1000, Math.max(10, Math.round(pdfState.pinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 5) { // update when change significant
         currentZoom = target;
-        renderPdfAtCurrentZoom();
+        schedulePdfRerender();
     }
 }
 function onPdfTouchEnd(e) {
@@ -432,6 +478,11 @@ function navigateHighResImage(direction) {
             highResImage.appendChild(img);
         });
     }
+    if (currentRecordId) {
+        const combined = '#'+encodeURIComponent(currentRecordId)+':'+currentHighResIndex;
+        if (location.hash !== combined) scheduleHashUpdate(combined);
+    }
+    preloadAdjacentHighRes();
 }
 
 // Close modal function
@@ -449,6 +500,13 @@ function closeModal(modalId) {
         if (lastFocusedElement && document.contains(lastFocusedElement)) {
             lastFocusedElement.focus();
         }
+        // Clear hash if it references this project
+        const raw = decodeURIComponent(location.hash.replace('#',''));
+        const { pid } = parseHash(raw);
+        if (currentRecordId && pid === currentRecordId) {
+            scheduleHashUpdate(window.location.pathname + window.location.search, true, true);
+        }
+        currentRecordId = null;
     } else if (modalId === 'highResModal' && !isMainModalOpen) {
         document.body.classList.remove('modal-open');
         if (lastFocusedElement && document.contains(lastFocusedElement)) {
@@ -490,6 +548,8 @@ window.onclick = function(event) {
         modal.style.display = 'none';
         isMainModalOpen = false;
         document.body.classList.remove('modal-open');
+
+        
     }
 }
 
@@ -511,6 +571,22 @@ document.addEventListener('keydown', function(event) {
             isMainModalOpen = false;
             document.body.classList.remove('modal-open');
             if (lastFocusedElement && document.contains(lastFocusedElement)) lastFocusedElement.focus();
+            const raw = decodeURIComponent(location.hash.replace('#',''));
+            const { pid } = parseHash(raw);
+            if (currentRecordId && pid === currentRecordId) {
+                scheduleHashUpdate(window.location.pathname + window.location.search, true, true);
+            }
+            currentRecordId = null;
+        }
+    }
+    // Arrow key navigation for high-res viewer
+    if (highResModal && highResModal.style.display === 'block') {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            navigateHighResImage(-1);
+        } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            navigateHighResImage(1);
         }
     }
     // Basic focus trap when main modal is open and highRes not covering it
@@ -695,8 +771,8 @@ function applyZoom() {
     }
     
     if (canvas && pdfState.isActive) {
-        // Re-render PDF at new zoom for crisp vector display
-        renderPdfAtCurrentZoom();
+        // Debounced re-render for performance
+        schedulePdfRerender();
     } else if (canvas) {
         // Non-PDF (should not happen) fallback scaling
         const containerRect = highResImage.getBoundingClientRect();
@@ -839,3 +915,162 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('hybrid-device');
     }
 });
+
+// --- Deep Linking & Share Utilities ---
+function parseHash(raw) {
+    if (!raw) return { pid: null, index: null };
+    const parts = raw.split(':');
+    const pid = parts[0] || null;
+    let index = null;
+    if (parts.length > 1) {
+        const n = parseInt(parts[1],10);
+        if (!isNaN(n) && n >= 0) index = n;
+    }
+    return { pid, index };
+}
+function processDeepLink() {
+    const raw = decodeURIComponent(location.hash || '').replace('#','');
+    if (!raw) return;
+    const { pid, index } = parseHash(raw);
+    if (!pid) return;
+    const target = document.querySelector('.record[data-id="'+CSS.escape(pid)+'"]');
+    if (target) {
+        openModal(target);
+        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) openHighResImage(index); }, 30);
+        dispatchProjectOpen(pid, index);
+    }
+}
+function handleHashChange() {
+    const raw = decodeURIComponent(location.hash || '').replace('#','');
+    if (!raw) {
+        if (isMainModalOpen) closeModal('modal');
+        return;
+    }
+    const { pid, index } = parseHash(raw);
+    if (!pid) return;
+    if (currentRecordId === pid) {
+        if (typeof index === 'number' && highResImages[index]) openHighResImage(index);
+        return;
+    }
+    const target = document.querySelector('.record[data-id="'+CSS.escape(pid)+'"]');
+    if (target) {
+        if (isMainModalOpen) closeModal('modal');
+        openModal(target);
+        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) openHighResImage(index); }, 30);
+        dispatchProjectOpen(pid, index);
+    }
+}
+function generateSlug(str) {
+    let base = (str || 'project').toLowerCase().trim()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .replace(/\s+/g,'-')
+        .replace(/-+/g,'-')
+        .replace(/^-|-$/g,'');
+    if (!base) base = 'project';
+    if (generatedSlugCounts[base] == null) generatedSlugCounts[base] = 0; else generatedSlugCounts[base] += 1;
+    const c = generatedSlugCounts[base];
+    return c === 0 ? base : base+'-'+c;
+}
+function copyProjectLink(includeImageIndex, btn) {
+    if (!currentRecordId) return;
+    const base = window.location.origin + window.location.pathname + window.location.search;
+    let hash = '#'+encodeURIComponent(currentRecordId);
+    if (includeImageIndex && typeof currentHighResIndex==='number') hash += ':'+currentHighResIndex;
+    const full = base + hash;
+    let originalHTML;
+    if (btn) {
+        if (!btn.dataset.originalHtml) btn.dataset.originalHtml = btn.innerHTML;
+        originalHTML = btn.dataset.originalHtml;
+    }
+    const feedback = () => {
+        if (btn) {
+            btn.disabled = true; btn.textContent='Gekopieerd!';
+            setTimeout(()=>{ btn.disabled=false; btn.innerHTML=originalHTML; },1600);
+        } else { alert('Link gekopieerd: '+full); }
+    };
+    if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(full).then(feedback).catch(()=>{ fallbackCopy(full); feedback(); });
+    } else { fallbackCopy(full); feedback(); }
+}
+function fallbackCopy(text) {
+    const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.top='-1000px';
+    document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){}; document.body.removeChild(ta);
+}
+function ensureHighResShareButton() {
+    const container = document.getElementById('highResModal');
+    if (!container) return;
+    let btn = container.querySelector('.share-image-link');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.type='button';
+        btn.className='share-image-link icon-copy-btn';
+        btn.setAttribute('aria-label','Kopieer afbeelding link');
+        btn.innerHTML = getCopyIconSVG();
+        Object.assign(btn.style, { position:'absolute', top:'10px', right:'10px', zIndex:'4500'});
+        btn.addEventListener('click', ()=> copyProjectLink(true, btn));
+        container.appendChild(btn);
+    }
+}
+function dispatchProjectOpen(id, imageIndex) {
+    try { window.dispatchEvent(new CustomEvent('projectModalOpen', { detail:{ id, imageIndex } })); } catch(e) {}
+    console.log('[projectModalOpen]', id, imageIndex != null ? imageIndex : '');
+}
+function getCopyIconSVG() {
+    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+}
+
+// ---- Debounced hash updating ----
+function scheduleHashUpdate(target, immediate=false, clear=false) {
+    // target: '#hash' or full path when clear
+    if (immediate) {
+        history.replaceState(null,'',target);
+        return;
+    }
+    if (pendingHashUpdate) cancelAnimationFrame(pendingHashUpdate);
+    pendingHashUpdate = requestAnimationFrame(()=>{
+        history.replaceState(null,'',target);
+        pendingHashUpdate = null;
+    });
+}
+
+// ---- Debounced PDF re-rendering ----
+function schedulePdfRerender() {
+    if (!pdfState.isActive) return;
+    if (pendingPdfRerender) cancelAnimationFrame(pendingPdfRerender);
+    pendingPdfRerender = requestAnimationFrame(()=>{
+        pendingPdfRerender = null;
+        renderPdfAtCurrentZoom();
+    });
+}
+
+// ---- Preload adjacent images for smoother navigation ----
+function preloadAdjacentHighRes() {
+    if (!highResImages || !highResImages.length) return;
+    if (highResImages.length < 2) return; // nothing to preload
+    const nextIndex = (currentHighResIndex + 1) % highResImages.length;
+    const prevIndex = (currentHighResIndex - 1 + highResImages.length) % highResImages.length;
+    [nextIndex, prevIndex].forEach(i => {
+        const src = highResImages[i];
+        if (!src || src.endsWith('.pdf')) return; // skip PDFs
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = src;
+    });
+}
+
+// ---- Live region for copy status ----
+function ensureLiveRegion() {
+    if (!document.getElementById('copy-status-live')) {
+        const live = document.createElement('div');
+        live.id = 'copy-status-live';
+        live.className = 'visually-hidden';
+        live.setAttribute('role','status');
+        live.setAttribute('aria-live','polite');
+        document.body.appendChild(live);
+    }
+}
+function announceCopySuccess(withImage) {
+    ensureLiveRegion();
+    const live = document.getElementById('copy-status-live');
+    if (live) live.textContent = withImage ? 'Afbeeldingslink gekopieerd' : 'Projectlink gekopieerd';
+}
