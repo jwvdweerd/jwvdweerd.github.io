@@ -66,8 +66,21 @@
         "genre": "..",
         "label": "Atelier A architecten",
         "cover": "resources/744/Stedenbouw/deelplan 1B Z-10.jpg",
-        "thumbnails": ["resources/744/Stedenbouw/deelplan 1B Z-10.jpg","resources/744/Stedenbouw/H1 situatie-10-R.jpg","resources/744/Stedenbouw/sat-10.png","resources/744/Stedenbouw/B0000166.jpg","resources/744/Stedenbouw/B0000167.jpg","resources/744/Stedenbouw/B0000217.jpg"],
-        "highres": ["resources/744/Stedenbouw/deelplan 1B Z-80.jpg","resources/744/Stedenbouw/H1 situatie-70-R.jpg","resources/744/Stedenbouw/sat-50.png","resources/744/Stedenbouw/B0000166.jpg","resources/744/Stedenbouw/B0000167.jpg","resources/744/Stedenbouw/B0000217.jpg"],
+        "thumbnails": [
+            "resources/744/Stedenbouw/deelplan 1b E7-E8_M5 kleur-20.jpg",
+            "resources/744/Stedenbouw/H1 situatie-10-R.jpg",
+            "resources/744/Stedenbouw/sat-10.png",
+            "resources/744/Stedenbouw/B0000166.jpg",
+            "resources/744/Stedenbouw/B0000167.jpg",
+            "resources/744/Stedenbouw/B0000217.jpg"
+        ],
+        "highres": [
+            "resources/744/Stedenbouw/deelplan 1b E7-E8_M5 kleur.jpg",
+            "resources/744/Stedenbouw/H1 situatie-70-R.jpg",
+            "resources/744/Stedenbouw/sat-50.png",
+            "resources/744/Stedenbouw/B0000166.jpg",
+            "resources/744/Stedenbouw/B0000167.jpg",
+            "resources/744/Stedenbouw/B0000217.jpg"],
         "info": "\n \nDit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sector), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.",
         "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
     },
