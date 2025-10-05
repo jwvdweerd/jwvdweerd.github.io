@@ -64,11 +64,11 @@
         "artist": "Herman Haan & Jan van der Weerd",
         "year": "1974",
         "genre": "..",
-        "label": "Atelier aA",
+        "label": "Atelier A architecten",
         "cover": "resources/744/Stedenbouw/deelplan 1B Z-10.jpg",
         "thumbnails": ["resources/744/Stedenbouw/deelplan 1B Z-10.jpg","resources/744/Stedenbouw/H1 situatie-10-R.jpg","resources/744/Stedenbouw/sat-10.png","resources/744/Stedenbouw/B0000166.jpg","resources/744/Stedenbouw/B0000167.jpg","resources/744/Stedenbouw/B0000217.jpg"],
         "highres": ["resources/744/Stedenbouw/deelplan 1B Z-80.jpg","resources/744/Stedenbouw/H1 situatie-70-R.jpg","resources/744/Stedenbouw/sat-50.png","resources/744/Stedenbouw/B0000166.jpg","resources/744/Stedenbouw/B0000167.jpg","resources/744/Stedenbouw/B0000217.jpg"],
-        "info": "\n \nDit projekt betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sektor), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.",
+        "info": "\n \nDit projekt betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sektor), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.",
         "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
     },
     {
@@ -77,7 +77,7 @@
         "artist": "Herman Haan & Jan van der Weerd",
         "year": "1974",
         "genre": "..",
-        "label": "Atelier aA",
+        "label": "Atelier A architecten",
         "cover": "resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg",
         "thumbnails": ["resources/744/H1-Hoogbouw/01-H1 situatie-10.jpg","resources/744/H1-Hoogbouw/02-H1 doorsneden Z-10.jpg","resources/744/H1-Hoogbouw/03-H1 verd 0-1-10.jpg","resources/744/H1-Hoogbouw/04-H1 verd 2-3-10.jpg","resources/744/H1-Hoogbouw/05-H1 verd 4-5-10.jpg","resources/744/H1-Hoogbouw/06-H1 verd 6-9-10.jpg","resources/744/H1-Hoogbouw/07-H1 sauna-zwembad Z-10.jpg","resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg","resources/744/H1-Hoogbouw/09-B0000207-70.jpg","resources/744/H1-Hoogbouw/10-B0000208-70.jpg","resources/744/H1-Hoogbouw/11-B0000210-70.jpg","resources/744/H1-Hoogbouw/12-bw1-10.jpg","resources/744/H1-Hoogbouw/13-bw2-10.jpg","resources/744/H1-Hoogbouw/14-birdeye1-10.jpg","resources/744/H1-Hoogbouw/15-B0000000-70.jpg","resources/744/H1-Hoogbouw/16-B0000058-70.jpg","resources/744/H1-Hoogbouw/17-B0000162-70.jpg","resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],
         "highres": [
@@ -155,6 +155,7 @@
         "release": "https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/"
     }    
 ]
+
 
 
 
