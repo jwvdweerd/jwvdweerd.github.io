@@ -72,6 +72,45 @@
         "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
     },
     {
+        "id": "744-patiowoningen",
+        "title": "Sterrenburg 3, Dordrecht - E7 Patiowoningen",
+        "artist": "Herman Haan & Jan van der Weerd",
+        "year": "1974",
+        "genre": "..",
+        "label": "Atelier A architecten",
+        "cover": "resources/744/E7-patiowoningen/E7 perspectief vogelvl-20.jpg",
+        "thumbnails": [
+            "resources/744/E7-patiowoningen/E7 perspectief vogelvl-20.jpg",
+            "resources/744/E7-patiowoningen/E7 perspectief.jpg",
+            "resources/744/E7-patiowoningen/E7 gevels.jpg",
+            "resources/744/E7-patiowoningen/E7 isometrie Z-20.jpg",
+            "resources/744/E7-patiowoningen/E7 ovz woningtypen-2 Z-20.jpg",
+            "resources/744/E7-patiowoningen/B0000211.jpg",
+            "resources/744/E7-patiowoningen/E7 keuzenkamp012-20.jpg",
+            "resources/744/E7-patiowoningen/B0000100.jpg",
+            "resources/744/E7-patiowoningen/B0000104.jpg",
+            "resources/744/E7-patiowoningen/B0000106.jpg",
+            "resources/744/E7-patiowoningen/B0000108.jpg",
+            "resources/744/E7-patiowoningen/B0000168.jpg"
+        ],
+        "highres": [
+            "resources/744/E7-patiowoningen/E7 perspectief vogelvl.jpg",
+            "resources/744/E7-patiowoningen/E7 perspectief.jpg",
+            "resources/744/E7-patiowoningen/E7 gevels.jpg",
+            "resources/744/E7-patiowoningen/E7 isometrie Z.jpg",
+            "resources/744/E7-patiowoningen/E7 ovz woningtypen-2 Z.jpg",
+            "resources/744/E7-patiowoningen/B0000211.jpg",
+            "resources/744/E7-patiowoningen/E7 keuzenkamp012.jpg",
+            "resources/744/E7-patiowoningen/B0000100.jpg",
+            "resources/744/E7-patiowoningen/B0000104.jpg",
+            "resources/744/E7-patiowoningen/B0000106.jpg",
+            "resources/744/E7-patiowoningen/B0000108.jpg",
+            "resources/744/E7-patiowoningen/B0000168.jpg"
+        ],
+        "info": "",
+        "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
+    },
+    {
         "id": "744-hoogbouw",
         "title": "Sterrenburg 3, Dordrecht - H1 Hoogbouw",
         "artist": "Herman Haan & Jan van der Weerd",
