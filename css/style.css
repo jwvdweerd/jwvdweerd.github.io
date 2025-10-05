@@ -420,6 +420,26 @@ body.modal-open {
     transition: all 0.3s ease;
 }
 
+/* Position the high-res share button to the LEFT of the close button */
+#highResModal .share-image-link {
+    position: fixed; /* match the close button so they align on scroll */
+    top: 15px;      /* align vertically with close button (desktop) */
+    /* Place it to the left: close button right(15px) + width(40px) + gap(10px) = 65px */
+    right: 65px;
+    z-index: 4100;  /* slightly above close so it is always clickable */
+}
+
+@media (max-width: 768px) {
+    /* Mobile alignment mirrors the mobile close button sizing */
+    #highResModal .share-image-link {
+        top: 20px;   /* mobile close top */
+        /* close right(20px) + width(44px) + gap(10px) = 74px */
+        right: 74px;
+        width: 44px; /* ensure same hit target size */
+        height: 44px;
+    }
+}
+
 .close:hover,
 .close:focus {
     color: #000;

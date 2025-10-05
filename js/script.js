@@ -1006,7 +1006,8 @@ function ensureHighResShareButton() {
         btn.className='share-image-link icon-copy-btn';
         btn.setAttribute('aria-label','Kopieer afbeelding link');
         btn.innerHTML = getCopyIconSVG();
-        Object.assign(btn.style, { position:'absolute', top:'10px', right:'10px', zIndex:'4500'});
+        // Positioning now handled purely in CSS so it can sit to the left of the existing close button.
+        // (Removed previous inline absolute positioning to avoid overlap.)
         btn.addEventListener('click', ()=> copyProjectLink(true, btn));
         container.appendChild(btn);
     }
