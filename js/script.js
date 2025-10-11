@@ -306,9 +306,12 @@ function openHighResImage(index) {
     highResModal.setAttribute('aria-label','High resolution viewer');
     document.body.classList.add('modal-open');
     
-    // Reset zoom when opening new image (desktop only)
+    // Reset zoom when opening new image
     if (!isMobileDevice()) {
         resetZoom();
+    } else {
+        // On mobile, ensure initial zoom is baseline fit (100%) prior to any restore
+        currentZoom = 100;
     }
     // Reset image pinch state
     imagePinch.active = false;
@@ -478,7 +481,8 @@ function onPdfTouchMove(e) {
     }
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / pdfState.pinch.startDist;
-    const target = Math.min(1000, Math.max(10, Math.round(pdfState.pinch.startZoom * ratio)));
+    const minZoom = isMobileDevice() ? 100 : 10;
+    const target = Math.min(1000, Math.max(minZoom, Math.round(pdfState.pinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 5) { // update when change significant
         currentZoom = target;
         schedulePdfRerender();
@@ -504,14 +508,19 @@ function navigateHighResImage(direction) {
     }
     const highResImage = document.getElementById('highResImage');
     
-    // Reset zoom when navigating to new image (desktop only)
+    // Reset zoom when navigating to new image
     if (!isMobileDevice()) {
         resetZoom();
+    } else {
+        // On mobile, ensure initial zoom is baseline fit (100%) prior to any restore
+        currentZoom = 100;
     }
     resetPdfState();
     
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
+        // After PDF render kicks off, attempt to restore zoom shortly after
+        setTimeout(restoreZoomForCurrentItemIfAny, 0);
     } else {
         // Clear container first
         highResImage.innerHTML = '';
@@ -519,6 +528,7 @@ function navigateHighResImage(direction) {
         // Create and add screen-fitted image
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
+            restoreZoomForCurrentItemIfAny();
         });
     }
     if (currentRecordId) {
@@ -1021,7 +1031,8 @@ function onImageTouchMove(e) {
     }
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / imagePinch.startDist;
-    const target = Math.min(1000, Math.max(10, Math.round(imagePinch.startZoom * ratio)));
+    const minZoom = isMobileDevice() ? 100 : 10;
+    const target = Math.min(1000, Math.max(minZoom, Math.round(imagePinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 3) {
         currentZoom = target;
         applyZoom();
@@ -1247,13 +1258,53 @@ function onDoubleTapToggleZoom(e) {
     const dy = Math.abs(cy - lastTapY);
     if (dt < 300 && dx < 30 && dy < 30) {
         if (e.cancelable) e.preventDefault();
-        currentZoom = (currentZoom <= 100) ? 200 : 100;
+        // Determine target zoom (toggle 100% <-> 200%)
+        const prev = currentZoom;
+        const target = (currentZoom <= 100) ? 200 : 100;
+        const container = document.getElementById('highResImage');
+        const rect = container ? container.getBoundingClientRect() : null;
+        const containerX = rect ? (cx - rect.left) : 0;
+        const containerY = rect ? (cy - rect.top) : 0;
         if (pdfState.isActive) {
+            // Use the existing PDF focal-point adjustment by priming pinch state
+            const canvas = container ? container.querySelector('canvas') : null;
+            if (canvas && container) {
+                const contentLeft = canvas.offsetLeft;
+                const contentTop = canvas.offsetTop;
+                pdfState.pinch.prevZoom = prev;
+                pdfState.pinch.containerX = containerX;
+                pdfState.pinch.containerY = containerY;
+                pdfState.pinch.contentX = (container.scrollLeft + containerX) - contentLeft;
+                pdfState.pinch.contentY = (container.scrollTop + containerY) - contentTop;
+            }
+            currentZoom = target;
             schedulePdfRerender();
         } else {
-            imagePinch.active = true;
-            applyZoom();
-            imagePinch.active = false;
+            // Image case: compute focal adjustment immediately after applying zoom
+            const img = container ? container.querySelector('img') : null;
+            if (img && container) {
+                const contentLeft = img.offsetLeft;
+                const contentTop = img.offsetTop;
+                const contentX = (container.scrollLeft + containerX) - contentLeft;
+                const contentY = (container.scrollTop + containerY) - contentTop;
+                currentZoom = target;
+                imagePinch.active = true; // allow applyZoom on mobile
+                applyZoom();
+                imagePinch.active = false;
+                const scaleRatio = currentZoom / (prev || currentZoom);
+                const newContentX = contentX * scaleRatio;
+                const newContentY = contentY * scaleRatio;
+                const imgLeft = img.offsetLeft;
+                const imgTop = img.offsetTop;
+                container.scrollLeft = Math.max(0, Math.round(imgLeft + newContentX - containerX));
+                container.scrollTop  = Math.max(0, Math.round(imgTop  + newContentY - containerY));
+            } else {
+                // Fallback: just set zoom
+                currentZoom = target;
+                imagePinch.active = true;
+                applyZoom();
+                imagePinch.active = false;
+            }
         }
         showZoomIndicator();
     }
@@ -1275,7 +1326,7 @@ function restoreZoomForCurrentItemIfAny() {
     if (!key) return;
     const z = zoomMemory[key];
     if (typeof z === 'number' && z >= 10 && z <= 1000) {
-        currentZoom = z;
+        currentZoom = Math.max(100, z);
         if (pdfState.isActive) {
             schedulePdfRerender();
         } else {
