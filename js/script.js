@@ -428,9 +428,14 @@ function attachPdfPinchHandlers() {
 function onPdfTouchStart(e) {
     if (!pdfState.isActive) return;
     if (e.touches.length === 2) {
+        // Prevent browser default pinch-zoom to keep interaction within the canvas
+        e.preventDefault();
         pdfState.pinch.active = true;
         pdfState.pinch.startDist = getTouchDistance(e.touches[0], e.touches[1]);
         pdfState.pinch.startZoom = currentZoom;
+        // Add a temporary class to disable UA pinch-zoom while our gesture is active
+        const container = document.getElementById('highResImage');
+        if (container) container.classList.add('pinching');
     }
 }
 function onPdfTouchMove(e) {
@@ -447,6 +452,9 @@ function onPdfTouchMove(e) {
 function onPdfTouchEnd(e) {
     if (e.touches.length < 2) {
         pdfState.pinch.active = false;
+        // Re-enable UA gestures after pinch ends
+        const container = document.getElementById('highResImage');
+        if (container) container.classList.remove('pinching');
     }
 }
 function getTouchDistance(t1, t2) { const dx = t2.clientX - t1.clientX; const dy = t2.clientY - t1.clientY; return Math.hypot(dx, dy); }

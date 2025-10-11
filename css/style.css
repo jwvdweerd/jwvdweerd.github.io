@@ -707,10 +707,10 @@ button:hover {
         display: none !important;
     }
     
-    /* Enable native mobile zoom and pan */
+    /* Enable scroll/pan within the viewer on mobile; zoom handled by custom pinch */
     #highResImage {
-        overflow: visible;
-        touch-action: manipulation;
+        overflow: auto; /* allow panning when zoomed */
+        touch-action: pan-x pan-y; /* allow native one-finger scrolling; pinch controlled dynamically */
         width: 100%;
         height: 100%;
         padding: 0;
@@ -740,5 +740,12 @@ button:hover {
         margin: 0;
         object-fit: contain;
     }
+}
+
+/* While an active pinch gesture is detected, disable UA gestures to avoid page zoom conflicts */
+#highResImage.pinching,
+#highResImage.pinching canvas,
+#highResImage.pinching img {
+    touch-action: none !important;
 }
 
