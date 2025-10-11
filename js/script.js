@@ -310,11 +310,15 @@ function openHighResImage(index) {
     if (!isMobileDevice()) {
         resetZoom();
     }
+    // Reset image pinch state
+    imagePinch.active = false;
     // Reset PDF state
     resetPdfState();
     
     if (highResImages[currentHighResIndex].endsWith('.pdf')) {
         renderPDF(highResImages[currentHighResIndex], highResImage);
+        // After initial render, restore per-item zoom if any
+        setTimeout(restoreZoomForCurrentItemIfAny, 0);
     } else {
         // Clear container first
         highResImage.innerHTML = '';
@@ -322,7 +326,9 @@ function openHighResImage(index) {
         // Create and add screen-fitted image
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
+            restoreZoomForCurrentItemIfAny();
         });
+        // On mobile, image pinch zoom is supported via global handlers
     }
     // Update hash with image index (#id:index)
     if (currentRecordId) {
@@ -391,10 +397,7 @@ function renderPdfAtCurrentZoom() {
     canvas.style.margin = 'auto';
     canvas.style.display = 'block';
     canvas.style.transition = 'none';
-    if (isMobileDevice()) {
-        canvas.style.width = '100%';
-        canvas.style.height = 'auto';
-    }
+    // Do not force 100% width/auto height on mobile; the CSS size must reflect the zoomed viewport
     const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
     renderTask.promise.then(() => {
         pdfState.rendering = false;
@@ -666,6 +669,14 @@ window.addEventListener('resize', () => {
 let currentZoom = 100;
 let isDragging = false;
 let startX, startY, scrollLeft, scrollTop;
+// Image pinch state for mobile
+const imagePinch = { active: false, startDist: 0, startZoom: 100 };
+// Per-item zoom memory (session only)
+const zoomMemory = {};
+// Double-tap detection
+let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
+// Zoom indicator timer
+let zoomIndicatorTimeout = null;
 
 // Device detection - distinguishes between mobile/tablet and desktop with optional touch
 function isMobileDevice() {
@@ -698,6 +709,7 @@ function zoomImage(direction) {
     }
     
     applyZoom();
+    showZoomIndicator();
     updateZoomSelect();
 }
 
@@ -715,6 +727,7 @@ function setZoomLevel(level) {
         customInput.style.display = 'none';
         currentZoom = parseInt(level);
         applyZoom();
+        showZoomIndicator();
     }
 }
 
@@ -727,14 +740,15 @@ function setCustomZoom(level) {
     if (zoom >= 10 && zoom <= 1000) {
         currentZoom = zoom;
         applyZoom();
+        showZoomIndicator();
         updateZoomSelect();
     }
 }
 
 // Apply zoom transformation
 function applyZoom() {
-    // For images we skip zoom on mobile; for PDFs we still re-render (pinch zoom sets currentZoom)
-    if (isMobileDevice() && !pdfState.isActive) return;
+    // On mobile, allow zoom for PDFs and for images when an image pinch gesture is active
+    if (isMobileDevice() && !pdfState.isActive && !imagePinch.active) return;
     
     const highResImage = document.getElementById('highResImage');
     const img = highResImage.querySelector('img');
@@ -787,6 +801,8 @@ function applyZoom() {
         canvas.style.width = finalWidth + 'px';
         canvas.style.height = finalHeight + 'px';
     }
+    // Persist zoom per item on mobile
+    if (isMobileDevice()) persistZoomForCurrentItem();
 }
 
 // Update zoom select dropdown
@@ -927,7 +943,50 @@ document.addEventListener('DOMContentLoaded', function() {
         highResBackdrop.addEventListener('click', handleBackdropInteraction, true);
         highResBackdrop.addEventListener('touchend', handleBackdropInteraction, { passive: false });
     }
+
+    // Attach image pinch handlers globally (they act only when an image is shown)
+    const container = document.getElementById('highResImage');
+    if (container && isMobileDevice()) {
+        container.addEventListener('touchstart', onImageTouchStart, { passive: false });
+        container.addEventListener('touchmove', onImageTouchMove, { passive: false });
+        container.addEventListener('touchend', onImageTouchEnd);
+        // Double-tap to toggle zoom on mobile
+        container.addEventListener('touchend', onDoubleTapToggleZoom, { passive: false });
+    }
 });
+
+// Image pinch handlers
+function onImageTouchStart(e) {
+    // Only when an IMG is present and PDF viewer not active
+    if (pdfState.isActive) return;
+    const container = document.getElementById('highResImage');
+    if (!container || !container.querySelector('img')) return;
+    if (e.touches.length === 2) {
+        if (e.cancelable) e.preventDefault();
+        imagePinch.active = true;
+        imagePinch.startDist = getTouchDistance(e.touches[0], e.touches[1]);
+        imagePinch.startZoom = currentZoom;
+        container.classList.add('pinching');
+    }
+}
+function onImageTouchMove(e) {
+    if (!imagePinch.active || e.touches.length !== 2) return;
+    if (e.cancelable) e.preventDefault();
+    const newDist = getTouchDistance(e.touches[0], e.touches[1]);
+    const ratio = newDist / imagePinch.startDist;
+    const target = Math.min(1000, Math.max(10, Math.round(imagePinch.startZoom * ratio)));
+    if (Math.abs(target - currentZoom) >= 3) {
+        currentZoom = target;
+        applyZoom();
+    }
+}
+function onImageTouchEnd(e) {
+    if (e.touches.length < 2) {
+        imagePinch.active = false;
+        const container = document.getElementById('highResImage');
+        if (container) container.classList.remove('pinching');
+    }
+}
 
 // --- Deep Linking & Share Utilities ---
 function parseHash(raw) {
@@ -1087,4 +1146,86 @@ function announceCopySuccess(withImage) {
     ensureLiveRegion();
     const live = document.getElementById('copy-status-live');
     if (live) live.textContent = withImage ? 'Afbeeldingslink gekopieerd' : 'Projectlink gekopieerd';
+}
+
+// ---- Zoom UI helpers (indicator, memory, double-tap) ----
+function ensureZoomIndicator() {
+    const modal = document.getElementById('highResModal');
+    if (!modal) return null;
+    let el = modal.querySelector('#zoom-indicator');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'zoom-indicator';
+        el.setAttribute('aria-hidden', 'true');
+        modal.appendChild(el);
+    }
+    return el;
+}
+function showZoomIndicator() {
+    const el = ensureZoomIndicator();
+    if (!el) return;
+    el.textContent = currentZoom + '%';
+    el.classList.add('visible');
+    if (zoomIndicatorTimeout) cancelAnimationFrame(zoomIndicatorTimeout);
+    const hideAt = performance.now() + 1200;
+    function tick(now){
+        if (now >= hideAt) {
+            el.classList.remove('visible');
+            zoomIndicatorTimeout = null;
+        } else {
+            zoomIndicatorTimeout = requestAnimationFrame(tick);
+        }
+    }
+    zoomIndicatorTimeout = requestAnimationFrame(tick);
+}
+function onDoubleTapToggleZoom(e) {
+    if (!isMobileDevice()) return;
+    if (e.touches && e.touches.length) return;
+    if (pdfState.pinch.active || imagePinch.active) return;
+    const now = performance.now();
+    const cx = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : 0;
+    const cy = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : 0;
+    const dt = now - lastTapTime;
+    const dx = Math.abs(cx - lastTapX);
+    const dy = Math.abs(cy - lastTapY);
+    if (dt < 300 && dx < 30 && dy < 30) {
+        if (e.cancelable) e.preventDefault();
+        currentZoom = (currentZoom <= 100) ? 200 : 100;
+        if (pdfState.isActive) {
+            schedulePdfRerender();
+        } else {
+            imagePinch.active = true;
+            applyZoom();
+            imagePinch.active = false;
+        }
+        showZoomIndicator();
+    }
+    lastTapTime = now; lastTapX = cx; lastTapY = cy;
+}
+function zoomKeyForCurrentItem() {
+    if (currentRecordId != null && typeof currentHighResIndex === 'number') return currentRecordId + ':' + currentHighResIndex;
+    if (highResImages && typeof currentHighResIndex === 'number') return 'url:' + (highResImages[currentHighResIndex] || '');
+    return null;
+}
+function persistZoomForCurrentItem() {
+    const key = zoomKeyForCurrentItem();
+    if (!key) return;
+    zoomMemory[key] = currentZoom;
+}
+function restoreZoomForCurrentItemIfAny() {
+    if (!isMobileDevice()) return;
+    const key = zoomKeyForCurrentItem();
+    if (!key) return;
+    const z = zoomMemory[key];
+    if (typeof z === 'number' && z >= 10 && z <= 1000) {
+        currentZoom = z;
+        if (pdfState.isActive) {
+            schedulePdfRerender();
+        } else {
+            imagePinch.active = true;
+            applyZoom();
+            imagePinch.active = false;
+        }
+        showZoomIndicator();
+    }
 }
