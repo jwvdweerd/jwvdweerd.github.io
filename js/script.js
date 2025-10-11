@@ -523,22 +523,15 @@ function closeModal(modalId) {
     }
 }
 
-// Add touch event listeners to close modal when touching outside the modal content on touch devices
-window.ontouchstart = function(event) {
-    const modal = document.getElementById('modal');
-    const highResModal = document.getElementById('highResModal');
-    if (event.target == highResModal) {
-        highResModal.style.display = 'none';
-        if (isMainModalOpen) {
-            modal.style.display = 'block';
-        } else {
-            document.body.classList.remove('modal-open');
-        }
-    } else if (event.target == modal) {
-        modal.style.display = 'none';
-        isMainModalOpen = false;
-        document.body.classList.remove('modal-open');
-    }
+// Close modals when tapping/clicking the backdrop, without click-through to underlying grid
+function handleBackdropInteraction(e) {
+    // Only act if the backdrop itself was the event target (not clicks inside modal content)
+    if (e.target !== this) return;
+    // Prevent the synthesized click from reaching underlying elements
+    if (e.cancelable) e.preventDefault();
+    e.stopPropagation();
+    const id = this.id === 'highResModal' ? 'highResModal' : 'modal';
+    closeModal(id);
 }
 
 // Close modal when clicking outside the modal content
@@ -921,6 +914,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hybrid-device class for desktop devices with touch capability
     if (!isMobileDevice() && hasTouchCapability()) {
         document.body.classList.add('hybrid-device');
+    }
+
+    // Attach backdrop handlers to prevent click-through on mobile/desktop
+    const modalBackdrop = document.getElementById('modal');
+    const highResBackdrop = document.getElementById('highResModal');
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', handleBackdropInteraction, true);
+        modalBackdrop.addEventListener('touchend', handleBackdropInteraction, { passive: false });
+    }
+    if (highResBackdrop) {
+        highResBackdrop.addEventListener('click', handleBackdropInteraction, true);
+        highResBackdrop.addEventListener('touchend', handleBackdropInteraction, { passive: false });
     }
 });
 
