@@ -16,7 +16,7 @@ const pdfState = {
     canvas: null,
     rendering: false,
     pendingZoom: null,
-    pinch: { active: false, startDist: 0, startZoom: 100 }
+    pinch: { active: false, startDist: 0, startZoom: 100, prevZoom: 100, contentX: 0, contentY: 0, containerX: 0, containerY: 0 }
 };
 
 // Fetch and display records
@@ -401,6 +401,21 @@ function renderPdfAtCurrentZoom() {
     const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
     renderTask.promise.then(() => {
         pdfState.rendering = false;
+        // Adjust scroll to keep pinch center stable
+        try {
+            const container = document.getElementById('highResImage');
+            const canvasEl = pdfState.canvas;
+            const p = pdfState.pinch;
+            if (container && canvasEl && p && (p.containerX || p.containerY)) {
+                const scaleRatio = currentZoom / (p.prevZoom || currentZoom);
+                const newContentX = p.contentX * scaleRatio;
+                const newContentY = p.contentY * scaleRatio;
+                const canvasLeft = canvasEl.offsetLeft;
+                const canvasTop = canvasEl.offsetTop;
+                container.scrollLeft = Math.max(0, Math.round(canvasLeft + newContentX - p.containerX));
+                container.scrollTop  = Math.max(0, Math.round(canvasTop  + newContentY - p.containerY));
+            }
+        } catch(_) {}
         if (pdfState.pendingZoom && pdfState.pendingZoom !== currentZoom) {
             pdfState.pendingZoom = null;
             renderPdfAtCurrentZoom();
@@ -444,6 +459,23 @@ function onPdfTouchStart(e) {
 function onPdfTouchMove(e) {
     if (!pdfState.isActive || !pdfState.pinch.active || e.touches.length !== 2) return;
     e.preventDefault();
+    // Record the focal point within the content before applying zoom
+    const container = document.getElementById('highResImage');
+    const canvas = container ? container.querySelector('canvas') : null;
+    if (container && canvas) {
+        const rect = container.getBoundingClientRect();
+        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const containerX = cx - rect.left;
+        const containerY = cy - rect.top;
+        pdfState.pinch.containerX = containerX;
+        pdfState.pinch.containerY = containerY;
+        const contentLeft = canvas.offsetLeft;
+        const contentTop = canvas.offsetTop;
+        pdfState.pinch.contentX = (container.scrollLeft + containerX) - contentLeft;
+        pdfState.pinch.contentY = (container.scrollTop + containerY) - contentTop;
+        pdfState.pinch.prevZoom = currentZoom;
+    }
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / pdfState.pinch.startDist;
     const target = Math.min(1000, Math.max(10, Math.round(pdfState.pinch.startZoom * ratio)));
@@ -972,12 +1004,37 @@ function onImageTouchStart(e) {
 function onImageTouchMove(e) {
     if (!imagePinch.active || e.touches.length !== 2) return;
     if (e.cancelable) e.preventDefault();
+    const container = document.getElementById('highResImage');
+    const img = container ? container.querySelector('img') : null;
+    // Capture focal point before zoom changes
+    let containerX=0, containerY=0, contentX=0, contentY=0, prev=currentZoom;
+    if (container && img) {
+        const rect = container.getBoundingClientRect();
+        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        containerX = cx - rect.left;
+        containerY = cy - rect.top;
+        const contentLeft = img.offsetLeft;
+        const contentTop = img.offsetTop;
+        contentX = (container.scrollLeft + containerX) - contentLeft;
+        contentY = (container.scrollTop + containerY) - contentTop;
+    }
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / imagePinch.startDist;
     const target = Math.min(1000, Math.max(10, Math.round(imagePinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 3) {
         currentZoom = target;
         applyZoom();
+        // After zoom, adjust scroll to keep focal point under fingers
+        if (container && img) {
+            const scaleRatio = currentZoom / (prev || currentZoom);
+            const newContentX = contentX * scaleRatio;
+            const newContentY = contentY * scaleRatio;
+            const imgLeft = img.offsetLeft;
+            const imgTop = img.offsetTop;
+            container.scrollLeft = Math.max(0, Math.round(imgLeft + newContentX - containerX));
+            container.scrollTop  = Math.max(0, Math.round(imgTop  + newContentY - containerY));
+        }
     }
 }
 function onImageTouchEnd(e) {
