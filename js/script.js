@@ -1355,6 +1355,14 @@ function showZoomIndicator() {
     }
     zoomIndicatorTimeout = requestAnimationFrame(tick);
 }
+const DOUBLE_TAP_LEVELS = [100, 150, 200, 300];
+function nextDoubleTapLevel(cur) {
+    const sorted = DOUBLE_TAP_LEVELS.slice().sort((a,b)=>a-b);
+    for (let i=0;i<sorted.length;i++) {
+        if (sorted[i] > cur) return sorted[i];
+    }
+    return sorted[0];
+}
 function onDoubleTapToggleZoom(e) {
     if (!isMobileDevice()) return;
     if (e.touches && e.touches.length) return;
@@ -1367,9 +1375,10 @@ function onDoubleTapToggleZoom(e) {
     const dy = Math.abs(cy - lastTapY);
     if (dt < 300 && dx < 30 && dy < 30) {
         if (e.cancelable) e.preventDefault();
-        // Determine target zoom (toggle 100% <-> 200%)
-        const prev = currentZoom;
-        const target = (currentZoom <= 100) ? 200 : 100;
+    // Determine next progressive level
+    const prev = currentZoom;
+    let target = nextDoubleTapLevel(currentZoom);
+    if (isMobileDevice() && target < 100) target = 100;
         const container = document.getElementById('highResImage');
         const rect = container ? container.getBoundingClientRect() : null;
         const containerX = rect ? (cx - rect.left) : 0;
