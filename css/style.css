@@ -47,23 +47,62 @@ body {
 /* Zoom indicator (mobile & desktop). Hidden by default; shown briefly after zoom changes */
 #zoom-indicator {
     position: fixed;
-    top: 15px;
-    left: 15px;
-    background: rgba(0,0,0,0.6);
+    top: calc(env(safe-area-inset-top, 0px) + 15px);
+    left: calc(env(safe-area-inset-left, 0px) + 15px);
+    background: rgba(0,0,0,0.65);
     color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 1;
     opacity: 0;
     transform: translateY(-6px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.18s ease, transform 0.18s ease;
     z-index: 4200;
-    pointer-events: none;
+    pointer-events: auto; /* allow clicking close button */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: saturate(120%) blur(4px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 #zoom-indicator.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Close (dismiss) button inside zoom indicator */
+#zoom-indicator .zi-close {
+    background: transparent;
+    color: #fff;
+    border: none;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#zoom-indicator .zi-close:focus-visible {
+    outline: 2px solid #ff8c00;
+    outline-offset: 2px;
+}
+
+/* On mobile, place indicator bottom-center to avoid top controls */
+@media (max-width: 1024px) {
+    #zoom-indicator {
+        top: auto;
+        left: 50%;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+        transform: translate(-50%, 6px);
+    }
+    #zoom-indicator.visible {
+        transform: translate(-50%, 0);
+    }
 }
 
 /* Visually hidden utility for a11y live regions */

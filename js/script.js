@@ -486,6 +486,7 @@ function onPdfTouchMove(e) {
     if (Math.abs(target - currentZoom) >= 5) { // update when change significant
         currentZoom = target;
         schedulePdfRerender();
+        showZoomIndicator();
     }
 }
 function onPdfTouchEnd(e) {
@@ -719,6 +720,7 @@ const zoomMemory = {};
 let lastTapTime = 0, lastTapX = 0, lastTapY = 0;
 // Zoom indicator timer
 let zoomIndicatorTimeout = null;
+let zoomIndicatorDismissed = false;
 
 // Device detection - distinguishes between mobile/tablet and desktop with optional touch
 function isMobileDevice() {
@@ -1090,6 +1092,7 @@ function onImageTouchMove(e) {
     if (Math.abs(target - currentZoom) >= 3) {
         currentZoom = target;
         applyZoom();
+        showZoomIndicator();
         // After zoom, adjust scroll to keep focal point under fingers
         if (container && img) {
             const scaleRatio = currentZoom / (prev || currentZoom);
@@ -1333,15 +1336,28 @@ function ensureZoomIndicator() {
     if (!el) {
         el = document.createElement('div');
         el.id = 'zoom-indicator';
-        el.setAttribute('aria-hidden', 'true');
+        el.setAttribute('role','status');
+        el.setAttribute('aria-live','polite');
+        const text = document.createElement('span');
+        text.className = 'zi-text';
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'zi-close';
+        close.setAttribute('aria-label','Sluit zoomindicator');
+        close.textContent = '×';
+        close.addEventListener('click', ()=>{ zoomIndicatorDismissed = true; el.classList.remove('visible'); });
+        el.appendChild(text);
+        el.appendChild(close);
         modal.appendChild(el);
     }
     return el;
 }
 function showZoomIndicator() {
+    if (zoomIndicatorDismissed) return;
     const el = ensureZoomIndicator();
     if (!el) return;
-    el.textContent = currentZoom + '%';
+    const text = el.querySelector('.zi-text');
+    if (text) text.textContent = currentZoom + '%'; else el.textContent = currentZoom + '%';
     el.classList.add('visible');
     if (zoomIndicatorTimeout) cancelAnimationFrame(zoomIndicatorTimeout);
     const hideAt = performance.now() + 1200;
