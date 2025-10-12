@@ -994,8 +994,62 @@ document.addEventListener('DOMContentLoaded', function() {
         container.addEventListener('touchend', onImageTouchEnd);
         // Double-tap to toggle zoom on mobile
         container.addEventListener('touchend', onDoubleTapToggleZoom, { passive: false });
+        // Swipe navigation (one finger)
+        container.addEventListener('touchstart', onSwipeStart, { passive: true });
+        container.addEventListener('touchmove', onSwipeMove, { passive: true });
+        container.addEventListener('touchend', onSwipeEnd, { passive: false });
     }
 });
+
+// --- Swipe navigation (mobile) ---
+// Tunable constants for swipe sensitivity
+const SWIPE_MIN_X = 48;     // minimum horizontal distance in px to trigger
+const SWIPE_MAX_Y = 60;     // maximum vertical deviation in px allowed
+const SWIPE_COOLDOWN_MS = 300; // cooldown after a swipe triggers
+
+let swipeStartX = 0, swipeStartY = 0, swipeActive = false, swipeDidMove = false, swipeCooldown = false;
+function onSwipeStart(e) {
+    if (!isMobileDevice()) return;
+    if (pdfState.pinch.active || imagePinch.active) return; // ignore during pinch
+    if (e.touches.length !== 1) return; // single-finger only
+    swipeActive = true; swipeDidMove = false;
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+}
+function onSwipeMove(e) {
+    if (!swipeActive) return;
+    if (e.touches.length !== 1) { swipeActive = false; return; }
+    const dx = e.touches[0].clientX - swipeStartX;
+    const dy = e.touches[0].clientY - swipeStartY;
+    // Mark moved to help reject double-tap overlap
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) swipeDidMove = true;
+}
+function onSwipeEnd(e) {
+    if (!swipeActive) return;
+    swipeActive = false;
+    if (swipeCooldown) return;
+    if (pdfState.pinch.active || imagePinch.active) return; // pinch ended last, ignore
+    // If zoomed in, prefer panning over swiping
+    if (currentZoom > 100) return;
+    // Compute deltas using changedTouches for robustness
+    const touch = e.changedTouches && e.changedTouches[0];
+    if (!touch) return;
+    const dx = touch.clientX - swipeStartX;
+    const dy = touch.clientY - swipeStartY;
+    const absX = Math.abs(dx), absY = Math.abs(dy);
+    if (absX >= SWIPE_MIN_X && absY <= SWIPE_MAX_Y) {
+        // Prevent triggering links/highlighting
+        if (e.cancelable) e.preventDefault();
+        if (dx < 0) {
+            navigateHighResImage(1);
+        } else {
+            navigateHighResImage(-1);
+        }
+        // Short cooldown to avoid accidental double-triggers
+        swipeCooldown = true;
+        setTimeout(()=>{ swipeCooldown = false; }, SWIPE_COOLDOWN_MS);
+    }
+}
 
 // Image pinch handlers
 function onImageTouchStart(e) {
