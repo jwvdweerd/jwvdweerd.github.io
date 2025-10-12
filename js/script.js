@@ -1008,6 +1008,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const SWIPE_MIN_X = 48;     // minimum horizontal distance in px to trigger
 const SWIPE_MAX_Y = 60;     // maximum vertical deviation in px allowed
 const SWIPE_COOLDOWN_MS = 300; // cooldown after a swipe triggers
+const EDGE_GUARD_PX = 28;   // ignore swipes that start within this many px from left/right edges
 
 let swipeStartX = 0, swipeStartY = 0, swipeActive = false, swipeDidMove = false, swipeCooldown = false;
 function onSwipeStart(e) {
@@ -1017,6 +1018,11 @@ function onSwipeStart(e) {
     swipeActive = true; swipeDidMove = false;
     swipeStartX = e.touches[0].clientX;
     swipeStartY = e.touches[0].clientY;
+    // Edge guard: if gesture starts too close to edges, let OS back/forward gestures win
+    const vw = window.innerWidth || document.documentElement.clientWidth;
+    if (swipeStartX <= EDGE_GUARD_PX || (vw - swipeStartX) <= EDGE_GUARD_PX) {
+        swipeActive = false; // don't treat as our swipe
+    }
 }
 function onSwipeMove(e) {
     if (!swipeActive) return;
@@ -1471,3 +1477,70 @@ function restoreZoomForCurrentItemIfAny() {
         showZoomIndicator();
     }
 }
+
+// --- Debug/test harness (optional) ---
+function isDebugMode() {
+    const qs = new URLSearchParams(window.location.search);
+    const v = (qs.get('debug') || '').toLowerCase();
+    return v === '1' || v === 'true' || v === 'yes';
+}
+function runViewerSelfTest() {
+    const results = [];
+    try {
+        // Test nextDoubleTapLevel sequence
+        const seqInput = [90, 100, 120, 150, 200, 250, 300, 350];
+        const seqExpect = [100, 150, 150, 200, 300, 300, 100, 100];
+        const seqGot = seqInput.map(x => nextDoubleTapLevel(x));
+        const okSeq = seqGot.every((v,i)=> v === seqExpect[i]);
+        results.push({ name: 'nextDoubleTapLevel', pass: okSeq, detail: { input: seqInput, expect: seqExpect, got: seqGot } });
+    } catch (e) {
+        results.push({ name: 'nextDoubleTapLevel', pass: false, error: String(e) });
+    }
+    try {
+        // Test zoom indicator visible/text update (requires high-res modal present)
+        const modal = document.getElementById('highResModal');
+        const container = document.getElementById('highResImage');
+        if (modal && container && (container.querySelector('img') || container.querySelector('canvas'))) {
+            currentZoom = 137;
+            showZoomIndicator();
+            const el = modal.querySelector('#zoom-indicator');
+            const text = el ? (el.querySelector('.zi-text')?.textContent || el.textContent || '') : '';
+            const hasVisible = el ? el.classList.contains('visible') : false;
+            const okText = /137%/.test(text);
+            results.push({ name: 'zoomIndicator', pass: !!(el && hasVisible && okText), detail: { text, hasVisible } });
+        } else {
+            results.push({ name: 'zoomIndicator', pass: false, skip: 'Open a high-res image/PDF first' });
+        }
+    } catch (e) {
+        results.push({ name: 'zoomIndicator', pass: false, error: String(e) });
+    }
+    try {
+        results.push({ name: 'edgeGuardDefined', pass: typeof EDGE_GUARD_PX === 'number', detail: { EDGE_GUARD_PX } });
+    } catch (e) {
+        results.push({ name: 'edgeGuardDefined', pass: false, error: String(e) });
+    }
+    console.group('[Viewer self-test]');
+    results.forEach(r => {
+        const status = r.pass ? 'PASS' : (r.skip ? 'SKIP' : 'FAIL');
+        console.log(status, r.name, r.detail || r.error || r.skip || '');
+    });
+    const summary = {
+        pass: results.filter(r=>r.pass).length,
+        fail: results.filter(r=>!r.pass && !r.skip).length,
+        skip: results.filter(r=>r.skip).length
+    };
+    console.log('Summary:', summary);
+    console.groupEnd();
+    return results;
+}
+
+// Expose for console usage when debugging
+if (typeof window !== 'undefined') {
+    window.runViewerSelfTest = runViewerSelfTest;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (isDebugMode()) {
+        console.info('[debug] Enable ?debug=1 in the URL. After opening a high-res image/PDF, run window.runViewerSelfTest() in the console to validate.');
+    }
+});

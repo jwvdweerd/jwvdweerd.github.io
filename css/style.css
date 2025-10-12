@@ -5,6 +5,14 @@ body {
     background-color: #f0f0f0; /* Add background color */
 }
 
+/* Safe-area CSS variables for convenience */
+:root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+}
+
 /* Share / copy icon buttons */
 .icon-copy-btn {
     width: 44px;
@@ -35,8 +43,8 @@ body {
 /* Fit / Reset button for mobile (high-res viewer) */
 #highResModal .fit-reset-btn {
     position: fixed;
-    top: 60px;         /* below the zoom indicator at top-left */
-    left: 15px;
+    top: calc(60px + var(--safe-top));         /* below the zoom indicator at top-left */
+    left: calc(15px + var(--safe-left));
     z-index: 4100;
     display: none;     /* hidden by default; shown on mobile */
 }
@@ -169,7 +177,7 @@ body {
 header {
     background-color: #333;
     color: #fff;
-    padding: 1rem;
+    padding: calc(1rem + var(--safe-top)) 1rem 1rem 1rem;
     text-align: left; /* Change from center to left */
     position: fixed;
     top: 0;
@@ -205,7 +213,7 @@ footer {
     background-color: #333;
     color: #fff;
     text-align: left; /* Change from center to left */
-    padding: 1rem;
+    padding: 1rem 1rem calc(1rem + var(--safe-bottom)) 1rem;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -225,12 +233,12 @@ footer img {
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
     footer {
-        padding: 0.5rem;
+        padding: 0.5rem 0.5rem calc(0.5rem + var(--safe-bottom));
         font-size: 0.8rem;
     }
     
     header {
-        padding: 0.5rem;
+        padding: calc(0.5rem + var(--safe-top)) 0.5rem 0.5rem 0.5rem;
         font-size: 0.9rem;
     }
     
@@ -262,8 +270,8 @@ footer img {
     /* Enhanced close button positioning for mobile */
     #highResModal .close {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: calc(20px + var(--safe-top));
+        right: calc(20px + var(--safe-right));
         width: 44px;
         height: 44px;
         font-size: 20px;
@@ -294,7 +302,7 @@ footer img {
         height: 100vh;
         max-width: 100vw;
         max-height: 100vh;
-        padding: 60px 5px 5px 5px; /* Reduced padding for more image space */
+        padding: calc(60px + var(--safe-top)) 5px calc(5px + var(--safe-bottom)) calc(5px + var(--safe-left)); /* Reduced padding with safe-area */
         margin: 0;
     }
 }
@@ -306,7 +314,7 @@ footer img {
         height: 100vh;
         max-width: 100vw;
         max-height: 100vh;
-        padding: 60px 15px 15px 15px;
+        padding: calc(60px + var(--safe-top)) 15px calc(15px + var(--safe-bottom)) calc(15px + var(--safe-left));
     }
 }
 
@@ -317,7 +325,7 @@ footer img {
         height: 100vh;
         max-width: 100vw;
         max-height: 100vh;
-        padding: 60px 20px 20px 20px;
+        padding: calc(60px + var(--safe-top)) 20px calc(20px + var(--safe-bottom)) calc(20px + var(--safe-left));
     }
 }
 
@@ -476,8 +484,8 @@ body.modal-open {
 /* Enhanced close button for high-res modal */
 #highResModal .close {
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: calc(15px + var(--safe-top));
+    right: calc(15px + var(--safe-right));
     color: #fff;
     background-color: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.4);
@@ -496,18 +504,18 @@ body.modal-open {
 /* Position the high-res share button to the LEFT of the close button */
 #highResModal .share-image-link {
     position: fixed; /* match the close button so they align on scroll */
-    top: 15px;      /* align vertically with close button (desktop) */
+    top: calc(15px + var(--safe-top));      /* align vertically with close button (desktop) */
     /* Place it to the left: close button right(15px) + width(40px) + gap(10px) = 65px */
-    right: 65px;
+    right: calc(65px + var(--safe-right));
     z-index: 4100;  /* slightly above close so it is always clickable */
 }
 
 @media (max-width: 768px) {
     /* Mobile alignment mirrors the mobile close button sizing */
     #highResModal .share-image-link {
-        top: 20px;   /* mobile close top */
+        top: calc(20px + var(--safe-top));   /* mobile close top */
         /* close right(20px) + width(44px) + gap(10px) = 74px */
-        right: 74px;
+        right: calc(74px + var(--safe-right));
         width: 44px; /* ensure same hit target size */
         height: 44px;
     }
@@ -679,12 +687,14 @@ button:hover {
 
 #prevImage { left: 10px; }
 #nextImage { right: 10px; }
+#prevImage { left: calc(10px + var(--safe-left)); }
+#nextImage { right: calc(10px + var(--safe-right)); }
 #prevImage:focus-visible, #nextImage:focus-visible, .zoom-btn:focus-visible, .pdf-thumbnail:focus-visible { outline:3px solid #ff8c00; outline-offset:2px; }
 
 /* Zoom Controls */
 .zoom-controls {
     position: fixed;
-    bottom: 20px;
+    bottom: calc(20px + var(--safe-bottom));
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -786,7 +796,7 @@ button:hover {
         touch-action: pan-x pan-y; /* allow native one-finger scrolling; pinch controlled dynamically */
         width: 100%;
         height: 100%;
-        padding: 0;
+        padding: 0; /* container itself spans safe-area via modal content padding */
         margin: 0;
     }
     
