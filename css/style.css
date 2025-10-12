@@ -205,8 +205,8 @@ nav a.active {
 
 main {
     padding: 2rem;
-    margin-top: 80px; /* Add space for fixed header */
-    margin-bottom: 80px; /* Add space for fixed footer */
+    margin-top: calc(80px + var(--safe-top)); /* Add space for fixed header and safe area */
+    margin-bottom: calc(80px + var(--safe-bottom)); /* Add space for fixed footer and safe area */
 }
 
 footer {
@@ -253,8 +253,8 @@ footer img {
     }
     
     main {
-        margin-top: 100px; /* Increased for mobile header + nav */
-        margin-bottom: 70px; /* Adjust for smaller footer on mobile */
+        margin-top: calc(100px + var(--safe-top)); /* Increased for mobile header + nav and safe area */
+        margin-bottom: calc(70px + var(--safe-bottom)); /* Adjust for smaller footer on mobile + safe area */
         padding: 1rem;
     }
     
@@ -578,6 +578,9 @@ body.modal-open {
     touch-action: manipulation; /* Enable pinch-zoom and pan on mobile */
     cursor: grab;
     display: block;
+    overscroll-behavior: contain; /* prevent scroll chaining to page */
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #highResImage:active {

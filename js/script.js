@@ -580,25 +580,7 @@ function handleBackdropInteraction(e) {
     closeModal(id);
 }
 
-// Close modal when clicking outside the modal content
-window.onclick = function(event) {
-    const modal = document.getElementById('modal');
-    const highResModal = document.getElementById('highResModal');
-    if (event.target == highResModal) {
-        highResModal.style.display = 'none';
-        if (isMainModalOpen) {
-            modal.style.display = 'block';
-        } else {
-            document.body.classList.remove('modal-open');
-        }
-    } else if (event.target == modal) {
-        modal.style.display = 'none';
-        isMainModalOpen = false;
-        document.body.classList.remove('modal-open');
-
-        
-    }
-}
+// Legacy window.onclick backdrop closer removed; relying on targeted handlers added to each modal.
 
 // Close modal when pressing the Escape key
 document.addEventListener('keydown', function(event) {
@@ -724,14 +706,12 @@ let zoomIndicatorDismissed = false;
 
 // Device detection - distinguishes between mobile/tablet and desktop with optional touch
 function isMobileDevice() {
-    // Check for mobile/tablet user agents first (most reliable)
+    // Prefer input modality and UA over viewport width
+    const coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     const isMobileUserAgent = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent);
-    
-    // Check for small screen sizes (mobile/tablet sized)
-    const isSmallScreen = window.innerWidth <= 1024;
-    
-    // Return true only for genuine mobile/tablet devices
-    return isMobileUserAgent || isSmallScreen;
+    if (coarse || isMobileUserAgent) return true;
+    // fallback: extremely small screens
+    return window.innerWidth <= 600;
 }
 
 // Check if device has touch capability (for hybrid desktop/laptop devices)
@@ -1008,9 +988,10 @@ document.addEventListener('DOMContentLoaded', function() {
 const SWIPE_MIN_X = 48;     // minimum horizontal distance in px to trigger
 const SWIPE_MAX_Y = 60;     // maximum vertical deviation in px allowed
 const SWIPE_COOLDOWN_MS = 300; // cooldown after a swipe triggers
-const EDGE_GUARD_PX = 28;   // ignore swipes that start within this many px from left/right edges
+const EDGE_GUARD_PX = 32;   // ignore swipes that start within this many px from left/right edges
 
 let swipeStartX = 0, swipeStartY = 0, swipeActive = false, swipeDidMove = false, swipeCooldown = false;
+let lastSwipeMoveTime = 0;
 function onSwipeStart(e) {
     if (!isMobileDevice()) return;
     if (pdfState.pinch.active || imagePinch.active) return; // ignore during pinch
@@ -1030,7 +1011,7 @@ function onSwipeMove(e) {
     const dx = e.touches[0].clientX - swipeStartX;
     const dy = e.touches[0].clientY - swipeStartY;
     // Mark moved to help reject double-tap overlap
-    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) swipeDidMove = true;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) { swipeDidMove = true; lastSwipeMoveTime = performance.now(); }
 }
 function onSwipeEnd(e) {
     if (!swipeActive) return;
@@ -1190,6 +1171,7 @@ function copyProjectLink(includeImageIndex, btn) {
             btn.disabled = true; btn.textContent='Gekopieerd!';
             setTimeout(()=>{ btn.disabled=false; btn.innerHTML=originalHTML; },1600);
         } else { alert('Link gekopieerd: '+full); }
+        announceCopySuccess(!!includeImageIndex);
     };
     if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(full).then(feedback).catch(()=>{ fallbackCopy(full); feedback(); });
@@ -1389,6 +1371,8 @@ function onDoubleTapToggleZoom(e) {
     if (!isMobileDevice()) return;
     if (e.touches && e.touches.length) return;
     if (pdfState.pinch.active || imagePinch.active) return;
+    // If a swipe move just occurred, ignore a near-immediate tap
+    if (lastSwipeMoveTime && (performance.now() - lastSwipeMoveTime) < 120) return;
     const now = performance.now();
     const cx = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : 0;
     const cy = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : 0;
