@@ -32,6 +32,18 @@ body {
 /* High-res share button inherits icon styling; position is set inline */
 .share-image-link { box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
 
+/* Fit / Reset button for mobile (high-res viewer) */
+#highResModal .fit-reset-btn {
+    position: fixed;
+    top: 60px;         /* below the zoom indicator at top-left */
+    left: 15px;
+    z-index: 4100;
+    display: none;     /* hidden by default; shown on mobile */
+}
+.touch-device #highResModal .fit-reset-btn {
+    display: inline-flex;
+}
+
 /* Zoom indicator (mobile & desktop). Hidden by default; shown briefly after zoom changes */
 #zoom-indicator {
     position: fixed;

@@ -1205,6 +1205,61 @@ function ensureHighResShareButton() {
         btn.addEventListener('click', ()=> copyProjectLink(true, btn));
         container.appendChild(btn);
     }
+
+    // Ensure Fit/Reset button exists (mobile-only via CSS)
+    let fit = container.querySelector('.fit-reset-btn');
+    if (!fit) {
+        fit = document.createElement('button');
+        fit.type = 'button';
+        fit.className = 'fit-reset-btn icon-copy-btn';
+        fit.setAttribute('aria-label','Passend maken');
+        fit.textContent = 'Fit';
+        fit.addEventListener('click', () => {
+            // Reset to baseline (100%) and re-render
+            if (currentZoom !== 100) {
+                const prev = currentZoom;
+                currentZoom = 100;
+                const containerEl = document.getElementById('highResImage');
+                if (pdfState.isActive) {
+                    // center around current viewport center using existing pdf pinch fields
+                    if (containerEl) {
+                        const rect = containerEl.getBoundingClientRect();
+                        const cx = rect.left + rect.width/2;
+                        const cy = rect.top + rect.height/2;
+                        const canvas = containerEl.querySelector('canvas');
+                        if (canvas) {
+                            const contentLeft = canvas.offsetLeft;
+                            const contentTop = canvas.offsetTop;
+                            pdfState.pinch.prevZoom = prev;
+                            pdfState.pinch.containerX = rect.width/2;
+                            pdfState.pinch.containerY = rect.height/2;
+                            pdfState.pinch.contentX = (containerEl.scrollLeft + rect.width/2) - contentLeft;
+                            pdfState.pinch.contentY = (containerEl.scrollTop + rect.height/2) - contentTop;
+                        }
+                    }
+                    schedulePdfRerender();
+                } else {
+                    // Images: allow applyZoom and center roughly on current view center
+                    imagePinch.active = true;
+                    applyZoom();
+                    imagePinch.active = false;
+                    if (containerEl) {
+                        const img = containerEl.querySelector('img');
+                        if (img) {
+                            const rect = containerEl.getBoundingClientRect();
+                            const imgLeft = img.offsetLeft;
+                            const imgTop = img.offsetTop;
+                            // Scroll so center aligns
+                            containerEl.scrollLeft = Math.max(0, Math.round(imgLeft + (img.clientWidth/2) - (rect.width/2)));
+                            containerEl.scrollTop  = Math.max(0, Math.round(imgTop  + (img.clientHeight/2) - (rect.height/2)));
+                        }
+                    }
+                }
+                showZoomIndicator();
+            }
+        });
+        container.appendChild(fit);
+    }
 }
 function dispatchProjectOpen(id, imageIndex) {
     try { window.dispatchEvent(new CustomEvent('projectModalOpen', { detail:{ id, imageIndex } })); } catch(e) {}
