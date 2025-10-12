@@ -329,6 +329,9 @@ function openHighResImage(index) {
         // Create and add screen-fitted image
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
+            // Center vertically at baseline
+            const container = document.getElementById('highResImage');
+            if (container) container.classList.add('center-fit');
             restoreZoomForCurrentItemIfAny();
         });
         // On mobile, image pinch zoom is supported via global handlers
@@ -352,6 +355,9 @@ function renderPDF(url, container) {
     pdfState.canvas = canvas;
     container.appendChild(canvas);
     const context = canvas.getContext('2d');
+    // Default to centered when baseline fit (100%)
+    const cont = document.getElementById('highResImage');
+    if (cont) cont.classList.add('center-fit');
 
     pdfjsLib.getDocument(url).promise.then(pdf => {
         pdfState.doc = pdf;
@@ -397,9 +403,13 @@ function renderPdfAtCurrentZoom() {
     // Style
     const touchAction = hasTouchCapability() ? 'touch-action: manipulation;' : '';
     canvas.style.cursor = 'grab';
-    canvas.style.margin = 'auto';
     canvas.style.display = 'block';
     canvas.style.transition = 'none';
+    // Toggle center-fit at baseline zoom
+    const container = document.getElementById('highResImage');
+    if (container) {
+        if (Math.round(currentZoom) === 100) container.classList.add('center-fit'); else container.classList.remove('center-fit');
+    }
     // Do not force 100% width/auto height on mobile; the CSS size must reflect the zoomed viewport
     const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
     renderTask.promise.then(() => {
@@ -529,6 +539,9 @@ function navigateHighResImage(direction) {
         // Create and add screen-fitted image
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
+            // Center vertically at baseline
+            const container = document.getElementById('highResImage');
+            if (container) container.classList.add('center-fit');
             restoreZoomForCurrentItemIfAny();
         });
     }
@@ -807,6 +820,12 @@ function applyZoom() {
         img.style.maxWidth = 'none';
         img.style.maxHeight = 'none';
         img.style.transform = 'none';
+        // Toggle center-fit class based on zoom level
+        if (Math.round(currentZoom) === 100) {
+            highResImage.classList.add('center-fit');
+        } else {
+            highResImage.classList.remove('center-fit');
+        }
     }
     
     if (canvas && pdfState.isActive) {
@@ -980,6 +999,25 @@ document.addEventListener('DOMContentLoaded', function() {
         container.addEventListener('touchstart', onSwipeStart, { passive: true });
         container.addEventListener('touchmove', onSwipeMove, { passive: true });
         container.addEventListener('touchend', onSwipeEnd, { passive: false });
+    }
+});
+
+// On orientation changes, reset to default fit (100%) and center vertically
+window.addEventListener('orientationchange', () => {
+    const modal = document.getElementById('highResModal');
+    const containerEl = document.getElementById('highResImage');
+    if (!modal || modal.style.display !== 'block' || !containerEl) return;
+    // Reset zoom to baseline
+    currentZoom = 100;
+    if (pdfState.isActive) {
+        // Recompute baseFitScale on next render and keep centered
+        schedulePdfRerender();
+        containerEl.classList.add('center-fit');
+    } else {
+        imagePinch.active = true;
+        applyZoom();
+        imagePinch.active = false;
+        containerEl.classList.add('center-fit');
     }
 });
 
@@ -1229,11 +1267,14 @@ function ensureHighResShareButton() {
                         }
                     }
                     schedulePdfRerender();
+                    if (containerEl) containerEl.classList.add('center-fit');
                 } else {
                     // Images: allow applyZoom and center roughly on current view center
                     imagePinch.active = true;
                     applyZoom();
                     imagePinch.active = false;
+                    // Center vertically at baseline
+                    if (containerEl) containerEl.classList.add('center-fit');
                     if (containerEl) {
                         const img = containerEl.querySelector('img');
                         if (img) {
