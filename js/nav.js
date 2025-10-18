@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const href = a.getAttribute('href');
             if (href === path) a.classList.add('active');
         });
+        // Update CSS var for header height (to ensure content clears fixed header)
+        const setHeaderHeight = () => {
+            const h = header.getBoundingClientRect().height;
+            document.documentElement.style.setProperty('--header-height', h + 'px');
+        };
+        setHeaderHeight();
+        window.addEventListener('resize', setHeaderHeight);
     } catch (e) {
         console.error('Nav include error:', e);
     }

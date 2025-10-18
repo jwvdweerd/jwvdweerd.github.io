@@ -205,8 +205,9 @@ nav a.active {
 
 main {
     padding: 2rem;
-    margin-top: calc(80px + var(--safe-top)); /* Add space for fixed header and safe area */
-    margin-bottom: calc(80px + var(--safe-bottom)); /* Add space for fixed footer and safe area */
+    /* Use dynamic header height if provided, fallback to 80px */
+    margin-top: calc(var(--header-height, 80px) + var(--safe-top));
+    margin-bottom: calc(80px + var(--safe-bottom)); /* Footer spacing */
 }
 
 footer {
@@ -253,8 +254,9 @@ footer img {
     }
     
     main {
-        margin-top: calc(100px + var(--safe-top)); /* Increased for mobile header + nav and safe area */
-        margin-bottom: calc(70px + var(--safe-bottom)); /* Adjust for smaller footer on mobile + safe area */
+        /* On mobile, header may wrap to two lines; use dynamic height with a higher fallback */
+        margin-top: calc(var(--header-height, 110px) + var(--safe-top));
+        margin-bottom: calc(70px + var(--safe-bottom));
         padding: 1rem;
     }
     
