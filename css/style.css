@@ -510,7 +510,10 @@ footer img {
     padding: 0;
     text-align: left;
     font-family: Arial, sans-serif;
-    font-size: small;
+    /* Use rem for consistency across devices; ~0.875rem approximates 'small' */
+    font-size: 0.875rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 #collection-grid {
