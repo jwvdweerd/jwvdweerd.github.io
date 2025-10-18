@@ -386,11 +386,15 @@ function updatePdfControlsUI() {
     const nextBtn = ctrls.querySelector('.pdf-next');
     const n = pdfState.numPages || 1;
     const p = pdfState.currentPage || 1;
-    indicator.textContent = `Pagina ${p}/${n}`;
-    jumpInput.value = String(p);
-    prevBtn.disabled = (p <= 1);
-    nextBtn.disabled = (p >= n);
-    ctrls.style.display = pdfState.isActive ? '' : 'none';
+    if (!pdfState.isActive || n <= 1) {
+        ctrls.style.display = 'none';
+    } else {
+        ctrls.style.display = '';
+        indicator.textContent = `Pagina ${p}/${n}`;
+        jumpInput.value = String(p);
+        prevBtn.disabled = (p <= 1);
+        nextBtn.disabled = (p >= n);
+    }
 }
 
 function changePdfPage(delta) {
@@ -549,6 +553,11 @@ function ensurePdfThumbnails() {
     const modal = document.getElementById('highResModal');
     if (!modal || !pdfState.doc || !pdfState.isActive) return;
     let strip = modal.querySelector('.pdf-thumbs');
+    // If only a single page, remove strip if present and bail
+    if ((pdfState.numPages || 1) <= 1) {
+        if (strip) strip.remove();
+        return;
+    }
     if (!strip) {
         strip = document.createElement('div');
         strip.className = 'pdf-thumbs';

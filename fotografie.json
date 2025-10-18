@@ -1,21 +1,19 @@
 [
     {
-        "id": "foto-voorbeeld",
-        "title": "Voorbeeldfoto set",
+        "id": "scharoun-scriptie",
+        "title": "Scharoun scriptie K2-examen",
         "artist": "Jan van der Weerd",
-        "year": "-",
+        "year": "1968",
         "genre": "fotografie",
         "label": "-",
-        "cover": "resources/WHT/B0000026.jpg",
+        "cover": "resources/scharoun/omslagtekst.jpg",
         "thumbnails": [
-            "resources/WHT/B0000026.jpg",
-            "resources/WHT/B0000030.jpg"
+            "resources/scharoun/omslagtekst.jpg"
         ],
         "highres": [
-            "resources/WHT/B0000026.jpg",
-            "resources/WHT/B0000030.jpg"
+            "resources/scharoun/Scharoun-origineel.pdf"
         ],
-        "info": "Plaatsvervangende inhoud voor fotografie items.",
+        "info": ".",
         "release": "."
     }
 ]
