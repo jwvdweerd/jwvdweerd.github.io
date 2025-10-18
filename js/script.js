@@ -18,8 +18,11 @@ const pdfState = {
     pendingZoom: null,
     pinch: { active: false, startDist: 0, startZoom: 100, prevZoom: 100, contentX: 0, contentY: 0, containerX: 0, containerY: 0 },
     numPages: 0,
-    currentPage: 1
+    currentPage: 1,
+    loadingTask: null
 };
+// Cache loaded PDF documents by URL to avoid re-fetch and re-parse on reopen
+const PDF_DOC_CACHE = new Map();
 let pendingTargetPdfPage = null; // if deep-link requests a certain page
 
 // Fetch and display records
@@ -427,17 +430,40 @@ function renderPDF(url, container) {
     const cont = document.getElementById('highResImage');
     if (cont) cont.classList.add('center-fit');
 
-    pdfjsLib.getDocument(url).promise.then(pdf => {
+    ensurePdfLoadingIndicator(container);
+
+    const cached = PDF_DOC_CACHE.get(url);
+    if (cached) {
+        pdfState.doc = cached;
+        pdfState.numPages = cached.numPages || 1;
+        pdfState.currentPage = Math.min(Math.max(1, pendingTargetPdfPage || 1), pdfState.numPages);
+        pendingTargetPdfPage = null;
+        pdfState.isActive = true;
+        loadPdfPage(pdfState.currentPage, container, true).finally(hidePdfLoadingIndicator);
+        return;
+    }
+
+    const loadingTask = pdfjsLib.getDocument(url);
+    pdfState.loadingTask = loadingTask;
+    if (typeof loadingTask.onProgress === 'function') {
+        loadingTask.onProgress = ({ loaded, total }) => {
+            if (loaded && total) updatePdfLoadingIndicator(Math.round((loaded/total)*100));
+        };
+    }
+    loadingTask.promise.then(pdf => {
+        PDF_DOC_CACHE.set(url, pdf);
         pdfState.doc = pdf;
         pdfState.numPages = pdf.numPages || 1;
         pdfState.currentPage = Math.min(Math.max(1, pendingTargetPdfPage || 1), pdfState.numPages);
         pendingTargetPdfPage = null;
         pdfState.isActive = true;
         return loadPdfPage(pdfState.currentPage, container, true);
-    }).catch(err => {
+    }).then(()=> hidePdfLoadingIndicator())
+    .catch(err => {
         console.error('Error loading PDF:', err);
         container.innerHTML = '<p style="color: white; text-align: center;">Error loading PDF</p>';
         resetPdfState();
+        hidePdfLoadingIndicator();
     });
 }
 
@@ -454,6 +480,11 @@ function loadPdfPage(pageNumber, container, initial=false) {
             const scaleX = containerRect.width / initialViewport.width;
             const scaleY = containerRect.height / initialViewport.height;
             pdfState.baseFitScale = Math.min(scaleX, scaleY);
+            try {
+                renderPdfQuickThenFull(container);
+            } catch (_) {
+                renderPdfAtCurrentZoom();
+            }
         } else {
             // Recompute base fit per page (pages may have different sizes)
             const containerRect = container.getBoundingClientRect();
@@ -461,8 +492,8 @@ function loadPdfPage(pageNumber, container, initial=false) {
             const scaleX = containerRect.width / initialViewport.width;
             const scaleY = containerRect.height / initialViewport.height;
             pdfState.baseFitScale = Math.min(scaleX, scaleY);
+            renderPdfAtCurrentZoom();
         }
-        renderPdfAtCurrentZoom();
         if (isMobileDevice()) attachPdfPinchHandlers();
         ensurePdfControls();
         ensurePdfThumbnails();
@@ -525,6 +556,73 @@ function renderPdfAtCurrentZoom() {
     }).catch(e => { pdfState.rendering = false; console.error('PDF render error', e); });
 }
 
+// Render a quick low-res pass then upgrade to full resolution for better perceived speed
+function renderPdfQuickThenFull(container) {
+    if (!pdfState.isActive || !pdfState.page || !pdfState.canvas) return renderPdfAtCurrentZoom();
+    const fullScale = pdfState.baseFitScale * (currentZoom / 100);
+    const quickScale = Math.max(0.35, Math.min(fullScale, pdfState.baseFitScale * 0.6));
+    const dprQuick = 1; // force low DPR for speed
+    renderPdfAtCustomScale(quickScale, dprQuick).then(() => {
+        hidePdfLoadingIndicator();
+        requestAnimationFrame(() => {
+            if (!pdfState.isActive) return;
+            renderPdfAtCurrentZoom();
+        });
+    }).catch(() => {
+        renderPdfAtCurrentZoom();
+    });
+}
+
+function renderPdfAtCustomScale(desiredScale, dpr) {
+    if (!pdfState.isActive || !pdfState.page || !pdfState.canvas) return Promise.resolve();
+    if (pdfState.rendering) {
+        return new Promise(resolve => {
+            const retry = () => {
+                if (!pdfState.rendering) { resolve(renderPdfAtCustomScale(desiredScale, dpr)); }
+                else requestAnimationFrame(retry);
+            };
+            requestAnimationFrame(retry);
+        });
+    }
+    pdfState.rendering = true;
+    const viewport = pdfState.page.getViewport({ scale: desiredScale });
+    const canvas = pdfState.canvas;
+    const ctx = canvas.getContext('2d');
+    canvas.width = viewport.width * dpr;
+    canvas.height = viewport.height * dpr;
+    canvas.style.width = viewport.width + 'px';
+    canvas.style.height = viewport.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
+    return renderTask.promise.then(() => { pdfState.rendering = false; }).catch(e => { pdfState.rendering = false; throw e; });
+}
+
+// Loading indicator helpers
+function ensurePdfLoadingIndicator(container) {
+    const modal = document.getElementById('highResModal');
+    if (!modal) return;
+    let el = modal.querySelector('.pdf-loading');
+    if (!el) {
+        el = document.createElement('div');
+        el.className = 'pdf-loading';
+        el.innerHTML = '<div class="spinner" aria-hidden="true"></div><div class="text">PDF laden…</div>';
+        modal.appendChild(el);
+    }
+    el.style.display = 'flex';
+}
+function updatePdfLoadingIndicator(pct) {
+    const modal = document.getElementById('highResModal');
+    if (!modal) return;
+    const el = modal.querySelector('.pdf-loading .text');
+    if (el) el.textContent = `PDF laden… ${pct}%`;
+}
+function hidePdfLoadingIndicator() {
+    const modal = document.getElementById('highResModal');
+    if (!modal) return;
+    const el = modal.querySelector('.pdf-loading');
+    if (el) el.style.display = 'none';
+}
+
 function resetPdfState() {
     pdfState.doc = null;
     pdfState.page = null;
@@ -537,6 +635,7 @@ function resetPdfState() {
     pdfState.pinch.active = false;
     pdfState.numPages = 0;
     pdfState.currentPage = 1;
+    pdfState.loadingTask = null;
 }
 
 // Mobile pinch zoom support for PDFs (re-renders at new scale)
@@ -548,7 +647,9 @@ function attachPdfPinchHandlers() {
     container.addEventListener('touchend', onPdfTouchEnd);
 }
 
-// Optional nicety: PDF page thumbnails for quick navigation
+// Optional nicety: PDF page thumbnails for quick navigation (with lazy rendering)
+let pdfThumbObserver = null;
+const renderedThumbs = new Set(); // 'page' numbers rendered as thumbs
 function ensurePdfThumbnails() {
     const modal = document.getElementById('highResModal');
     if (!modal || !pdfState.doc || !pdfState.isActive) return;
@@ -568,6 +669,7 @@ function ensurePdfThumbnails() {
     // Build lazily if empty or page count changed
     if (strip.childElementCount !== (pdfState.numPages || 1)) {
         strip.innerHTML = '';
+        renderedThumbs.clear();
         const n = pdfState.numPages || 1;
         for (let i=1; i<=n; i++) {
             const item = document.createElement('button');
@@ -575,31 +677,67 @@ function ensurePdfThumbnails() {
             item.className = 'pdf-thumb';
             item.setAttribute('role','listitem');
             item.setAttribute('aria-label', 'Ga naar pagina ' + i);
+            item.dataset.page = String(i);
             const canvas = document.createElement('canvas');
-            canvas.width = 80; canvas.height = 110; // placeholder size; updated after render
+            // Placeholder size; will be updated on render
+            canvas.width = 80; canvas.height = 110;
             item.appendChild(canvas);
             item.addEventListener('click', ()=>{
                 const container = document.getElementById('highResImage');
                 loadPdfPage(i, container, false);
             });
             strip.appendChild(item);
-            // Lazy render thumbnails
-            pdfState.doc.getPage(i).then(page => {
-                const v = page.getViewport({ scale: 0.2 });
-                const dpr = window.devicePixelRatio || 1;
-                canvas.width = v.width * dpr;
-                canvas.height = v.height * dpr;
-                canvas.style.width = Math.round(v.width) + 'px';
-                canvas.style.height = Math.round(v.height) + 'px';
-                const ctx = canvas.getContext('2d');
-                ctx.setTransform(dpr,0,0,dpr,0,0);
-                page.render({ canvasContext: ctx, viewport: v });
-            });
         }
+        // Setup lazy observer once
+        if (!pdfThumbObserver) {
+            pdfThumbObserver = new IntersectionObserver((entries)=>{
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const btn = entry.target;
+                        const pageNum = parseInt(btn.dataset.page, 10);
+                        if (!isNaN(pageNum) && !renderedThumbs.has(pageNum)) {
+                            const canvas = btn.querySelector('canvas');
+                            renderPdfThumbnail(pageNum, canvas);
+                        }
+                    }
+                });
+            }, { root: strip, rootMargin: '200px 0px', threshold: 0.01 });
+        }
+        // Observe all thumbs
+        Array.from(strip.children).forEach(btn => pdfThumbObserver.observe(btn));
+        // Proactively render current and neighbors for snappy UX
+        const p = pdfState.currentPage || 1;
+        [-2,-1,0,1,2].forEach(d => {
+            const target = p + d;
+            if (target >= 1 && target <= (pdfState.numPages||1)) {
+                const btn = strip.querySelector(`.pdf-thumb[data-page="${target}"]`);
+                if (btn) {
+                    const canvas = btn.querySelector('canvas');
+                    if (!renderedThumbs.has(target)) renderPdfThumbnail(target, canvas);
+                }
+            }
+        });
     }
     // Highlight current page
     Array.from(strip.children).forEach((btn, idx) => {
         if ((idx+1) === pdfState.currentPage) btn.classList.add('active'); else btn.classList.remove('active');
+    });
+}
+
+function renderPdfThumbnail(i, canvas) {
+    if (!pdfState.doc || !canvas || renderedThumbs.has(i)) return;
+    pdfState.doc.getPage(i).then(page => {
+        const v = page.getViewport({ scale: 0.2 });
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = v.width * dpr;
+        canvas.height = v.height * dpr;
+        canvas.style.width = Math.round(v.width) + 'px';
+        canvas.style.height = Math.round(v.height) + 'px';
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        page.render({ canvasContext: ctx, viewport: v }).promise.finally(()=>{
+            renderedThumbs.add(i);
+        });
     });
 }
 function onPdfTouchStart(e) {

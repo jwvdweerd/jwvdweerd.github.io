@@ -89,13 +89,6 @@ body {
     backdrop-filter: saturate(120%) blur(4px);
     display: inline-flex;
     align-items: center;
-@media (max-width: 768px) {
-    #highResModal {
-        z-index: 3500;
-    }
-    .pdf-controls { top: calc(12px + var(--safe-top)); left: calc(12px + var(--safe-left)); }
-    .pdf-thumbs { top: calc(70px + var(--safe-top)); right: calc(6px + var(--safe-right)); max-height: calc(100vh - 140px); }
-}
     gap: 8px;
 }
 #zoom-indicator.visible {
@@ -266,6 +259,22 @@ nav a.active {
     border-bottom: 3px solid #ff8c00;
 }
 
+/* PDF thumbnails strip */
+.pdf-thumbs {
+    position: absolute;
+    right: calc(10px + var(--safe-right));
+    top: calc(60px + var(--safe-top));
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+    z-index: 3500;
+}
+.pdf-thumb { background: transparent; border: 2px solid transparent; padding: 0; cursor: pointer; }
+.pdf-thumb.active { border-color: #ff8c00; }
+.pdf-thumb canvas { display: block; background: #222; border-radius: 2px; }
+
 main {
     padding: 2rem;
     /* Use dynamic header height if provided, fallback to 80px */
@@ -296,6 +305,11 @@ footer img {
 
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
+    /* Ensure high-res modal sits above header/footer on mobile */
+    #highResModal { z-index: 3500; }
+    /* Position PDF UI on small screens */
+    .pdf-controls { top: calc(12px + var(--safe-top)); left: calc(12px + var(--safe-left)); }
+    .pdf-thumbs { top: calc(70px + var(--safe-top)); right: calc(6px + var(--safe-right)); max-height: calc(100vh - 140px); }
     nav {
         justify-content: space-between;
     }
@@ -397,6 +411,28 @@ footer img {
         padding: calc(60px + var(--safe-top)) 5px calc(5px + var(--safe-bottom)) calc(5px + var(--safe-left)); /* Reduced padding with safe-area */
         margin: 0;
     }
+}
+
+/* PDF loading indicator */
+.pdf-loading {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(0,0,0,0.45);
+    color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px;
+    z-index: 3600;
+}
+.pdf-loading .spinner {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    animation: pdfspin 1s linear infinite;
+}
+@keyframes pdfspin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Tablet and small desktop adjustments */
