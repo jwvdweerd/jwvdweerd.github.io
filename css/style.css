@@ -186,6 +186,46 @@ header {
     box-sizing: border-box;
 }
 
+/* Navigation layout */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    margin: 5px 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 nav a {
     color: #fff;
     margin: 0 1rem;
@@ -233,6 +273,33 @@ footer img {
 
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
+    nav {
+        justify-content: space-between;
+    }
+    .menu-toggle {
+        display: inline-block;
+    }
+    .nav-links {
+        position: fixed;
+        top: calc(var(--header-height, 110px));
+        left: 0;
+        right: 0;
+        background: #333;
+        display: none;
+        flex-direction: column;
+        padding: 0.5rem 1rem calc(0.5rem + var(--safe-bottom));
+        gap: 0.25rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        z-index: 1200;
+    }
+    .nav-links a {
+        margin: 0.25rem 0;
+        padding: 0.5rem 0;
+        display: block;
+    }
+    .nav-links.open {
+        display: flex;
+    }
     footer {
         padding: 0.5rem 0.5rem calc(0.5rem + var(--safe-bottom));
         font-size: 0.8rem;
@@ -254,7 +321,7 @@ footer img {
     }
     
     main {
-        /* On mobile, header may wrap to two lines; use dynamic height with a higher fallback */
+        /* On mobile, account for header & potential open menu state; header height is dynamic */
         margin-top: calc(var(--header-height, 110px) + var(--safe-top));
         margin-bottom: calc(70px + var(--safe-bottom));
         padding: 1rem;

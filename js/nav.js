@@ -19,6 +19,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             const href = a.getAttribute('href');
             if (href === path) a.classList.add('active');
         });
+        // Mobile menu toggle handling
+        const toggleBtn = newNav.querySelector('.menu-toggle');
+        const navLinks = newNav.querySelector('.nav-links');
+        const closeMenu = () => {
+            if (!toggleBtn || !navLinks) return;
+            navLinks.classList.remove('open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        };
+        if (toggleBtn && navLinks) {
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                toggleBtn.setAttribute('aria-expanded', String(isOpen));
+                setHeaderHeight();
+            });
+            // Close menu when a link is clicked (mobile UX)
+            navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+        }
         // Update CSS var for header height (to ensure content clears fixed header)
         const setHeaderHeight = () => {
             const h = header.getBoundingClientRect().height;
