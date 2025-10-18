@@ -76,8 +76,60 @@
         ],
         "info": "Architectuurreis met Herman Haan naar Mali in 1972. Dogon dorpen en Mopti.",
         "release": "."
+    },
+    {
+        "id": "corbusier",
+        "title": "Le Corbusier",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/corbusier/corbusier-savoye-poissy3-20.jpg",
+        "thumbnails": [
+            "resources/corbusier/corbusier-savoye-poissy-20.jpg",
+            "resources/corbusier/corbusier-savoye-poissy2-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy3-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy4-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy5-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy6-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy7-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy8-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy9-20.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy10-20.jpg", 
+            "resources/corbusier/corbusier-pav-suisse-20.jpg", 
+            "resources/corbusier/corbusier-pav-suisse2-20.jpg", 
+            "resources/corbusier/corbusier-jaoul-neuilly-sur-seine-20.jpg", 
+            "resources/corbusier/corbusier-molitor-paris-20.jpg", 
+            "resources/corbusier/corbusier-molitor-paris2-20.jpg", 
+            "resources/corbusier/corbusier-molitor-paris3-20.jpg", 
+            "resources/corbusier/corbusier-cook-boulogne-sur-seine-20.jpg"
+        ],
+        "highres": [
+            "resources/corbusier/corbusier-savoye-poissy.jpg",  
+            "resources/corbusier/corbusier-savoye-poissy2.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy3.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy4.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy5.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy6.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy7.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy8.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy9.jpg", 
+            "resources/corbusier/corbusier-savoye-poissy10.jpg", 
+            "resources/corbusier/corbusier-pav-suisse.jpg", 
+            "resources/corbusier/corbusier-pav-suisse2.jpg", 
+            "resources/corbusier/corbusier-jaoul-neuilly-sur-seine.jpg", 
+            "resources/corbusier/corbusier-molitor-paris.jpg", 
+            "resources/corbusier/corbusier-molitor-paris2.jpg", 
+            "resources/corbusier/corbusier-molitor-paris3.jpg", 
+            "resources/corbusier/corbusier-cook-boulogne-sur-seine.jpg" 
+        ],
+        "info": "Diverse architectuur van Le Corbusier, opnames ca. 1970.",
+        "release": "."
     }
 ]
 
 
 
+    
+
+    
