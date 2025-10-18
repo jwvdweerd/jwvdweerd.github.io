@@ -1,0 +1,21 @@
+[
+    {
+        "id": "foto-voorbeeld",
+        "title": "Voorbeeldfoto set",
+        "artist": "Jan van der Weerd",
+        "year": "-",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/WHT/B0000026.jpg",
+        "thumbnails": [
+            "resources/WHT/B0000026.jpg",
+            "resources/WHT/B0000030.jpg"
+        ],
+        "highres": [
+            "resources/WHT/B0000026.jpg",
+            "resources/WHT/B0000030.jpg"
+        ],
+        "info": "Plaatsvervangende inhoud voor fotografie items.",
+        "release": "."
+    }
+]

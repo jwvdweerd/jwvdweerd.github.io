@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
     statusEl.textContent = 'Laden...';
     collectionGrid.parentNode.insertBefore(statusEl, collectionGrid);
 
-    fetch('records.json')
+    const dataUrl = window.COLLECTION_JSON || 'records.json';
+    fetch(dataUrl)
         .then(response => {
             if(!response.ok) throw new Error('Netwerkfout');
             return response.json();
