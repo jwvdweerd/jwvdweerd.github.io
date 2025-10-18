@@ -48,6 +48,22 @@ body {
     z-index: 4100;
     display: none;     /* hidden by default; shown on mobile */
 }
+/* PDF controls in high-res modal */
+.pdf-controls {
+    position: absolute;
+    top: calc(15px + var(--safe-top));
+    left: calc(20px + var(--safe-left));
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 3600;
+    color: #fff;
+}
+.pdf-controls .pdf-page-indicator { font-weight: 600; }
+.pdf-controls .pdf-jump { width: 4.5rem; font-size: 0.9rem; }
+.pdf-controls button { color: #fff; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.4); padding: 0.25rem 0.5rem; border-radius: 4px; }
+.pdf-controls button:disabled { opacity: 0.5; }
+
 .touch-device #highResModal .fit-reset-btn {
     display: inline-flex;
 }
@@ -73,6 +89,13 @@ body {
     backdrop-filter: saturate(120%) blur(4px);
     display: inline-flex;
     align-items: center;
+@media (max-width: 768px) {
+    #highResModal {
+        z-index: 3500;
+    }
+    .pdf-controls { top: calc(12px + var(--safe-top)); left: calc(12px + var(--safe-left)); }
+    .pdf-thumbs { top: calc(70px + var(--safe-top)); right: calc(6px + var(--safe-right)); max-height: calc(100vh - 140px); }
+}
     gap: 8px;
 }
 #zoom-indicator.visible {
@@ -186,6 +209,46 @@ header {
     box-sizing: border-box;
 }
 
+/* Navigation layout */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    margin: 5px 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 nav a {
     color: #fff;
     margin: 0 1rem;
@@ -205,8 +268,9 @@ nav a.active {
 
 main {
     padding: 2rem;
-    margin-top: calc(80px + var(--safe-top)); /* Add space for fixed header and safe area */
-    margin-bottom: calc(80px + var(--safe-bottom)); /* Add space for fixed footer and safe area */
+    /* Use dynamic header height if provided, fallback to 80px */
+    margin-top: calc(var(--header-height, 80px) + var(--safe-top));
+    margin-bottom: calc(80px + var(--safe-bottom)); /* Footer spacing */
 }
 
 footer {
@@ -232,6 +296,33 @@ footer img {
 
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
+    nav {
+        justify-content: space-between;
+    }
+    .menu-toggle {
+        display: inline-block;
+    }
+    .nav-links {
+        position: fixed;
+        top: calc(var(--header-height, 110px));
+        left: 0;
+        right: 0;
+        background: #333;
+        display: none;
+        flex-direction: column;
+        padding: 0.5rem 1rem calc(0.5rem + var(--safe-bottom));
+        gap: 0.25rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        z-index: 1200;
+    }
+    .nav-links a {
+        margin: 0.25rem 0;
+        padding: 0.5rem 0;
+        display: block;
+    }
+    .nav-links.open {
+        display: flex;
+    }
     footer {
         padding: 0.5rem 0.5rem calc(0.5rem + var(--safe-bottom));
         font-size: 0.8rem;
@@ -253,8 +344,9 @@ footer img {
     }
     
     main {
-        margin-top: calc(100px + var(--safe-top)); /* Increased for mobile header + nav and safe area */
-        margin-bottom: calc(70px + var(--safe-bottom)); /* Adjust for smaller footer on mobile + safe area */
+        /* On mobile, account for header & potential open menu state; header height is dynamic */
+        margin-top: calc(var(--header-height, 110px) + var(--safe-top));
+        margin-bottom: calc(70px + var(--safe-bottom));
         padding: 1rem;
     }
     

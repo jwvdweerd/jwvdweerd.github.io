@@ -16,8 +16,11 @@ const pdfState = {
     canvas: null,
     rendering: false,
     pendingZoom: null,
-    pinch: { active: false, startDist: 0, startZoom: 100, prevZoom: 100, contentX: 0, contentY: 0, containerX: 0, containerY: 0 }
+    pinch: { active: false, startDist: 0, startZoom: 100, prevZoom: 100, contentX: 0, contentY: 0, containerX: 0, containerY: 0 },
+    numPages: 0,
+    currentPage: 1
 };
+let pendingTargetPdfPage = null; // if deep-link requests a certain page
 
 // Fetch and display records
 document.addEventListener("DOMContentLoaded", function() {
@@ -30,7 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
     statusEl.textContent = 'Laden...';
     collectionGrid.parentNode.insertBefore(statusEl, collectionGrid);
 
-    fetch('records.json')
+    const dataUrl = window.COLLECTION_JSON || 'records.json';
+    fetch(dataUrl)
         .then(response => {
             if(!response.ok) throw new Error('Netwerkfout');
             return response.json();
@@ -342,7 +346,71 @@ function openHighResImage(index) {
         if (location.hash !== combined) scheduleHashUpdate(combined);
     }
     ensureHighResShareButton();
+    ensurePdfControls();
     preloadAdjacentHighRes();
+}
+
+// Ensure PDF page controls exist in the modal
+function ensurePdfControls() {
+    const modal = document.getElementById('highResModal');
+    if (!modal) return;
+    let ctrls = modal.querySelector('.pdf-controls');
+    if (!ctrls) {
+        ctrls = document.createElement('div');
+        ctrls.className = 'pdf-controls';
+        ctrls.innerHTML = `
+            <button type="button" class="pdf-prev" aria-label="Vorige pagina">◀</button>
+            <span class="pdf-page-indicator" aria-live="polite">Pagina 1/1</span>
+            <button type="button" class="pdf-next" aria-label="Volgende pagina">▶</button>
+            <label class="pdf-jump-label">Ga naar: <input type="number" min="1" class="pdf-jump" aria-label="Ga naar pagina"></label>
+        `;
+        modal.appendChild(ctrls);
+        const prevBtn = ctrls.querySelector('.pdf-prev');
+        const nextBtn = ctrls.querySelector('.pdf-next');
+        const jumpInput = ctrls.querySelector('.pdf-jump');
+        prevBtn.addEventListener('click', () => changePdfPage(-1));
+        nextBtn.addEventListener('click', () => changePdfPage(1));
+        jumpInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyPdfJump(jumpInput.value); });
+        jumpInput.addEventListener('blur', () => applyPdfJump(jumpInput.value));
+    }
+    updatePdfControlsUI();
+}
+
+function updatePdfControlsUI() {
+    const modal = document.getElementById('highResModal');
+    const ctrls = modal ? modal.querySelector('.pdf-controls') : null;
+    if (!ctrls) return;
+    const indicator = ctrls.querySelector('.pdf-page-indicator');
+    const jumpInput = ctrls.querySelector('.pdf-jump');
+    const prevBtn = ctrls.querySelector('.pdf-prev');
+    const nextBtn = ctrls.querySelector('.pdf-next');
+    const n = pdfState.numPages || 1;
+    const p = pdfState.currentPage || 1;
+    if (!pdfState.isActive || n <= 1) {
+        ctrls.style.display = 'none';
+    } else {
+        ctrls.style.display = '';
+        indicator.textContent = `Pagina ${p}/${n}`;
+        jumpInput.value = String(p);
+        prevBtn.disabled = (p <= 1);
+        nextBtn.disabled = (p >= n);
+    }
+}
+
+function changePdfPage(delta) {
+    if (!pdfState.isActive) return;
+    const target = Math.min(Math.max(1, (pdfState.currentPage || 1) + delta), pdfState.numPages || 1);
+    if (target === pdfState.currentPage) return;
+    const container = document.getElementById('highResImage');
+    loadPdfPage(target, container, false);
+}
+
+function applyPdfJump(val) {
+    if (!pdfState.isActive) return;
+    const n = pdfState.numPages || 1;
+    const v = Math.min(Math.max(1, parseInt(val, 10) || 1), n);
+    const container = document.getElementById('highResImage');
+    loadPdfPage(v, container, false);
 }
 
 // Render PDF using pdf.js with responsive sizing
@@ -361,24 +429,44 @@ function renderPDF(url, container) {
 
     pdfjsLib.getDocument(url).promise.then(pdf => {
         pdfState.doc = pdf;
-        return pdf.getPage(1);
-    }).then(page => {
-        pdfState.page = page;
+        pdfState.numPages = pdf.numPages || 1;
+        pdfState.currentPage = Math.min(Math.max(1, pendingTargetPdfPage || 1), pdfState.numPages);
+        pendingTargetPdfPage = null;
         pdfState.isActive = true;
-        // Determine fit scale
-        const containerRect = container.getBoundingClientRect();
-        const initialViewport = page.getViewport({ scale: 1 });
-        const scaleX = containerRect.width / initialViewport.width;
-        const scaleY = containerRect.height / initialViewport.height;
-        pdfState.baseFitScale = Math.min(scaleX, scaleY);
-        // Render at base (100%)
-        renderPdfAtCurrentZoom();
-        // Enable pinch zoom on mobile for PDF
-        if (isMobileDevice()) attachPdfPinchHandlers();
+        return loadPdfPage(pdfState.currentPage, container, true);
     }).catch(err => {
         console.error('Error loading PDF:', err);
         container.innerHTML = '<p style="color: white; text-align: center;">Error loading PDF</p>';
         resetPdfState();
+    });
+}
+
+// Load a specific PDF page (and render it at the current zoom). When initial is true, compute baseFitScale.
+function loadPdfPage(pageNumber, container, initial=false) {
+    if (!pdfState.doc) return Promise.resolve();
+    pageNumber = Math.min(Math.max(1, pageNumber), pdfState.numPages || 1);
+    return pdfState.doc.getPage(pageNumber).then(page => {
+        pdfState.page = page;
+        pdfState.currentPage = pageNumber;
+        if (initial) {
+            const containerRect = container.getBoundingClientRect();
+            const initialViewport = page.getViewport({ scale: 1 });
+            const scaleX = containerRect.width / initialViewport.width;
+            const scaleY = containerRect.height / initialViewport.height;
+            pdfState.baseFitScale = Math.min(scaleX, scaleY);
+        } else {
+            // Recompute base fit per page (pages may have different sizes)
+            const containerRect = container.getBoundingClientRect();
+            const initialViewport = page.getViewport({ scale: 1 });
+            const scaleX = containerRect.width / initialViewport.width;
+            const scaleY = containerRect.height / initialViewport.height;
+            pdfState.baseFitScale = Math.min(scaleX, scaleY);
+        }
+        renderPdfAtCurrentZoom();
+        if (isMobileDevice()) attachPdfPinchHandlers();
+        ensurePdfControls();
+        ensurePdfThumbnails();
+        updateHashForCurrentAsset();
     });
 }
 
@@ -433,6 +521,7 @@ function renderPdfAtCurrentZoom() {
             pdfState.pendingZoom = null;
             renderPdfAtCurrentZoom();
         }
+        updatePdfControlsUI();
     }).catch(e => { pdfState.rendering = false; console.error('PDF render error', e); });
 }
 
@@ -446,6 +535,8 @@ function resetPdfState() {
     pdfState.rendering = false;
     pdfState.pendingZoom = null;
     pdfState.pinch.active = false;
+    pdfState.numPages = 0;
+    pdfState.currentPage = 1;
 }
 
 // Mobile pinch zoom support for PDFs (re-renders at new scale)
@@ -455,6 +546,61 @@ function attachPdfPinchHandlers() {
     container.addEventListener('touchstart', onPdfTouchStart, { passive: false });
     container.addEventListener('touchmove', onPdfTouchMove, { passive: false });
     container.addEventListener('touchend', onPdfTouchEnd);
+}
+
+// Optional nicety: PDF page thumbnails for quick navigation
+function ensurePdfThumbnails() {
+    const modal = document.getElementById('highResModal');
+    if (!modal || !pdfState.doc || !pdfState.isActive) return;
+    let strip = modal.querySelector('.pdf-thumbs');
+    // If only a single page, remove strip if present and bail
+    if ((pdfState.numPages || 1) <= 1) {
+        if (strip) strip.remove();
+        return;
+    }
+    if (!strip) {
+        strip = document.createElement('div');
+        strip.className = 'pdf-thumbs';
+        strip.setAttribute('aria-label','Miniaturen van pagina\'s');
+        strip.setAttribute('role','list');
+        modal.appendChild(strip);
+    }
+    // Build lazily if empty or page count changed
+    if (strip.childElementCount !== (pdfState.numPages || 1)) {
+        strip.innerHTML = '';
+        const n = pdfState.numPages || 1;
+        for (let i=1; i<=n; i++) {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'pdf-thumb';
+            item.setAttribute('role','listitem');
+            item.setAttribute('aria-label', 'Ga naar pagina ' + i);
+            const canvas = document.createElement('canvas');
+            canvas.width = 80; canvas.height = 110; // placeholder size; updated after render
+            item.appendChild(canvas);
+            item.addEventListener('click', ()=>{
+                const container = document.getElementById('highResImage');
+                loadPdfPage(i, container, false);
+            });
+            strip.appendChild(item);
+            // Lazy render thumbnails
+            pdfState.doc.getPage(i).then(page => {
+                const v = page.getViewport({ scale: 0.2 });
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = v.width * dpr;
+                canvas.height = v.height * dpr;
+                canvas.style.width = Math.round(v.width) + 'px';
+                canvas.style.height = Math.round(v.height) + 'px';
+                const ctx = canvas.getContext('2d');
+                ctx.setTransform(dpr,0,0,dpr,0,0);
+                page.render({ canvasContext: ctx, viewport: v });
+            });
+        }
+    }
+    // Highlight current page
+    Array.from(strip.children).forEach((btn, idx) => {
+        if ((idx+1) === pdfState.currentPage) btn.classList.add('active'); else btn.classList.remove('active');
+    });
 }
 function onPdfTouchStart(e) {
     if (!pdfState.isActive) return;
@@ -625,10 +771,10 @@ document.addEventListener('keydown', function(event) {
     if (highResModal && highResModal.style.display === 'block') {
         if (event.key === 'ArrowLeft') {
             event.preventDefault();
-            navigateHighResImage(-1);
+            if (pdfState.isActive) changePdfPage(-1); else navigateHighResImage(-1);
         } else if (event.key === 'ArrowRight') {
             event.preventDefault();
-            navigateHighResImage(1);
+            if (pdfState.isActive) changePdfPage(1); else navigateHighResImage(1);
         }
     }
     // Basic focus trap when main modal is open and highRes not covering it
@@ -1140,25 +1286,31 @@ function onImageTouchEnd(e) {
 
 // --- Deep Linking & Share Utilities ---
 function parseHash(raw) {
-    if (!raw) return { pid: null, index: null };
+    if (!raw) return { pid: null, index: null, page: null };
     const parts = raw.split(':');
     const pid = parts[0] || null;
-    let index = null;
+    let index = null, page = null;
     if (parts.length > 1) {
-        const n = parseInt(parts[1],10);
+        const rest = parts[1];
+        const sub = rest.split('@'); // support :index@page for PDFs
+        const n = parseInt(sub[0],10);
         if (!isNaN(n) && n >= 0) index = n;
+        if (sub.length > 1) {
+            const p = parseInt(sub[1],10);
+            if (!isNaN(p) && p >= 1) page = p;
+        }
     }
-    return { pid, index };
+    return { pid, index, page };
 }
 function processDeepLink() {
     const raw = decodeURIComponent(location.hash || '').replace('#','');
     if (!raw) return;
-    const { pid, index } = parseHash(raw);
+    const { pid, index, page } = parseHash(raw);
     if (!pid) return;
     const target = document.querySelector('.record[data-id="'+CSS.escape(pid)+'"]');
     if (target) {
         openModal(target);
-        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) openHighResImage(index); }, 30);
+        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) { pendingTargetPdfPage = page || null; openHighResImage(index); } }, 30);
         dispatchProjectOpen(pid, index);
     }
 }
@@ -1168,17 +1320,17 @@ function handleHashChange() {
         if (isMainModalOpen) closeModal('modal');
         return;
     }
-    const { pid, index } = parseHash(raw);
+    const { pid, index, page } = parseHash(raw);
     if (!pid) return;
     if (currentRecordId === pid) {
-        if (typeof index === 'number' && highResImages[index]) openHighResImage(index);
+        if (typeof index === 'number' && highResImages[index]) { pendingTargetPdfPage = page || null; openHighResImage(index); }
         return;
     }
     const target = document.querySelector('.record[data-id="'+CSS.escape(pid)+'"]');
     if (target) {
         if (isMainModalOpen) closeModal('modal');
         openModal(target);
-        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) openHighResImage(index); }, 30);
+        if (typeof index === 'number') setTimeout(()=>{ if (highResImages[index]) { pendingTargetPdfPage = page || null; openHighResImage(index); } }, 30);
         dispatchProjectOpen(pid, index);
     }
 }
@@ -1313,6 +1465,15 @@ function scheduleHashUpdate(target, immediate=false, clear=false) {
         history.replaceState(null,'',target);
         pendingHashUpdate = null;
     });
+}
+
+// Update hash to include page when viewing a PDF
+function updateHashForCurrentAsset() {
+    if (!currentRecordId) return;
+    const base = '#'+encodeURIComponent(currentRecordId)+':'+currentHighResIndex;
+    const suffix = (pdfState.isActive && pdfState.currentPage) ? ('@'+pdfState.currentPage) : '';
+    const combined = base + suffix;
+    if (location.hash !== combined) scheduleHashUpdate(combined);
 }
 
 // ---- Debounced PDF re-rendering ----

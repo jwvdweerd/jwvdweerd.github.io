@@ -1,0 +1,19 @@
+[
+    {
+        "id": "scharoun-scriptie",
+        "title": "Scharoun scriptie K2-examen",
+        "artist": "Jan van der Weerd",
+        "year": "1968",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/scharoun/omslagtekst.jpg",
+        "thumbnails": [
+            "resources/scharoun/omslagtekst.jpg"
+        ],
+        "highres": [
+            "resources/scharoun/Scharoun-origineel.pdf"
+        ],
+        "info": ".",
+        "release": "."
+    }
+]
