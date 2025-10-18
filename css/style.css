@@ -48,6 +48,22 @@ body {
     z-index: 4100;
     display: none;     /* hidden by default; shown on mobile */
 }
+/* PDF controls in high-res modal */
+.pdf-controls {
+    position: absolute;
+    top: calc(15px + var(--safe-top));
+    left: calc(20px + var(--safe-left));
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 3600;
+    color: #fff;
+}
+.pdf-controls .pdf-page-indicator { font-weight: 600; }
+.pdf-controls .pdf-jump { width: 4.5rem; font-size: 0.9rem; }
+.pdf-controls button { color: #fff; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.4); padding: 0.25rem 0.5rem; border-radius: 4px; }
+.pdf-controls button:disabled { opacity: 0.5; }
+
 .touch-device #highResModal .fit-reset-btn {
     display: inline-flex;
 }
@@ -73,6 +89,13 @@ body {
     backdrop-filter: saturate(120%) blur(4px);
     display: inline-flex;
     align-items: center;
+@media (max-width: 768px) {
+    #highResModal {
+        z-index: 3500;
+    }
+    .pdf-controls { top: calc(12px + var(--safe-top)); left: calc(12px + var(--safe-left)); }
+    .pdf-thumbs { top: calc(70px + var(--safe-top)); right: calc(6px + var(--safe-right)); max-height: calc(100vh - 140px); }
+}
     gap: 8px;
 }
 #zoom-indicator.visible {
