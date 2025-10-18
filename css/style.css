@@ -463,6 +463,31 @@ footer img {
     gap: 20px;
 }
 
+/* Utility: make grouped images flow side-by-side with wrapping */
+.image-container.image-row,
+.image-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;           /* keep items in a single line */
+    align-items: flex-start;
+    gap: 20px;                   /* spacing between image boxes */
+    overflow-x: auto;            /* enable horizontal scrolling when overflow */
+    overflow-y: hidden;          /* avoid vertical scrollbar in the row */
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    scrollbar-width: thin;       /* Firefox: thinner scrollbar */
+}
+
+/* Prevent flex items from stretching; keep each image box sized to its content */
+.image-container.image-row .image-box,
+.image-row .image-box {
+    flex: 0 0 auto;              /* don't stretch; size to content */
+}
+
+/* Optional: add a little padding so content isn't flush against edges when scrollable */
+.image-row {
+    padding-bottom: 4px;
+}
+
 .image-box {
     display: flex;
     flex-direction: column;
