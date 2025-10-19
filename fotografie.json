@@ -321,12 +321,12 @@
         "label": "-",
         "cover": "resources/arch-div/chareau-verre-paris-50.jpg",
         "thumbnails": [
-            "resources/arch-div/chareau-verre-paris2-50.jpg", 
-            "resources/arch-div/chareau-verre-paris-50.jpg"
+            "resources/arch-div/chareau-verre-paris-50.jpg",
+            "resources/arch-div/chareau-verre-paris2-50.jpg" 
         ],
         "highres": [
-            "resources/arch-div/chareau-verre-paris2.jpg", 
-            "resources/arch-div/chareau-verre-paris.jpg"
+            "resources/arch-div/chareau-verre-paris.jpg",
+            "resources/arch-div/chareau-verre-paris2.jpg" 
         ],
         "info": "Maison de Verre, Rue St Guillaume, Parijs, van Pierre Chareau (1928).",
         "release": "https://fr.wikipedia.org/wiki/Maison_de_verre_(Pierre_Chareau)"

@@ -283,6 +283,51 @@
         "highres": ["resources/99012-nlr-trs/99012-03_noord_zuidgevel.pdf","resources/99012-nlr-trs/TRS-gevels-doorsneden.pdf","resources/99012-nlr-trs/B0000039.jpg","resources/99012-nlr-trs/B0000040.jpg","resources/99012-nlr-trs/B0000043.jpg","resources/99012-nlr-trs/B0000044.jpg","resources/99012-nlr-trs/B0000045.jpg","resources/99012-nlr-trs/B0000047.jpg","resources/99012-nlr-trs/B0000048.jpg","resources/99012-nlr-trs/B0000049.jpg","resources/99012-nlr-trs/B0000050.jpg","resources/99012-nlr-trs/B0000051.jpg"],
         "info": "Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) in gehuisvest.",
         "release": "https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/"
+    },
+    {
+        "id": "eco-compact",
+        "title": "ECO compact woningconcept",
+        "artist": "Henk Klunder, Jan van der Weerd",
+        "year": "2012",
+        "genre": "..",
+        "label": "Henk Klunder & ir J.W. van der Weerd bv",
+        "cover": "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
+        "thumbnails": [
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_2_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_3_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_4_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_5_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_6_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_7_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_8_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_9_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_10_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_11_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_12_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_13_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_14_thumb.jpg",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_15_thumb.jpg"
+        ],
+        "highres": [
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_1.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_2.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_3.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_4.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_5.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_6.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_7.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_8.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_9.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_10.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_11.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_12.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_13.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_14.pdf",
+            "resources/eco-compact/boekje v12-b 7-05-2012_page_15.pdf"
+        ],
+        "info": "",
+        "release": ""
     }    
 ]
 
