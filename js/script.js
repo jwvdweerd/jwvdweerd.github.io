@@ -25,6 +25,11 @@ const pdfState = {
 const PDF_DOC_CACHE = new Map();
 let pendingTargetPdfPage = null; // if deep-link requests a certain page
 
+// Check if PDF.js library is available
+function isPdfJsAvailable() {
+    return typeof pdfjsLib !== 'undefined' && pdfjsLib.getDocument;
+}
+
 // Fetch and display records
 document.addEventListener("DOMContentLoaded", function() {
     const collectionGrid = document.getElementById('collection-grid');
@@ -476,6 +481,11 @@ function applyPdfJump(val) {
 
 // Render PDF using pdf.js with responsive sizing
 function renderPDF(url, container) {
+    if (!isPdfJsAvailable()) {
+        container.innerHTML = '<p style="color: white; text-align: center;">PDF viewer not available. Please refresh the page.</p>';
+        console.error('PDF.js library not loaded');
+        return;
+    }
     container.innerHTML = ''; // Clear previous content
     resetPdfState();
     pdfState.url = url;
@@ -572,8 +582,24 @@ function renderPdfAtCurrentZoom() {
     const ctx = canvas.getContext('2d');
     // Support high DPI
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = viewport.width * dpr;
-    canvas.height = viewport.height * dpr;
+    // Prevent canvas from exceeding browser limits (max ~32k x 32k pixels or 32MB memory)
+    // Most browsers fail around 8000x8000 pixels. Cap at 6000 to be safe.
+    const maxCanvasDimension = 6000;
+    let canvasWidth = Math.min(viewport.width * dpr, maxCanvasDimension);
+    let canvasHeight = Math.min(viewport.height * dpr, maxCanvasDimension);
+    
+    // If we had to cap the dimensions, reduce the render scale proportionally to stay within limits
+    if (viewport.width * dpr > maxCanvasDimension || viewport.height * dpr > maxCanvasDimension) {
+        const scaleX = canvasWidth / (viewport.width * dpr);
+        const scaleY = canvasHeight / (viewport.height * dpr);
+        const limitScale = Math.min(scaleX, scaleY);
+        canvasWidth = Math.round(viewport.width * dpr * limitScale);
+        canvasHeight = Math.round(viewport.height * dpr * limitScale);
+        console.warn(`PDF render scaled down from ${viewport.width * dpr}x${viewport.height * dpr} to ${canvasWidth}x${canvasHeight} to stay within browser canvas limits`);
+    }
+    
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
     canvas.style.width = viewport.width + 'px';
     canvas.style.height = viewport.height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -587,8 +613,15 @@ function renderPdfAtCurrentZoom() {
     if (container) {
         if (Math.round(currentZoom) === 100) container.classList.add('center-fit'); else container.classList.remove('center-fit');
     }
+    // Render at the capped scale if we had to limit canvas size
+    let effectiveViewport = viewport;
+    if (canvasWidth < viewport.width * dpr || canvasHeight < viewport.height * dpr) {
+        // Scale down the viewport to match the capped canvas
+        const viewportScale = Math.min(canvasWidth / (viewport.width * dpr), canvasHeight / (viewport.height * dpr));
+        effectiveViewport = pdfState.page.getViewport({ scale: desiredScale * viewportScale });
+    }
     // Do not force 100% width/auto height on mobile; the CSS size must reflect the zoomed viewport
-    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
+    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport: effectiveViewport });
     renderTask.promise.then(() => {
         pdfState.rendering = false;
         // Adjust scroll to keep pinch center stable
@@ -646,12 +679,27 @@ function renderPdfAtCustomScale(desiredScale, dpr) {
     const viewport = pdfState.page.getViewport({ scale: desiredScale });
     const canvas = pdfState.canvas;
     const ctx = canvas.getContext('2d');
-    canvas.width = viewport.width * dpr;
-    canvas.height = viewport.height * dpr;
-    canvas.style.width = viewport.width + 'px';
-    canvas.style.height = viewport.height + 'px';
+    
+    // Prevent canvas from exceeding browser limits (max ~32k x 32k pixels or 32MB memory)
+    const maxCanvasDimension = 6000;
+    let canvasWidth = Math.min(viewport.width * dpr, maxCanvasDimension);
+    let canvasHeight = Math.min(viewport.height * dpr, maxCanvasDimension);
+    
+    // If we had to cap the dimensions, scale down the viewport to stay within limits
+    let effectiveViewport = viewport;
+    if (viewport.width * dpr > maxCanvasDimension || viewport.height * dpr > maxCanvasDimension) {
+        const viewportScale = Math.min(canvasWidth / (viewport.width * dpr), canvasHeight / (viewport.height * dpr));
+        effectiveViewport = pdfState.page.getViewport({ scale: desiredScale * viewportScale });
+        canvasWidth = Math.round(effectiveViewport.width * dpr);
+        canvasHeight = Math.round(effectiveViewport.height * dpr);
+    }
+    
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.style.width = effectiveViewport.width + 'px';
+    canvas.style.height = effectiveViewport.height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport });
+    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport: effectiveViewport });
     return renderTask.promise.then(() => { pdfState.rendering = false; }).catch(e => { pdfState.rendering = false; throw e; });
 }
 
@@ -834,7 +882,8 @@ function onPdfTouchMove(e) {
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / pdfState.pinch.startDist;
     const minZoom = isMobileDevice() ? 100 : 10;
-    const target = Math.min(1000, Math.max(minZoom, Math.round(pdfState.pinch.startZoom * ratio)));
+    const maxZoom = 500; // Limit to 500% for PDF rendering stability
+    const target = Math.min(maxZoom, Math.max(minZoom, Math.round(pdfState.pinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 5) { // update when change significant
         currentZoom = target;
         schedulePdfRerender();
@@ -1080,9 +1129,10 @@ function zoomImage(direction) {
     if (isMobileDevice()) return;
     
     const zoomStep = 25;
+    const maxZoom = 500; // Limit to 500% for PDF rendering stability (browser canvas limits)
     
     if (direction === '+') {
-        currentZoom = Math.min(currentZoom + zoomStep, 1000);
+        currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
     } else if (direction === '-') {
         currentZoom = Math.max(currentZoom - zoomStep, 10);
     }
@@ -1116,8 +1166,15 @@ function setCustomZoom(level) {
     if (isMobileDevice()) return;
     
     const zoom = parseInt(level);
-    if (zoom >= 10 && zoom <= 1000) {
+    const maxZoom = 500; // Limit to 500% for PDF rendering stability
+    if (zoom >= 10 && zoom <= maxZoom) {
         currentZoom = zoom;
+        applyZoom();
+        showZoomIndicator();
+        updateZoomSelect();
+    } else if (zoom > maxZoom) {
+        // Cap at max zoom
+        currentZoom = maxZoom;
         applyZoom();
         showZoomIndicator();
         updateZoomSelect();
@@ -1455,7 +1512,8 @@ function onImageTouchMove(e) {
     const newDist = getTouchDistance(e.touches[0], e.touches[1]);
     const ratio = newDist / imagePinch.startDist;
     const minZoom = isMobileDevice() ? 100 : 10;
-    const target = Math.min(1000, Math.max(minZoom, Math.round(imagePinch.startZoom * ratio)));
+    const maxZoom = 500; // Limit to 500% for rendering stability
+    const target = Math.min(maxZoom, Math.max(minZoom, Math.round(imagePinch.startZoom * ratio)));
     if (Math.abs(target - currentZoom) >= 3) {
         currentZoom = target;
         applyZoom();

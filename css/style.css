@@ -168,6 +168,19 @@ body {
     border: 0 !important;
 }
 
+/* Alias for consistency with common naming convention */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 /* Floating positioning helper */
 .floating-top-right {
     position: absolute;
@@ -881,8 +894,7 @@ button:hover {
     transform: translateY(-50%) scale(1.1);
 }
 
-#prevImage { left: 10px; }
-#nextImage { right: 10px; }
+/* Navigation buttons with proper safe-area support */
 #prevImage { left: calc(10px + var(--safe-left)); }
 #nextImage { right: calc(10px + var(--safe-right)); }
 #prevImage:focus-visible, #nextImage:focus-visible, .zoom-btn:focus-visible, .pdf-thumbnail:focus-visible { outline:3px solid #ff8c00; outline-offset:2px; }

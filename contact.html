@@ -16,16 +16,16 @@
     </header>
     <main>
         <!-- <h2>Contact Form</h2> -->
-         <div><br></br></div>
-    <form id="contactForm" novalidate aria-describedby="formResponse">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+    <form id="contactForm" novalidate aria-describedby="formResponse" style="margin-top: 1rem;">
+            <label for="name">Name: <span aria-label="required">*</span></label>
+            <input type="text" id="name" name="name" required aria-required="true">
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Email: <span aria-label="required">*</span></label>
+            <input type="email" id="email" name="email" required aria-required="true" aria-describedby="email-help">
+            <small id="email-help" style="display: block; margin-top: 0.25rem; font-size: 0.85em; color: #666;">Enter a valid email address (e.g., user@example.com)</small>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
+            <label for="message">Message: <span aria-label="required">*</span></label>
+            <textarea id="message" name="message" required aria-required="true"></textarea>
 
             <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
                 <label for="company">Company:</label>
