@@ -952,6 +952,16 @@ button:hover {
     transform: scale(1.1);
 }
 
+.zoom-btn.fit-btn {
+    border-radius: 15px;
+    width: auto;
+    height: 35px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .zoom-select {
     background-color: rgba(0, 0, 0, 0.7);
     border: 2px solid rgba(255, 255, 255, 0.6);

@@ -1273,6 +1273,19 @@ function resetZoom() {
     updateZoomSelect();
 }
 
+// Fit zoom - reset to 100% (explicit function for the fit button)
+function fitZoomLevel() {
+    currentZoom = 100;
+    updateZoomSelect();
+    
+    // Apply zoom using the standard zoom application function
+    // This handles both PDFs and images correctly
+    applyZoom();
+    
+    // Show the zoom indicator to confirm the action
+    showZoomIndicator();
+}
+
 // --- Info markdown rendering & sanitization ---
 function renderInfoMarkdown(raw) {
     if (!raw) return '';
