@@ -414,6 +414,7 @@ function openHighResImage(index) {
     }
     ensurePdfControls();
     preloadAdjacentHighRes();
+    initZoomControlsDragOnModalOpen();
 }
 
 // Ensure PDF page controls exist in the modal
@@ -1972,6 +1973,134 @@ function runViewerSelfTest() {
     console.log('Summary:', summary);
     console.groupEnd();
     return results;
+}
+
+// --- Draggable Zoom Controls ---
+let zoomControlsDrag = {
+    element: null,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    startLeft: 0,
+    startBottom: 0,
+    minDistance: 5 // Minimum pixels to move before considering it a drag (prevents accidental drags on click)
+};
+
+function initializeZoomControlsDrag() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (!zoomControls) return;
+    
+    zoomControlsDrag.element = zoomControls;
+    
+    // Only add drag if not already added
+    if (zoomControls.hasAttribute('data-drag-enabled')) return;
+    zoomControls.setAttribute('data-drag-enabled', 'true');
+    
+    zoomControls.addEventListener('mousedown', startDraggingZoomControls);
+    document.addEventListener('mousemove', dragZoomControls);
+    document.addEventListener('mouseup', stopDraggingZoomControls);
+}
+
+function startDraggingZoomControls(e) {
+    // Don't drag if clicking on buttons or select/input elements
+    if (e.target.closest('.zoom-btn, .zoom-select, .zoom-input')) {
+        return;
+    }
+    
+    zoomControlsDrag.isDragging = true;
+    zoomControlsDrag.startX = e.clientX;
+    zoomControlsDrag.startY = e.clientY;
+    
+    // Store current position
+    const rect = zoomControlsDrag.element.getBoundingClientRect();
+    zoomControlsDrag.startLeft = rect.left;
+    zoomControlsDrag.startBottom = window.innerHeight - rect.bottom;
+    
+    zoomControlsDrag.element.classList.add('dragging');
+    e.preventDefault();
+}
+
+function dragZoomControls(e) {
+    if (!zoomControlsDrag.isDragging) return;
+    
+    const deltaX = e.clientX - zoomControlsDrag.startX;
+    const deltaY = e.clientY - zoomControlsDrag.startY;
+    
+    // Only start dragging if moved beyond minimum distance
+    if (Math.abs(deltaX) < zoomControlsDrag.minDistance && Math.abs(deltaY) < zoomControlsDrag.minDistance) {
+        return;
+    }
+    
+    // Calculate new position
+    let newLeft = zoomControlsDrag.startLeft + deltaX;
+    let newBottom = zoomControlsDrag.startBottom - deltaY;
+    
+    // Get element dimensions for boundary checking
+    const rect = zoomControlsDrag.element.getBoundingClientRect();
+    const elemWidth = rect.width;
+    const elemHeight = rect.height;
+    
+    // Add safe area margins (safe-inset variables)
+    const safeLeft = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-left')) || 0;
+    const safeRight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-right')) || 0;
+    const safeBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--safe-bottom')) || 0;
+    
+    // Constrain within viewport with safe area boundaries
+    const minLeft = safeLeft + 10;
+    const maxLeft = window.innerWidth - elemWidth - safeRight - 10;
+    const minBottom = safeBottom + 10;
+    const maxBottom = window.innerHeight - elemHeight - 10;
+    
+    newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+    newBottom = Math.max(minBottom, Math.min(maxBottom, newBottom));
+    
+    // Apply new position (remove center transform and use absolute positioning)
+    zoomControlsDrag.element.style.position = 'fixed';
+    zoomControlsDrag.element.style.left = newLeft + 'px';
+    zoomControlsDrag.element.style.bottom = newBottom + 'px';
+    zoomControlsDrag.element.style.transform = 'none';
+}
+
+function stopDraggingZoomControls() {
+    if (!zoomControlsDrag.isDragging) return;
+    
+    zoomControlsDrag.isDragging = false;
+    zoomControlsDrag.element.classList.remove('dragging');
+    
+    // Save the new position to localStorage for persistence
+    if (zoomControlsDrag.element) {
+        const position = {
+            left: zoomControlsDrag.element.style.left,
+            bottom: zoomControlsDrag.element.style.bottom
+        };
+        localStorage.setItem('zoomControlsPosition', JSON.stringify(position));
+    }
+}
+
+function restoreZoomControlsPosition() {
+    const zoomControls = document.querySelector('.zoom-controls');
+    if (!zoomControls) return;
+    
+    const saved = localStorage.getItem('zoomControlsPosition');
+    if (saved) {
+        try {
+            const position = JSON.parse(saved);
+            zoomControls.style.position = 'fixed';
+            zoomControls.style.left = position.left;
+            zoomControls.style.bottom = position.bottom;
+            zoomControls.style.transform = 'none';
+        } catch (e) {
+            console.warn('Failed to restore zoom controls position:', e);
+        }
+    }
+}
+
+// Initialize drag when high-res modal opens
+function initZoomControlsDragOnModalOpen() {
+    setTimeout(() => {
+        initializeZoomControlsDrag();
+        restoreZoomControlsPosition();
+    }, 0);
 }
 
 // Expose for console usage when debugging

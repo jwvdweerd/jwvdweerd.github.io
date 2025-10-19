@@ -915,6 +915,19 @@ button:hover {
     backdrop-filter: blur(4px);
     z-index: 4000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.zoom-controls:active {
+    cursor: grabbing;
+    box-shadow: 0 6px 16px rgba(255, 140, 0, 0.4);
+}
+
+.zoom-controls.dragging {
+    cursor: grabbing;
 }
 
 .zoom-btn {
@@ -946,9 +959,10 @@ button:hover {
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 14px;
-    min-width: 80px;
+    width: 80px;
     text-align: center;
     backdrop-filter: blur(2px);
+    flex-shrink: 0;
 }
 
 .zoom-select option {
@@ -963,9 +977,10 @@ button:hover {
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 14px;
-    width: 60px;
+    width: 80px;
     text-align: center;
     backdrop-filter: blur(2px);
+    flex-shrink: 0;
 }
 
 .zoom-input::placeholder {
