@@ -584,8 +584,8 @@ function renderPdfAtCurrentZoom() {
     // Support high DPI
     const dpr = window.devicePixelRatio || 1;
     // Prevent canvas from exceeding browser limits (max ~32k x 32k pixels or 32MB memory)
-    // Most browsers fail around 8000x8000 pixels. Cap at 6000 to be safe.
-    const maxCanvasDimension = 6000;
+    // Desktop: Cap at 6000 to be safe. Mobile: Cap at 3500 (tighter GPU memory on mobile/iPad)
+    const maxCanvasDimension = isMobileDevice() ? 3500 : 6000;
     let canvasWidth = Math.min(viewport.width * dpr, maxCanvasDimension);
     let canvasHeight = Math.min(viewport.height * dpr, maxCanvasDimension);
     
@@ -682,7 +682,8 @@ function renderPdfAtCustomScale(desiredScale, dpr) {
     const ctx = canvas.getContext('2d');
     
     // Prevent canvas from exceeding browser limits (max ~32k x 32k pixels or 32MB memory)
-    const maxCanvasDimension = 6000;
+    // Desktop: Cap at 6000 to be safe. Mobile: Cap at 3500 (tighter GPU memory on mobile/iPad)
+    const maxCanvasDimension = isMobileDevice() ? 3500 : 6000;
     let canvasWidth = Math.min(viewport.width * dpr, maxCanvasDimension);
     let canvasHeight = Math.min(viewport.height * dpr, maxCanvasDimension);
     
