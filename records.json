@@ -266,8 +266,22 @@
         "genre": "..",
         "label": "architektenburo ir J.W. van der Weerd bv",
         "cover": "resources/WHT/wht-doorsneden-gevels-40.jpg",
-        "thumbnails": ["resources/WHT/wht-doorsneden-gevels-40.jpg","resources/WHT/B0000026.jpg","resources/WHT/B0000030.jpg","resources/WHT/B0000031.jpg","resources/WHT/B0000032.jpg","resources/WHT/B0000035.jpg"],
-        "highres": ["resources/WHT/wht-doorsneden-gevels.pdf","resources/WHT/B0000026.jpg","resources/WHT/B0000030.jpg","resources/WHT/B0000031.jpg","resources/WHT/B0000032.jpg","resources/WHT/B0000035.jpg"],
+        "thumbnails": [
+            "resources/WHT/B0000026.jpg",
+            "resources/WHT/B0000030.jpg",
+            "resources/WHT/B0000031.jpg",
+            "resources/WHT/B0000032.jpg",
+            "resources/WHT/B0000035.jpg",
+            "resources/WHT/wht-doorsneden-gevels-40.jpg"
+        ],
+        "highres": [
+            "resources/WHT/B0000026.jpg",
+            "resources/WHT/B0000030.jpg",
+            "resources/WHT/B0000031.jpg",
+            "resources/WHT/B0000032.jpg",
+            "resources/WHT/B0000035.jpg",
+            "resources/WHT/wht-doorsneden-gevels.pdf"
+        ],
         "info": "Dakconstructie door Octatube bv / Mick Eeckhout",
         "release": "https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/1265/prj_id/1576"
     },
@@ -280,8 +294,6 @@
         "label": "architektenburo ir J.W. van der Weerd bv",
         "cover": "resources/99012-nlr-trs/TRS-gevels-cropped.jpg",
         "thumbnails": [
-            "resources/99012-nlr-trs/99012-03_noord_zuidgevel-50.jpg",
-            "resources/99012-nlr-trs/TRS-gevels-doorsneden.jpg",
             "resources/99012-nlr-trs/H03-30.jpg",
             "resources/99012-nlr-trs/B0000039-20.jpg",
             "resources/99012-nlr-trs/B0000040-20.jpg",
@@ -292,11 +304,11 @@
             "resources/99012-nlr-trs/B0000048-20.jpg",
             "resources/99012-nlr-trs/B0000049-20.jpg",
             "resources/99012-nlr-trs/B0000050-20.jpg",
-            "resources/99012-nlr-trs/B0000051-20.jpg"
+            "resources/99012-nlr-trs/B0000051-20.jpg",
+            "resources/99012-nlr-trs/TRS-gevels-doorsneden.jpg",
+            "resources/99012-nlr-trs/99012-03_noord_zuidgevel-50.jpg"
         ],
         "highres": [
-            "resources/99012-nlr-trs/99012-03_noord_zuidgevel.pdf",
-            "resources/99012-nlr-trs/TRS-gevels-doorsneden.pdf",
             "resources/99012-nlr-trs/H03.jpg",
             "resources/99012-nlr-trs/B0000039.jpg",
             "resources/99012-nlr-trs/B0000040.jpg",
@@ -307,7 +319,9 @@
             "resources/99012-nlr-trs/B0000048.jpg",
             "resources/99012-nlr-trs/B0000049.jpg",
             "resources/99012-nlr-trs/B0000050.jpg",
-            "resources/99012-nlr-trs/B0000051.jpg"
+            "resources/99012-nlr-trs/B0000051.jpg",
+            "resources/99012-nlr-trs/TRS-gevels-doorsneden.pdf",
+            "resources/99012-nlr-trs/99012-03_noord_zuidgevel.pdf"
         ],
         "info": "Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) in gehuisvest.",
         "release": "https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/"
@@ -318,7 +332,7 @@
         "artist": "Henk Klunder, Jan van der Weerd",
         "year": "2012",
         "genre": "..",
-        "label": "Henk Klunder & ir J.W. van der Weerd bv",
+        "label": "Henk Klunder & Jan van der Weerd",
         "cover": "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
         "thumbnails": [
             "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
@@ -355,7 +369,8 @@
             "resources/eco-compact/boekje v12-b 7-05-2012_page_15.pdf"
         ],
         "info": "",
-        "release": ""
+        "release": "",
+        "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
     }    
 ]
 

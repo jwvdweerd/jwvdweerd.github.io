@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test PDF Link</title>
+    <script>
+        function testPDFLink() {
+            const recordId = 'eco-compact';
+            const pdfUrl = 'resources/eco-compact/boekje v12-b 7-05-2012.pdf';
+            
+            // Simulate what the code does
+            const recordEl = document.querySelector('.record[data-id="' + CSS.escape(recordId) + '"]');
+            console.log('Record element:', recordEl);
+            
+            if (recordEl) {
+                const dataPdf = recordEl.getAttribute('data-pdf');
+                console.log('data-pdf attribute:', dataPdf);
+            }
+            
+            // Test the modal
+            const modal = document.getElementById('highResModal');
+            console.log('Modal found:', modal);
+            
+            if (modal) {
+                const shareBtn = modal.querySelector('.share-image-link');
+                console.log('Share button found:', shareBtn);
+            }
+        }
+    </script>
+</head>
+<body onload="testPDFLink()">
+    <div class="record" data-id="eco-compact" data-pdf="resources/eco-compact/boekje v12-b 7-05-2012.pdf">
+        Test Record
+    </div>
+    
+    <div id="highResModal">
+        <button class="share-image-link">Share</button>
+    </div>
+</body>
+</html>

@@ -72,7 +72,8 @@
             "resources/scharoun/Scharoun-origineel_page_30.pdf"
         ],
         "info": ".",
-        "release": "."
+        "release": ".",
+        "pdf": "resources/scharoun/Scharoun-origineel.pdf"
     },
     {
         "id": "mali",

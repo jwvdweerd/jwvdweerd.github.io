@@ -65,7 +65,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-genre', record.genre);
                 recordDiv.setAttribute('data-label', record.label);
                 recordDiv.setAttribute('data-thumbnails', JSON.stringify(record.thumbnails));
-                recordDiv.setAttribute('data-highres', JSON.stringify(record.highres));
+                    recordDiv.setAttribute('data-highres', JSON.stringify(record.highres)); // Store the high-res images
+                    // If a 'pdf' property is present, show a visible link for Google and users
+                    let pdfLinkHtml = '';
+                    if (record.pdf && typeof record.pdf === 'string' && record.pdf.trim() !== '') {
+                        pdfLinkHtml = `<a href="${record.pdf}" class="pdf-link" target="_blank" rel="noopener noreferrer">Open PDF</a>`;
+                        recordDiv.setAttribute('data-pdf', record.pdf);
+                    }
                 recordDiv.setAttribute('data-info', record.info);
                 // Add a visually-hidden SEO info block for Googlebot
                 const seoInfo = document.createElement('div');
@@ -84,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
                         <p><strong>Record Label:</strong> <span class="data-label">${record.label}</span></p>
                         <p><strong>Release:</strong> <span class="data-release">Klik voor details</span></p>
+                        ${pdfLinkHtml}
                     </div>`;
                 collectionGrid.appendChild(recordDiv);
             });
@@ -171,6 +178,7 @@ function openModal(record) {
     if (currentRecordId) {
         const shareWrap = document.createElement('div');
         shareWrap.style.display = 'flex';
+        shareWrap.style.alignItems = 'center';
         shareWrap.style.gap = '0.5rem';
         shareWrap.style.margin = '0.25rem 0 0.75rem';
     const copyBtn = document.createElement('button');
@@ -180,6 +188,20 @@ function openModal(record) {
     copyBtn.innerHTML = getCopyIconSVG();
     copyBtn.addEventListener('click', ()=> copyProjectLink(false, copyBtn));
         shareWrap.appendChild(copyBtn);
+        
+        // Add PDF link if available
+        const pdfUrl = record.getAttribute('data-pdf');
+        if (pdfUrl && typeof pdfUrl === 'string' && pdfUrl.trim() !== '') {
+            const pdfLink = document.createElement('a');
+            pdfLink.href = pdfUrl;
+            pdfLink.className = 'pdf-link icon-copy-btn';
+            pdfLink.target = '_blank';
+            pdfLink.rel = 'noopener noreferrer';
+            pdfLink.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10z"></path><polyline points="14 2 14 10 22 10"></polyline><text x="12" y="17" text-anchor="middle" font-size="6" fill="currentColor" font-family="Arial">PDF</text></svg>';
+            pdfLink.setAttribute('aria-label', 'Open PDF document');
+            shareWrap.appendChild(pdfLink);
+        }
+        
         modalBody.appendChild(shareWrap);
     }
 
@@ -354,6 +376,37 @@ function openHighResImage(index) {
         if (location.hash !== combined) scheduleHashUpdate(combined);
     }
     ensureHighResShareButton();
+    // Show 'View PDF' link next to share/copy icon if record has a PDF
+    const modal = document.getElementById('highResModal');
+    if (modal) {
+        // Remove any previous PDF link
+        let oldPdfLink = modal.querySelector('.pdf-link.highres-modal-link');
+        if (oldPdfLink) oldPdfLink.remove();
+        // Find the current record element
+        const recordEl = document.querySelector('.record[data-id="' + CSS.escape(currentRecordId) + '"]');
+        let pdfUrl = null;
+        if (recordEl) {
+            pdfUrl = recordEl.getAttribute('data-pdf');
+        }
+        if (pdfUrl && typeof pdfUrl === 'string' && pdfUrl.trim() !== '') {
+            // Insert PDF link next to share/copy icon
+            let shareBtn = modal.querySelector('.share-image-link');
+            if (shareBtn) {
+                const pdfLink = document.createElement('a');
+                pdfLink.href = pdfUrl;
+                pdfLink.className = 'pdf-link highres-modal-link icon-copy-btn';
+                pdfLink.target = '_blank';
+                pdfLink.rel = 'noopener noreferrer';
+                pdfLink.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10z"></path><polyline points="14 2 14 10 22 10"></polyline><text x="12" y="17" text-anchor="middle" font-size="6" fill="currentColor" font-family="Arial">PDF</text></svg>';
+                pdfLink.style.position = 'fixed';
+                pdfLink.style.top = 'calc(15px + var(--safe-top))';
+                pdfLink.style.right = 'calc(115px + var(--safe-right))';
+                pdfLink.style.zIndex = '4100';
+                pdfLink.setAttribute('aria-label', 'Open PDF document');
+                modal.appendChild(pdfLink);
+            }
+        }
+    }
     ensurePdfControls();
     preloadAdjacentHighRes();
 }
@@ -1593,7 +1646,7 @@ function dispatchProjectOpen(id, imageIndex) {
     console.log('[projectModalOpen]', id, imageIndex != null ? imageIndex : '');
 }
 function getCopyIconSVG() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 }
 
 // ---- Debounced hash updating ----
