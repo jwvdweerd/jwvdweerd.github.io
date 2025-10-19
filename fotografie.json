@@ -250,6 +250,145 @@
         ],
         "info": "Diverse architectuur van Le Corbusier, opnames ca. 1970.",
         "release": "."
+    },
+    {
+        "id": "montrouge",
+        "title": "Atelier de Montrouge",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/montrouge-ivry-sur-seine-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/montrouge-ivry-sur-seine-50.jpg",
+            "resources/arch-div/montrouge-ivry-sur-seine2-50.jpg" 
+        ],
+        "highres": [
+            "resources/arch-div/montrouge-ivry-sur-seine.jpg",
+            "resources/arch-div/montrouge-ivry-sur-seine2.jpg" 
+        ],
+        "info": "Logements d'Électricité de France in Ivry-sur-Seine, van l'Atelier de Montrouge (Jean Renaudie, Pierre Riboulet, Gérard Thurnauer, Jean-Louis Véret), 1967.",
+        "release": "."
+    },
+    {
+        "id": "parent",
+        "title": "Parent",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/parent-iran-cite-int-univ-paris-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/parent-iran-cite-int-univ-paris-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/parent-iran-cite-int-univ-paris.jpg"
+        ],
+        "info": "Maison de l'Iran (Fondation Avicenne), Cité Internationale Universitaire, Parijs, van Claude Parent met André Bloc, Mohseine Foroughi & Heydar Ghiai (1958).",
+        "release": "."
+    },
+    {
+        "id": "beaudouin",
+        "title": "Beaudouin",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/beaudouin-suresnes4-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/beaudouin-suresnes5-50.jpg", 
+            "resources/arch-div/beaudouin-suresnes3-50.jpg", 
+            "resources/arch-div/beaudouin-suresnes4-50.jpg", 
+            "resources/arch-div/beaudouin-suresnes-50.jpg", 
+            "resources/arch-div/beaudouin-suresnes2-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/beaudouin-suresnes5.jpg", 
+            "resources/arch-div/beaudouin-suresnes3.jpg", 
+            "resources/arch-div/beaudouin-suresnes4.jpg", 
+            "resources/arch-div/beaudouin-suresnes.jpg", 
+            "resources/arch-div/beaudouin-suresnes2.jpg"
+        ],
+        "info": "École de Plein-air, Suresnes, Frankrijk, van Eugène Beaudouin en Marcel Lods (1935).",
+        "release": "https://fr.wikipedia.org/wiki/%C3%89cole_de_plein_air_de_Suresnes"
+    },
+    {
+        "id": "chareau",
+        "title": "Chareau",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/chareau-verre-paris-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/chareau-verre-paris2-50.jpg", 
+            "resources/arch-div/chareau-verre-paris-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/chareau-verre-paris2.jpg", 
+            "resources/arch-div/chareau-verre-paris.jpg"
+        ],
+        "info": "Maison de Verre, Rue St Guillaume, Parijs, van Pierre Chareau (1928).",
+        "release": "https://fr.wikipedia.org/wiki/Maison_de_verre_(Pierre_Chareau)"
+    },
+    {
+        "id": "bernard",
+        "title": "Bernard",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/edf-oficentro-vigo-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/edf-oficentro-vigo-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/edf-oficentro-vigo.jpg" 
+       ],
+        "info": "Maison de la Radio et de la Musique, Parijs, van Henry Bernard (1963).",
+        "release": "https://fr.wikipedia.org/wiki/Maison_de_la_Radio_et_de_la_Musique"
+    },
+    {
+        "id": "prouve",
+        "title": "Prouvé",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/prouve-ffb-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/prouve-ffb-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/prouve-ffb.jpg"
+        ],
+        "info": "Hoofdkantoor FFB - Fédération Française (voorheen: Nationale) du Bâtiment (\"Fedebat\"), Parijs, van Raymond Gravereaux en Raymond Lopez (1949-1953). Paneelontwerp facades door Jean Prouvé.",
+        "release": "https://nl.wikipedia.org/wiki/Jean_Prouv%C3%A9"
+    },
+    {
+        "id": "sauvage",
+        "title": "Sauvage",
+        "artist": "Jan van der Weerd",
+        "year": "1970",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/arch-div/sauvage-50.jpg",
+        "thumbnails": [
+            "resources/arch-div/sauv-50.jpg", 
+            "resources/arch-div/sauvage2-50.jpg", 
+            "resources/arch-div/saugave-3-50.jpg", 
+            "resources/arch-div/sauvage-paris-50.jpg", 
+            "resources/arch-div/sauvage-50.jpg"
+        ],
+        "highres": [
+            "resources/arch-div/sauv.jpg", 
+            "resources/arch-div/sauvage2.jpg", 
+            "resources/arch-div/saugave-3.jpg", 
+            "resources/arch-div/sauvage-paris.jpg", 
+            "resources/arch-div/sauvage.jpg"
+        ],
+        "info": "Appartement 26 rue Vavin, Parijs, van Henri Sauvage (1913).",
+        "release": "https://en.wikipedia.org/wiki/Henri_Sauvage"
     }
 ]
 
