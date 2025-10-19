@@ -67,6 +67,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-thumbnails', JSON.stringify(record.thumbnails));
                 recordDiv.setAttribute('data-highres', JSON.stringify(record.highres));
                 recordDiv.setAttribute('data-info', record.info);
+                // Add a visually-hidden SEO info block for Googlebot
+                const seoInfo = document.createElement('div');
+                seoInfo.className = 'seo-info visually-hidden';
+                seoInfo.textContent = record.info || '';
+                recordDiv.appendChild(seoInfo);
                 recordDiv.setAttribute('data-release', record.release);
 
                 const safeTitle = record.title.replace(/&/g, '&amp;');
