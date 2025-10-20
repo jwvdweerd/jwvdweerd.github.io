@@ -403,13 +403,13 @@
         "thumbnails": [
             "resources/westerstraat/B0000002.jpg",
             "resources/westerstraat/B0000003.jpg",
-            "resources/westerstraat/G-01.jpg.jpg",
+            "resources/westerstraat/G-01.jpg",
             "resources/westerstraat/westerstraat perspektief.jpg"
         ],
         "highres": [
             "resources/westerstraat/B0000002.jpg",
             "resources/westerstraat/B0000003.jpg",
-            "resources/westerstraat/G-01.jpg.jpg",
+            "resources/westerstraat/G-01.jpg",
             "resources/westerstraat/westerstraat perspektief.jpg"
         ],
         "info": "",
@@ -462,6 +462,7 @@
         "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
     }    
 ]
+
 
 
 
