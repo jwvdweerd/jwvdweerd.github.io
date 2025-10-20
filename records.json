@@ -131,7 +131,7 @@
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
-        "cover": ""resources/744/M5-terrasw/M5 gevels001-10.jpg",
+        "cover": "resources/744/M5-terrasw/M5 gevels001-10.jpg",
         "thumbnails": [
             "resources/744/M5-terrasw/M5 doorsneden001-10.jpg",
             "resources/744/M5-terrasw/M5 gevels001-10.jpg",
@@ -462,6 +462,7 @@
         "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
     }    
 ]
+
 
 
 
