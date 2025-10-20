@@ -92,7 +92,7 @@
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
-        "cover": "resources/744/E7-patiowoningen/E7 perspectief vogelvl-20.jpg",
+        "cover": "resources/744/E7-patiowoningen/E7 isometrie Z-20.jpg",
         "thumbnails": [
             "resources/744/E7-patiowoningen/E7 perspectief vogelvl-20.jpg",
             "resources/744/E7-patiowoningen/E7 perspectief.jpg",
@@ -131,7 +131,7 @@
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
-        "cover": "resources/744/M5-terrasw/M5 vogelvlucht1-SMALL.jpg",
+        "cover": ""resources/744/M5-terrasw/M5 gevels001-10.jpg",
         "thumbnails": [
             "resources/744/M5-terrasw/M5 doorsneden001-10.jpg",
             "resources/744/M5-terrasw/M5 gevels001-10.jpg",
@@ -462,6 +462,7 @@
         "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
     }    
 ]
+
 
 
 
