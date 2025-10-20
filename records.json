@@ -393,6 +393,29 @@
         "release": "https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/"
     },
     {
+        "id": "westerstraat",
+        "title": "Westerstraat Rotterdam",
+        "artist": "Henk Klunder, Jan van der Weerd",
+        "year": "2000",
+        "genre": "gerealiseerd",
+        "label": "Henk Klunder & Jan van der Weerd",
+        "cover": "resources/westerstraat/westerstraat perspektief.jpg",
+        "thumbnails": [
+            "resources/westerstraat/B0000002.jpg",
+            "resources/westerstraat/B0000003.jpg",
+            "resources/westerstraat/G-01.jpg.jpg",
+            "resources/westerstraat/westerstraat perspektief.jpg"
+        ],
+        "highres": [
+            "resources/westerstraat/B0000002.jpg",
+            "resources/westerstraat/B0000003.jpg",
+            "resources/westerstraat/G-01.jpg.jpg",
+            "resources/westerstraat/westerstraat perspektief.jpg"
+        ],
+        "info": "",
+        "release": ""
+    },
+    {
         "id": "eco-compact",
         "title": "ECO compact woningconcept",
         "artist": "Henk Klunder, Jan van der Weerd",
@@ -439,6 +462,7 @@
         "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
     }    
 ]
+
 
 
 
