@@ -84,6 +84,7 @@
         "label": "-",
         "cover": "resources/mali/12-10-20.jpg",
         "thumbnails": [
+            "resources/mali/90-1_00.jpg", 
             "resources/mali/12-01-20.jpg", 
             "resources/mali/12-02-20.jpg", 
             "resources/mali/12-03-20.jpg", 
@@ -105,10 +106,16 @@
             "resources/mali/14-05-20.jpg", 
             "resources/mali/91-1_17 2400 dpi-10.jpg", 
             "resources/mali/91-1_34 2400dpi-10.jpg", 
-            "resources/mali/92-1_35 2400 dpi-10.jpg", 
-            "resources/mali/mopti 92-36z-10.jpg"
+            "resources/mali/92-1_33.jpg",
+            "resources/mali/92-1_32.jpg",
+            "resources/mali/mopti 92-36z-10.jpg",
+            "resources/mali/92-1_39.jpg",
+            "resources/mali/90-1_04.jpg",
+            "resources/mali/90-1_01.jpg",
+            "resources/mali/90-1_02.jpg"
         ],
         "highres": [
+            "resources/mali/90-1_00.jpg", 
             "resources/mali/12-01.jpg", 
             "resources/mali/12-02.jpg", 
             "resources/mali/12-03.jpg", 
@@ -130,8 +137,13 @@
             "resources/mali/14-05.jpg", 
             "resources/mali/91-1_17 2400 dpi.jpg", 
             "resources/mali/91-1_34 2400dpi.jpg", 
-            "resources/mali/92-1_35 2400 dpi.jpg", 
-            "resources/mali/mopti 92-36z.jpg"
+            "resources/mali/92-1_33.jpg",
+            "resources/mali/92-1_32.jpg",
+            "resources/mali/mopti 92-36z.jpg",
+            "resources/mali/92-1_39.jpg",
+            "resources/mali/90-1_04.jpg",
+            "resources/mali/90-1_01.jpg",
+            "resources/mali/90-1_02.jpg"
         ],
         "info": "Architectuurreis met Herman Haan naar Mali in 1972. Dogon dorpen (Klif van Bandiagara) en Mopti.",
         "release": "."

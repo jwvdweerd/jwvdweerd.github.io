@@ -401,15 +401,19 @@
         "label": "Henk Klunder & Jan van der Weerd",
         "cover": "resources/westerstraat/westerstraat perspektief.jpg",
         "thumbnails": [
-            "resources/westerstraat/B0000002.jpg",
-            "resources/westerstraat/B0000003.jpg",
+            "resources/westerstraat/B0000022.jpg",
             "resources/westerstraat/G-01.jpg",
+            "resources/westerstraat/99011 gevels dsn-10.jpg",
+            "resources/westerstraat/99011 plattegronden-10.jpg",
+            "resources/westerstraat/B0000003.jpg",
             "resources/westerstraat/westerstraat perspektief.jpg"
         ],
         "highres": [
-            "resources/westerstraat/B0000002.jpg",
-            "resources/westerstraat/B0000003.jpg",
+            "resources/westerstraat/B0000022.jpg",
             "resources/westerstraat/G-01.jpg",
+            "resources/westerstraat/99011 gevels dsn.pdf",
+            "resources/westerstraat/99011 plattegronden.pdf",
+            "resources/westerstraat/B0000003.jpg",
             "resources/westerstraat/westerstraat perspektief.jpg"
         ],
         "info": "",
