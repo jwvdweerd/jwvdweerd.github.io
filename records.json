@@ -231,6 +231,25 @@
             "resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg"],        
         "info": "\n \nDe hoogbouw is gesitueerd in het centrum van de wijk, nabij het centrale plein en het winkelcentrum, en vormt zodoende een ruimtelijk accent. \n \nWat is vermeld over de terraswoningen geldt eveneens voor de hoogbouw; in feite vormt deze een verbijzondering van de middelhoogbouw. De eerste 4 bouwlagen zijn identiek en daarbij zijn de bouwblokken zo geplaatst dat op het knooppunt kon worden verdergebouwd tot 9 verdiepingen. \n \nDoor de piramidale opbouw ontstaat in het hart een inpandige ruimte, welke wordt benut voor gemeenschappelijke voorzieningen. Het parkeren vindt ook hier onder het gebouw plaats.",
         "release": "https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot"
+    },    
+    {
+        "id": "75-WS",
+        "title": "Woningbouw, Willemstad",
+        "artist": "Herman Haan & Jan van der Weerd",
+        "year": "1975",
+        "genre": "studie",
+        "label": "Atelier A architecten",
+        "cover": "resources/75-willemstad/willemstad iso Z-10.jpg",
+        "thumbnails": [
+            "resources/75-willemstad/willemstad verkaveling Z-10.jpg",
+            "resources/75-willemstad/willemstad iso Z-10.jpg"
+        ],
+        "highres": [
+            "resources/75-willemstad/willemstad verkaveling Z.jpg",
+            "resources/75-willemstad/willemstad iso Z.jpg"
+        ],
+        "info": "",
+        "release": ""
     },
     {
         "id": "78044",
