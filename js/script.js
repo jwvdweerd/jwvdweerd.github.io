@@ -465,18 +465,46 @@ function updatePdfControlsUI() {
 }
 
 function changePdfPage(delta) {
-    if (!pdfState.isActive) return;
+    // Check if PDF document exists, or try to get it from cache
+    if (!pdfState.doc) {
+        // Try to get the PDF from cache
+        if (pdfState.url && PDF_DOC_CACHE.has(pdfState.url)) {
+            pdfState.doc = PDF_DOC_CACHE.get(pdfState.url);
+            if (isDebugMode()) console.log('[PDF Nav] Retrieved PDF from cache');
+        } else {
+            if (isDebugMode()) console.log('[PDF Nav] No PDF document loaded, cannot change page');
+            return;
+        }
+    }
     const target = Math.min(Math.max(1, (pdfState.currentPage || 1) + delta), pdfState.numPages || 1);
-    if (target === pdfState.currentPage) return;
+    if (isDebugMode()) console.log(`[PDF Nav] Attempting to navigate from page ${pdfState.currentPage} to ${target} (total pages: ${pdfState.numPages})`);
+    if (target === pdfState.currentPage) {
+        if (isDebugMode()) console.log(`[PDF Nav] Already on page ${target}, no change`);
+        return;
+    }
     const container = document.getElementById('highResImage');
+    // Ensure isActive is set for the page load
+    pdfState.isActive = true;
+    if (isDebugMode()) console.log(`[PDF Nav] Loading page ${target}`);
     loadPdfPage(target, container, false);
 }
 
 function applyPdfJump(val) {
+    // Check if PDF document exists, or try to get it from cache
+    if (!pdfState.doc) {
+        // Try to get the PDF from cache
+        if (pdfState.url && PDF_DOC_CACHE.has(pdfState.url)) {
+            pdfState.doc = PDF_DOC_CACHE.get(pdfState.url);
+        } else {
+            if (isDebugMode()) console.log('[PDF Jump] No PDF document loaded, cannot jump');
+            return;
+        }
+    }
     if (!pdfState.isActive) return;
     const n = pdfState.numPages || 1;
     const v = Math.min(Math.max(1, parseInt(val, 10) || 1), n);
     const container = document.getElementById('highResImage');
+    pdfState.isActive = true;
     loadPdfPage(v, container, false);
 }
 
@@ -540,6 +568,8 @@ function renderPDF(url, container) {
 function loadPdfPage(pageNumber, container, initial=false) {
     if (!pdfState.doc) return Promise.resolve();
     pageNumber = Math.min(Math.max(1, pageNumber), pdfState.numPages || 1);
+    // Ensure PDF state remains active during page loading
+    pdfState.isActive = true;
     return pdfState.doc.getPage(pageNumber).then(page => {
         pdfState.page = page;
         pdfState.currentPage = pageNumber;
@@ -1018,10 +1048,16 @@ document.addEventListener('keydown', function(event) {
     if (highResModal && highResModal.style.display === 'block') {
         if (event.key === 'ArrowLeft') {
             event.preventDefault();
-            if (pdfState.isActive) changePdfPage(-1); else navigateHighResImage(-1);
+            // Arrow keys navigate between images/PDFs in the array
+            // Since each PDF is single-page, we navigate to previous image file
+            if (isDebugMode()) console.log('[Arrow Nav] Left key: navigating to previous image');
+            navigateHighResImage(-1);
         } else if (event.key === 'ArrowRight') {
             event.preventDefault();
-            if (pdfState.isActive) changePdfPage(1); else navigateHighResImage(1);
+            // Arrow keys navigate between images/PDFs in the array
+            // Since each PDF is single-page, we navigate to next image file
+            if (isDebugMode()) console.log('[Arrow Nav] Right key: navigating to next image');
+            navigateHighResImage(1);
         }
     }
     // Basic focus trap when main modal is open and highRes not covering it
@@ -1149,38 +1185,9 @@ function setZoomLevel(level) {
     // Skip zoom functionality on mobile devices
     if (isMobileDevice()) return;
     
-    const customInput = document.getElementById('customZoom');
-    
-    if (level === 'custom') {
-        customInput.style.display = 'inline-block';
-        customInput.focus();
-    } else {
-        customInput.style.display = 'none';
-        currentZoom = parseInt(level);
-        applyZoom();
-        showZoomIndicator();
-    }
-}
-
-// Set custom zoom level
-function setCustomZoom(level) {
-    // Skip zoom functionality on mobile devices
-    if (isMobileDevice()) return;
-    
-    const zoom = parseInt(level);
-    const maxZoom = 500; // Limit to 500% for PDF rendering stability
-    if (zoom >= 10 && zoom <= maxZoom) {
-        currentZoom = zoom;
-        applyZoom();
-        showZoomIndicator();
-        updateZoomSelect();
-    } else if (zoom > maxZoom) {
-        // Cap at max zoom
-        currentZoom = maxZoom;
-        applyZoom();
-        showZoomIndicator();
-        updateZoomSelect();
-    }
+    currentZoom = parseInt(level);
+    applyZoom();
+    showZoomIndicator();
 }
 
 // Apply zoom transformation
@@ -1252,19 +1259,13 @@ function applyZoom() {
 // Update zoom select dropdown
 function updateZoomSelect() {
     const zoomSelect = document.getElementById('zoomSelect');
-    const customInput = document.getElementById('customZoom');
     
-    // Check if current zoom matches any preset value
-    const presetValues = ['25', '50', '75', '100', '125', '150', '200', '300', '400'];
+    // Update select to show current zoom level
+    const presetValues = ['25', '50', '75', '100', '125', '150', '200', '300', '400', '500'];
     const matchingPreset = presetValues.find(val => parseInt(val) === currentZoom);
     
     if (matchingPreset) {
         zoomSelect.value = matchingPreset;
-        customInput.style.display = 'none';
-    } else {
-        zoomSelect.value = 'custom';
-        customInput.style.display = 'inline-block';
-        customInput.value = currentZoom;
     }
 }
 

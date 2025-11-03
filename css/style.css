@@ -969,32 +969,18 @@ button:hover {
     border-radius: 15px;
     padding: 5px 10px;
     font-size: 14px;
-    width: 80px;
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
     text-align: center;
     backdrop-filter: blur(2px);
     flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .zoom-select option {
     background-color: #222;
     color: white;
-}
-
-.zoom-input {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    color: white;
-    border-radius: 15px;
-    padding: 5px 10px;
-    font-size: 14px;
-    width: 80px;
-    text-align: center;
-    backdrop-filter: blur(2px);
-    flex-shrink: 0;
-}
-
-.zoom-input::placeholder {
-    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Hide zoom controls for touch devices - use native touch gestures instead */
