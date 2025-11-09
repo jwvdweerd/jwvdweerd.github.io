@@ -759,7 +759,7 @@ body.modal-open {
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding: 60px 20px 20px 20px; /* Top padding for close button */
+    padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
@@ -776,6 +776,8 @@ body.modal-open {
     overscroll-behavior: contain; /* prevent scroll chaining to page */
     -webkit-user-select: none;
     user-select: none;
+    padding: 20px 20px 100px 20px; /* Space for close button at top and zoom controls at bottom */
+    box-sizing: border-box;
 }
 
 /* When at baseline (100%) we center content vertically/horizontally */
