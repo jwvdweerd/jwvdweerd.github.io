@@ -776,8 +776,9 @@ body.modal-open {
     overscroll-behavior: contain; /* prevent scroll chaining to page */
     -webkit-user-select: none;
     user-select: none;
-    padding: 20px 20px 100px 20px; /* Space for close button at top and zoom controls at bottom */
     box-sizing: border-box;
+    /* Use padding-bottom to reserve space for zoom controls at the bottom */
+    padding-bottom: 120px;
 }
 
 /* When at baseline (100%) we center content vertically/horizontally */
@@ -805,9 +806,9 @@ body.modal-open {
     cursor: grab;
     touch-action: manipulation;
     display: block;
-    margin: 100px auto; /* Center with scrollable margins */
-    min-width: calc(100% - 200px);
-    min-height: calc(100% - 200px);
+    margin: 20px auto; /* Reduced margins for proper spacing */
+    min-width: calc(100% - 40px);
+    min-height: calc(100% - 40px);
 }
 
 #highResImage img:active {
@@ -824,9 +825,9 @@ body.modal-open {
     cursor: grab;
     touch-action: manipulation;
     display: block;
-    margin: 100px auto; /* Center with scrollable margins */
-    min-width: calc(100% - 200px);
-    min-height: calc(100% - 200px);
+    margin: 20px auto; /* Reduced margins for proper spacing */
+    min-width: calc(100% - 40px);
+    min-height: calc(100% - 40px);
 }
 
 #highResImage canvas:active {
