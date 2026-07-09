@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const header = document.querySelector('header');
     if (!header) return;
     try {
-        const resp = await fetch('partials/nav.html', { cache: 'no-cache' });
+        const resp = await fetch('/partials/nav.html', { cache: 'no-cache' });
         if (!resp.ok) throw new Error('Failed to load nav');
         const html = await resp.text();
         // Replace existing <nav> if present, else append
@@ -13,11 +13,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const oldNav = header.querySelector('nav');
         if (oldNav) oldNav.replaceWith(newNav); else header.appendChild(newNav);
         // set active based on current file name
-        const path = location.pathname.split('/').pop() || 'index.html';
+        const pathParts = location.pathname.split('/').filter(Boolean);
+        let path = pathParts[pathParts.length - 1] || 'index.html';
+        if (pathParts[0] === 'projects') {
+            path = 'collection.html';
+        }
         const links = newNav.querySelectorAll('a');
         links.forEach(a => {
             const href = a.getAttribute('href');
-            if (href === path) a.classList.add('active');
+            const normalizedHref = href.startsWith('/') ? href.slice(1) : href;
+            if (normalizedHref === path) a.classList.add('active');
         });
         // Mobile menu toggle handling
         const toggleBtn = newNav.querySelector('.menu-toggle');

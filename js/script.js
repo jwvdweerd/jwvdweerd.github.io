@@ -30,6 +30,32 @@ function isPdfJsAvailable() {
     return typeof pdfjsLib !== 'undefined' && pdfjsLib.getDocument;
 }
 
+function getViewportSize() {
+    if (window.visualViewport) {
+        return {
+            width: window.visualViewport.width,
+            height: window.visualViewport.height
+        };
+    }
+    return {
+        width: window.innerWidth || document.documentElement.clientWidth || 0,
+        height: window.innerHeight || document.documentElement.clientHeight || 0
+    };
+}
+
+function getContainerContentSize(container) {
+    if (!container) return { width: 0, height: 0 };
+    const viewport = getViewportSize();
+    if (container.classList.contains('center-fit')) {
+        return { width: viewport.width, height: viewport.height };
+    }
+    const rect = container.getBoundingClientRect();
+    return {
+        width: rect.width || viewport.width,
+        height: rect.height || viewport.height
+    };
+}
+
 // Fetch and display records
 document.addEventListener("DOMContentLoaded", function() {
     const collectionGrid = document.getElementById('collection-grid');
@@ -78,11 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         recordDiv.setAttribute('data-pdf', record.pdf);
                     }
                 recordDiv.setAttribute('data-info', record.info);
-                // Add a visually-hidden SEO info block for Googlebot
-                const seoInfo = document.createElement('div');
-                seoInfo.className = 'seo-info visually-hidden';
-                seoInfo.textContent = record.info || '';
-                recordDiv.appendChild(seoInfo);
                 recordDiv.setAttribute('data-release', record.release);
 
                 const safeTitle = record.title.replace(/&/g, '&amp;');
@@ -333,6 +354,60 @@ function createScreenFittedImage(imageSrc) {
     });
 }
 
+function setCenterFitState(isCenterFit, container = document.getElementById('highResImage')) {
+    if (!container) return;
+    if (isCenterFit) {
+        container.classList.add('center-fit');
+        container.classList.remove('scrollable');
+        container.scrollLeft = 0;
+        container.scrollTop = 0;
+    } else {
+        container.classList.remove('center-fit');
+        container.classList.add('scrollable');
+    }
+}
+
+function openHighResViewer(images, index = 0, options = {}) {
+    if (!Array.isArray(images) || images.length === 0) return;
+    highResImages = images.map((imageUrl) => {
+        if (typeof imageUrl !== 'string') return imageUrl;
+        if (imageUrl.startsWith('/') || /^https?:\/\//i.test(imageUrl)) return imageUrl;
+        return '/' + imageUrl.replace(/^\/+/, '');
+    });
+    currentHighResIndex = Math.max(0, Math.min(index, highResImages.length - 1));
+    currentRecordId = options.recordId || null;
+    const normalizedPdfUrl = typeof options.pdfUrl === 'string' && options.pdfUrl.trim() !== ''
+        ? (options.pdfUrl.startsWith('/') || /^https?:\/\//i.test(options.pdfUrl) ? options.pdfUrl : '/' + options.pdfUrl.replace(/^\/+/, ''))
+        : '';
+    const highResModal = document.getElementById('highResModal');
+    const highResImage = document.getElementById('highResImage');
+    if (!highResModal || !highResImage) return;
+
+    let modal = highResModal;
+    if (!document.getElementById('modal')) {
+        const fallbackModal = document.createElement('div');
+        fallbackModal.id = 'modal';
+        fallbackModal.className = 'modal';
+        fallbackModal.style.display = 'none';
+        document.body.appendChild(fallbackModal);
+    }
+
+    if (normalizedPdfUrl) {
+        let recordEl = document.getElementById('project-viewer-record');
+        if (!recordEl) {
+            recordEl = document.createElement('article');
+            recordEl.id = 'project-viewer-record';
+            recordEl.className = 'record visually-hidden';
+            document.body.appendChild(recordEl);
+        }
+        recordEl.setAttribute('data-id', currentRecordId || 'project-viewer');
+        recordEl.setAttribute('data-pdf', normalizedPdfUrl);
+    }
+
+    isMainModalOpen = false;
+    openHighResImage(currentHighResIndex);
+}
+
 // Open high-resolution image modal
 function openHighResImage(index) {
     currentHighResIndex = index; // Set the current high-res image index
@@ -369,8 +444,7 @@ function openHighResImage(index) {
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
             // Center vertically at baseline
-            const container = document.getElementById('highResImage');
-            if (container) container.classList.add('center-fit');
+            setCenterFitState(true);
             restoreZoomForCurrentItemIfAny();
         });
         // On mobile, image pinch zoom is supported via global handlers
@@ -525,7 +599,7 @@ function renderPDF(url, container) {
     const context = canvas.getContext('2d');
     // Default to centered when baseline fit (100%)
     const cont = document.getElementById('highResImage');
-    if (cont) cont.classList.add('center-fit');
+    setCenterFitState(true, cont);
 
     ensurePdfLoadingIndicator(container);
 
@@ -574,22 +648,22 @@ function loadPdfPage(pageNumber, container, initial=false) {
         pdfState.page = page;
         pdfState.currentPage = pageNumber;
         if (initial) {
-            const containerRect = container.getBoundingClientRect();
+            const { width: contentWidth, height: contentHeight } = getContainerContentSize(container);
             const initialViewport = page.getViewport({ scale: 1 });
-            const scaleX = containerRect.width / initialViewport.width;
-            const scaleY = containerRect.height / initialViewport.height;
+            const usableWidth = contentWidth > 0 ? contentWidth : container.getBoundingClientRect().width;
+            const usableHeight = contentHeight > 0 ? contentHeight : container.getBoundingClientRect().height;
+            const scaleX = usableWidth / initialViewport.width;
+            const scaleY = usableHeight / initialViewport.height;
             pdfState.baseFitScale = Math.min(scaleX, scaleY);
-            try {
-                renderPdfQuickThenFull(container);
-            } catch (_) {
-                renderPdfAtCurrentZoom();
-            }
+            renderPdfAtCurrentZoom();
         } else {
             // Recompute base fit per page (pages may have different sizes)
-            const containerRect = container.getBoundingClientRect();
+            const { width: contentWidth, height: contentHeight } = getContainerContentSize(container);
             const initialViewport = page.getViewport({ scale: 1 });
-            const scaleX = containerRect.width / initialViewport.width;
-            const scaleY = containerRect.height / initialViewport.height;
+            const usableWidth = contentWidth > 0 ? contentWidth : container.getBoundingClientRect().width;
+            const usableHeight = contentHeight > 0 ? contentHeight : container.getBoundingClientRect().height;
+            const scaleX = usableWidth / initialViewport.width;
+            const scaleY = usableHeight / initialViewport.height;
             pdfState.baseFitScale = Math.min(scaleX, scaleY);
             renderPdfAtCurrentZoom();
         }
@@ -642,7 +716,7 @@ function renderPdfAtCurrentZoom() {
     // Toggle center-fit at baseline zoom
     const container = document.getElementById('highResImage');
     if (container) {
-        if (Math.round(currentZoom) === 100) container.classList.add('center-fit'); else container.classList.remove('center-fit');
+        setCenterFitState(Math.round(currentZoom) === 100, container);
     }
     // Render at the capped scale if we had to limit canvas size
     let effectiveViewport = viewport;
@@ -679,62 +753,6 @@ function renderPdfAtCurrentZoom() {
 }
 
 // Render a quick low-res pass then upgrade to full resolution for better perceived speed
-function renderPdfQuickThenFull(container) {
-    if (!pdfState.isActive || !pdfState.page || !pdfState.canvas) return renderPdfAtCurrentZoom();
-    const fullScale = pdfState.baseFitScale * (currentZoom / 100);
-    const quickScale = Math.max(0.35, Math.min(fullScale, pdfState.baseFitScale * 0.6));
-    const dprQuick = 1; // force low DPR for speed
-    renderPdfAtCustomScale(quickScale, dprQuick).then(() => {
-        hidePdfLoadingIndicator();
-        requestAnimationFrame(() => {
-            if (!pdfState.isActive) return;
-            renderPdfAtCurrentZoom();
-        });
-    }).catch(() => {
-        renderPdfAtCurrentZoom();
-    });
-}
-
-function renderPdfAtCustomScale(desiredScale, dpr) {
-    if (!pdfState.isActive || !pdfState.page || !pdfState.canvas) return Promise.resolve();
-    if (pdfState.rendering) {
-        return new Promise(resolve => {
-            const retry = () => {
-                if (!pdfState.rendering) { resolve(renderPdfAtCustomScale(desiredScale, dpr)); }
-                else requestAnimationFrame(retry);
-            };
-            requestAnimationFrame(retry);
-        });
-    }
-    pdfState.rendering = true;
-    const viewport = pdfState.page.getViewport({ scale: desiredScale });
-    const canvas = pdfState.canvas;
-    const ctx = canvas.getContext('2d');
-    
-    // Prevent canvas from exceeding browser limits (max ~32k x 32k pixels or 32MB memory)
-    // Desktop: Cap at 6000 to be safe. Mobile: Cap at 3500 (tighter GPU memory on mobile/iPad)
-    const maxCanvasDimension = isMobileDevice() ? 3500 : 6000;
-    let canvasWidth = Math.min(viewport.width * dpr, maxCanvasDimension);
-    let canvasHeight = Math.min(viewport.height * dpr, maxCanvasDimension);
-    
-    // If we had to cap the dimensions, scale down the viewport to stay within limits
-    let effectiveViewport = viewport;
-    if (viewport.width * dpr > maxCanvasDimension || viewport.height * dpr > maxCanvasDimension) {
-        const viewportScale = Math.min(canvasWidth / (viewport.width * dpr), canvasHeight / (viewport.height * dpr));
-        effectiveViewport = pdfState.page.getViewport({ scale: desiredScale * viewportScale });
-        canvasWidth = Math.round(effectiveViewport.width * dpr);
-        canvasHeight = Math.round(effectiveViewport.height * dpr);
-    }
-    
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    canvas.style.width = effectiveViewport.width + 'px';
-    canvas.style.height = effectiveViewport.height + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const renderTask = pdfState.page.render({ canvasContext: ctx, viewport: effectiveViewport });
-    return renderTask.promise.then(() => { pdfState.rendering = false; }).catch(e => { pdfState.rendering = false; throw e; });
-}
-
 // Loading indicator helpers
 function ensurePdfLoadingIndicator(container) {
     const modal = document.getElementById('highResModal');
@@ -963,8 +981,7 @@ function navigateHighResImage(direction) {
         createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
             highResImage.appendChild(img);
             // Center vertically at baseline
-            const container = document.getElementById('highResImage');
-            if (container) container.classList.add('center-fit');
+            setCenterFitState(true);
             restoreZoomForCurrentItemIfAny();
         });
     }
@@ -1229,11 +1246,7 @@ function applyZoom() {
         img.style.maxHeight = 'none';
         img.style.transform = 'none';
         // Toggle center-fit class based on zoom level
-        if (Math.round(currentZoom) === 100) {
-            highResImage.classList.add('center-fit');
-        } else {
-            highResImage.classList.remove('center-fit');
-        }
+        setCenterFitState(Math.round(currentZoom) === 100, highResImage);
     }
     
     if (canvas && pdfState.isActive) {
@@ -1427,12 +1440,12 @@ window.addEventListener('orientationchange', () => {
     if (pdfState.isActive) {
         // Recompute baseFitScale on next render and keep centered
         schedulePdfRerender();
-        containerEl.classList.add('center-fit');
+        setCenterFitState(true, containerEl);
     } else {
         imagePinch.active = true;
         applyZoom();
         imagePinch.active = false;
-        containerEl.classList.add('center-fit');
+        setCenterFitState(true, containerEl);
     }
 });
 
@@ -1689,14 +1702,14 @@ function ensureHighResShareButton() {
                         }
                     }
                     schedulePdfRerender();
-                    if (containerEl) containerEl.classList.add('center-fit');
+                    if (containerEl) setCenterFitState(true, containerEl);
                 } else {
                     // Images: allow applyZoom and center roughly on current view center
                     imagePinch.active = true;
                     applyZoom();
                     imagePinch.active = false;
                     // Center vertically at baseline
-                    if (containerEl) containerEl.classList.add('center-fit');
+                    if (containerEl) setCenterFitState(true, containerEl);
                     if (containerEl) {
                         const img = containerEl.querySelector('img');
                         if (img) {

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <title>Sterrenburg 3, Dordrecht - Stedenbouw - Jan Willem van der Weerd</title>
+    <meta name="description" content="Dit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplann">
+    <link rel="canonical" href="/projects/744-stedenbouw/index.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/nav.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Jan Willem van der Weerd (1943-2024) - architect</h1>
+        <nav></nav>
+    </header>
+    <main class="project-page">
+        <p class="project-backlink"><a href="/collection.html">Back to project index</a></p>
+        <article class="project-detail">
+            <h2>Sterrenburg 3, Dordrecht - Stedenbouw</h2>
+            <div class="project-hero">
+                <button type="button" class="project-hero-trigger" aria-label="Open Sterrenburg 3, Dordrecht - Stedenbouw viewer">
+                    <img src="/resources/744/Stedenbouw/deelplan%201B%20Z-10.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw" loading="eager">
+                </button>
+            </div>
+            <dl class="project-facts">
+                <div><dt>Artist</dt><dd>Herman Haan &amp; Jan van der Weerd</dd></div>
+                <div><dt>Year</dt><dd>1974</dd></div>
+                <div><dt>Genre</dt><dd>gerealiseerd</dd></div>
+                <div><dt>Label</dt><dd>Atelier A architecten</dd></div>
+            </dl>
+            <p class="project-info">Dit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sector), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.</p>
+            <p class="project-link-row"><a href="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot" target="_blank" rel="noopener noreferrer">External reference</a></p>
+            
+            <section class="project-gallery" aria-label="Project images">
+                <h3>Image gallery</h3>
+                <div class="project-gallery-grid">
+                    
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="0">
+                    <img src="/resources/744/Stedenbouw/deelplan%201b%20E7-E8_M5%20kleur-20.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 1" loading="lazy">
+                </button>
+            </figure>
+
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="1">
+                    <img src="/resources/744/Stedenbouw/H1%20situatie-10-R.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 2" loading="lazy">
+                </button>
+            </figure>
+
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="2">
+                    <img src="/resources/744/Stedenbouw/sat-10.png" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 3" loading="lazy">
+                </button>
+            </figure>
+
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="3">
+                    <img src="/resources/744/Stedenbouw/B0000166.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 4" loading="lazy">
+                </button>
+            </figure>
+
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="4">
+                    <img src="/resources/744/Stedenbouw/B0000167.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 5" loading="lazy">
+                </button>
+            </figure>
+
+            <figure class="project-image-card">
+                <button type="button" class="project-image-trigger" data-index="5">
+                    <img src="/resources/744/Stedenbouw/B0000217.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw image 6" loading="lazy">
+                </button>
+            </figure>
+                </div>
+            </section>
+        </article>
+    </main>
+    
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal')">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="highResModal" class="modal" style="display:none;">
+        <div class="modal-content high-res-modal-content">
+            <span class="close" onclick="closeModal('highResModal')">&times;</span>
+            <button id="prevImage" class="nav-btn" aria-label="Vorige" onclick="navigateHighResImage(-1)">&#9664;</button>
+            <div id="highResImage" class="high-res-content"></div>
+            <button id="nextImage" class="nav-btn" aria-label="Volgende" onclick="navigateHighResImage(1)">&#9654;</button>
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomImage('-')" title="Zoom Out">-</button>
+                <select class="zoom-select" id="zoomSelect" onchange="setZoomLevel(this.value)">
+                    <option value="25">25%</option>
+                    <option value="50">50%</option>
+                    <option value="75">75%</option>
+                    <option value="100" selected>100%</option>
+                    <option value="125">125%</option>
+                    <option value="150">150%</option>
+                    <option value="200">200%</option>
+                    <option value="300">300%</option>
+                    <option value="400">400%</option>
+                    <option value="500">500%</option>
+                </select>
+                <button class="zoom-btn" onclick="zoomImage('+')" title="Zoom In">+</button>
+                <button class="zoom-btn fit-btn" onclick="fitZoomLevel()" title="Fit to 100%">Fit</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 R. van der Weerd - Netherlands. <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
+    </footer>
+    <script>
+        window.PROJECT_VIEWER = {
+            recordId: "744-stedenbouw",
+            images: ["resources/744/Stedenbouw/deelplan 1b E7-E8_M5 kleur.jpg","resources/744/Stedenbouw/H1 situatie-70-R.jpg","resources/744/Stedenbouw/sat-50.png","resources/744/Stedenbouw/B0000166.jpg","resources/744/Stedenbouw/B0000167.jpg","resources/744/Stedenbouw/B0000217.jpg"],
+            pdfUrl: ""
+        };
+    </script>
+    <script src="/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const config = window.PROJECT_VIEWER;
+            if (!config || !Array.isArray(config.images) || !config.images.length) return;
+            const openViewer = (index) => openHighResViewer(config.images, index, { recordId: config.recordId, pdfUrl: config.pdfUrl });
+            const heroButton = document.querySelector('.project-hero-trigger');
+            if (heroButton) heroButton.addEventListener('click', () => openViewer(0));
+            document.querySelectorAll('.project-image-trigger').forEach((button) => {
+                const index = Number(button.getAttribute('data-index') || '0');
+                button.addEventListener('click', () => openViewer(index));
+            });
+        });
+    </script>
+</body>
+</html>

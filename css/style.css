@@ -321,6 +321,177 @@ main {
     margin-bottom: calc(80px + var(--safe-bottom)); /* Footer spacing */
 }
 
+.project-index {
+    margin: 0 0 2rem;
+}
+
+.project-index-title {
+    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+}
+
+.project-index-lead {
+    margin: 0 0 1rem;
+    color: #555;
+}
+
+.project-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.project-backlink {
+    margin: 0 0 1rem;
+}
+
+.project-detail {
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.project-detail h2 {
+    margin-top: 0;
+}
+
+.project-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.project-hero-trigger,
+.project-image-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.project-hero-trigger img,
+.project-image-trigger img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.project-hero-trigger:focus-visible,
+.project-image-trigger:focus-visible {
+    outline: 2px solid #ff8c00;
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
+.project-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+.project-facts div {
+    padding: 0.75rem;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.project-facts dt {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.project-facts dd {
+    margin: 0;
+}
+
+.project-info {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+.project-gallery {
+    margin-top: 1.5rem;
+}
+
+.project-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.project-image-card {
+    margin: 0;
+}
+
+.project-image-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.seo-project {
+    display: grid;
+    grid-template-columns: minmax(140px, 240px) 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0 0 1rem;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.seo-project-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.seo-project-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.seo-project-link h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.25;
+}
+
+.seo-project-meta,
+.seo-project-info,
+.seo-project-release,
+.seo-project-pdf {
+    margin: 0 0 0.5rem;
+}
+
+.seo-project-meta strong {
+    display: inline-block;
+    min-width: 5rem;
+}
+
+.seo-project-info {
+    white-space: pre-line;
+}
+
+@media (max-width: 760px) {
+    .seo-project {
+        grid-template-columns: 1fr;
+    }
+}
+
 footer {
     background-color: #333;
     color: #fff;
@@ -443,11 +614,7 @@ footer img {
     }
     
     .high-res-modal-content {
-        width: 100vw;
-        height: 100vh;
-        max-width: 100vw;
-        max-height: 100vh;
-        padding: calc(60px + var(--safe-top)) 5px calc(5px + var(--safe-bottom)) calc(5px + var(--safe-left)); /* Reduced padding with safe-area */
+        padding: 0;
         margin: 0;
     }
 }
@@ -477,22 +644,14 @@ footer img {
 /* Tablet and small desktop adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
     .high-res-modal-content {
-        width: 100vw;
-        height: 100vh;
-        max-width: 100vw;
-        max-height: 100vh;
-        padding: calc(60px + var(--safe-top)) 15px calc(15px + var(--safe-bottom)) calc(15px + var(--safe-left));
+        padding: 0;
     }
 }
 
 /* Large desktop optimizations */
 @media (min-width: 1025px) {
     .high-res-modal-content {
-        width: 100vw;
-        height: 100vh;
-        max-width: 100vw;
-        max-height: 100vh;
-        padding: calc(60px + var(--safe-top)) 20px calc(20px + var(--safe-bottom)) calc(20px + var(--safe-left));
+        padding: 0;
     }
 }
 
@@ -637,6 +796,7 @@ footer img {
 #highResModal {
     z-index: 3000;
     background-color: rgba(0, 0, 0, 1); /* Solid black background */
+    overflow: hidden;
 }
 
 /* Prevent body scrolling when modal is open */
@@ -748,16 +908,17 @@ body.modal-open {
 
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
     background-color: transparent;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     overflow: hidden;
     padding: 0;
     margin: 0;
@@ -777,8 +938,7 @@ body.modal-open {
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
-    /* Use padding-bottom to reserve space for zoom controls at the bottom */
-    padding-bottom: 120px;
+    padding: 0;
 }
 
 /* When at baseline (100%) we center content vertically/horizontally */
@@ -786,10 +946,8 @@ body.modal-open {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-#highResImage.center-fit img,
-#highResImage.center-fit canvas {
-    margin: 0;
+    overflow: hidden;
+    padding: 0;
 }
 
 #highResImage:active {
@@ -806,9 +964,7 @@ body.modal-open {
     cursor: grab;
     touch-action: manipulation;
     display: block;
-    margin: 20px auto; /* Reduced margins for proper spacing */
-    min-width: calc(100% - 40px);
-    min-height: calc(100% - 40px);
+    margin: 0 auto;
 }
 
 #highResImage img:active {
@@ -825,13 +981,24 @@ body.modal-open {
     cursor: grab;
     touch-action: manipulation;
     display: block;
-    margin: 20px auto; /* Reduced margins for proper spacing */
-    min-width: calc(100% - 40px);
-    min-height: calc(100% - 40px);
+    margin: 0 auto;
 }
 
 #highResImage canvas:active {
     cursor: grabbing;
+}
+
+#highResImage.scrollable {
+    padding-bottom: 40px;
+}
+
+#highResImage.center-fit img,
+#highResImage.center-fit canvas {
+    margin: 0;
+    min-width: auto;
+    min-height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 form {
@@ -1020,6 +1187,9 @@ button:hover {
         height: 100%;
         padding: 0; /* container itself spans safe-area via modal content padding */
         margin: 0;
+    }
+    #highResImage.scrollable {
+        padding-bottom: 0;
     }
     
     #highResImage img,

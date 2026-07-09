@@ -4,7 +4,7 @@ Static archival/portfolio site for architect Jan Willem van der Weerd.
 
 ## Features
 - Responsive static pages (home, collection, archive, contact)
-- Data-driven project gallery (`records.json`) with client-side search (now includes project info in search)
+- Data-driven project gallery (`records.json`) with client-side search, a pre-rendered static project index, and one static page per project for indexing
 - Accessible modal viewer with:
   - Image & PDF support (single-page PDF rendering via pdf.js)
   - High-res viewer with keyboard navigation, wrap-around, drag-pan, zoom (desktop) and native pinch-zoom (touch)
@@ -32,6 +32,7 @@ IDs should be unique (duplicate 744 split into 744-stedenbouw and 744-hoogbouw).
 1. Place images/PDFs under `resources/<project-id>/`.
 2. Add thumbnails (low/medium), highres (full), cover (thumbnail path) to `records.json`.
 3. Optionally fill `info` and `release` (set `release` to `.` or omit if none).
+4. Run `node scripts/generate-project-pages.js` to refresh the standalone project pages.
 
 ## Accessibility notes
 - Records are keyboard-activatable (Enter/Space).
