@@ -108,7 +108,7 @@ function projectPageTemplate(record) {
     <main class="project-page">
         <p class="project-backlink"><a href="/collection.html">Back to project index</a></p>
         <article class="project-detail">
-            <h2>${escapeHtml(record.title)}</h2>
+            <h1 class="project-title">${escapeHtml(record.title)}</h1>
             <div class="project-hero">
                 <button type="button" class="project-hero-trigger" aria-label="Open ${escapeHtml(record.title)} viewer">
                     <img src="/${encodeURI(record.cover)}" alt="${escapeHtml(record.title)}" loading="eager">
