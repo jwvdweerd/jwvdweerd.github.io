@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.jwvdweerd.github.io/sitemap.xml
-Sitemap: https://www.jwvdweerd.github.io/sitemap-index.xml
+Sitemap: https://jwvdweerd.github.io/sitemap.xml
+Sitemap: https://jwvdweerd.github.io/sitemap-index.xml
