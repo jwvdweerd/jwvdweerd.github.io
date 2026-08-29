@@ -251,13 +251,30 @@
         "info": "",
         "release": ""
     },
+        {
+        "id": "75046",
+        "title": "Raadshuis Amstelveen",
+        "artist": "Piet (P.W.) van Dommelen & J.W. (Jan) van der Weerd",
+        "year": "1975-1980",
+        "genre": "gerealiseerd",
+        "label": "van Dommelen Kroos van der Weerd architekten",
+        "cover": "resources/75046-raads-amst/schets-BW.png",
+        "thumbnails": [
+            "resources/75046-raads-amst/Raadhuis aan het water.jpg"
+        ],
+        "highres": [
+            "resources/75046-raads-amst/Raadhuis aan het water.jpg"
+        ],
+        "info": "",
+        "release": ""
+    },
     {
         "id": "76014",
         "title": "ABN Amro, Zwolle",
         "artist": "Piet (P.W.) van Dommelen & J.W. (Jan) van der Weerd",
         "year": "1978",
         "genre": "gerealiseerd",
-        "label": "Maaskant van Dommelen Kroos architekten",
+        "label": "van Dommelen Kroos van der Weerd architekten",
         "cover": "resources/76014-abna-zwol/perspectief.jpg",
         "thumbnails": [
             "resources/76014-abna-zwol/76014-58 amro zwolle.jpg",
@@ -307,7 +324,7 @@
         "id": "80015",
         "title": "Kantoorgebouw Spuiboulevard, Dordrecht",
         "artist": "J.W. (Jan) van der Weerd",
-        "year": "1980",
+        "year": "1980-1982",
         "genre": "gerealiseerd",
         "label": "architektenburo ir j.w. van der weerd bv",
         "cover": "resources/80015-spui-dord/schetsontwerp-30.jpg",
