@@ -2,7 +2,7 @@
     {
         "id": "tud-schuilhut",
         "title": "TU Delft studie - Schuilhut",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "ca. 1966",
         "genre": "studie",
         "label": "TU Delft - Faculteit Bouwkunde",
@@ -15,7 +15,7 @@
     {
         "id": "tud-roeipaviljoen",
         "title": "TU Delft studie - Roeipaviljoen",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "ca. 1967",
         "genre": "studie",
         "label": "TU Delft - Faculteit Bouwkunde",
@@ -28,7 +28,7 @@
         {
         "id": "tud-stations",
         "title": "TU Delft studie - Stationsgebieden Delft en Leiden-Noord",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "ca. 1969",
         "genre": "studie",
         "label": "TU Delft - Faculteit Bouwkunde",
@@ -61,7 +61,7 @@
     {
         "id": "744-stedenbouw",
         "title": "Sterrenburg 3, Dordrecht - Stedenbouw",
-        "artist": "Herman Haan & Jan van der Weerd",
+        "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
@@ -88,7 +88,7 @@
     {
         "id": "744-patiowoningen",
         "title": "Sterrenburg 3, Dordrecht - E7 Patiowoningen",
-        "artist": "Herman Haan & Jan van der Weerd",
+        "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
@@ -127,7 +127,7 @@
         {
         "id": "744-terraswoningen",
         "title": "Sterrenburg 3, Dordrecht - M5 Terraswoningen",
-        "artist": "Herman Haan & Jan van der Weerd",
+        "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
@@ -186,7 +186,7 @@
     {
         "id": "744-hoogbouw",
         "title": "Sterrenburg 3, Dordrecht - H1 Hoogbouw",
-        "artist": "Herman Haan & Jan van der Weerd",
+        "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
         "label": "Atelier A architecten",
@@ -235,7 +235,7 @@
     {
         "id": "75-WS",
         "title": "Woningbouw, Willemstad",
-        "artist": "Herman Haan & Jan van der Weerd",
+        "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1975",
         "genre": "studie",
         "label": "Atelier A architecten",
@@ -254,7 +254,7 @@
     {
         "id": "76014",
         "title": "ABN Amro, Zwolle",
-        "artist": "Jan van der Weerd",
+        "artist": "Piet (P.W.) van Dommelen & J.W. (Jan) van der Weerd",
         "year": "1978",
         "genre": "gerealiseerd",
         "label": "Maaskant van Dommelen Kroos architekten",
@@ -287,29 +287,29 @@
             "resources/76014-abna-zwol/606_1440.avif",
             "resources/76014-abna-zwol/614_1440.avif"
         ],
-        "info": "ABN Amro kantoor Zwolle, stationsplein. Ontwerp van bureau Maaskant van Dommelen Kroos en Jan van der Weerd (medewerkend architect). Oorspronkelijk uitgevoerd in baksteen, gevel later (ca. 2020) aangepast zonder medewerking bureau.",
+        "info": "ABN Amro kantoor Zwolle, stationsplein. Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau.",
         "release": ".."
     },
     {
         "id": "78044",
         "title": "ABN Amro, Dordrecht",
-        "artist": "Jan van der Weerd",
-        "year": "1979",
+        "artist": "J.W. (Jan) van der Weerd & Piet (P.W.) van Dommelen",
+        "year": "1978-1979",
         "genre": "gerealiseerd",
         "label": "van Dommelen Kroos van der Weerd architekten",
         "cover": "resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg",
         "thumbnails": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg","resources/78044-abna-dord/B0000152-40.jpg","resources/78044-abna-dord/B0000153-40.jpg","resources/78044-abna-dord/B0000154-40.jpg","resources/78044-abna-dord/B0000155-40.jpg"],
         "highres": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg","resources/78044-abna-dord/B0000152.jpg","resources/78044-abna-dord/B0000153.jpg","resources/78044-abna-dord/B0000154.jpg","resources/78044-abna-dord/B0000155.jpg"],
-        "info": "ABN Amro kantoor Dordrecht, ontworpen door bureau Maaskant van Dommelen Kroos, dat gedurende de ontwikkeling overging in bureau van Dommelen Kroos van der Weerd architekten. Het gebouw is gerealiseerd in 1979.",
+        "info": "ABN Amro kantoor Dordrecht, Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau Maaskant van Dommelen Kroos (dat gedurende de ontwikkeling overging in bureau van Dommelen Kroos van der Weerd architekten). Het gebouw is gerealiseerd in 1979.",
         "release": ".."
     },
     {
         "id": "80015",
         "title": "Kantoorgebouw Spuiboulevard, Dordrecht",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "1980",
         "genre": "gerealiseerd",
-        "label": "architektenburo ir J.W. van der Weerd bv",
+        "label": "architektenburo ir j.w. van der weerd bv",
         "cover": "resources/80015-spui-dord/schetsontwerp-30.jpg",
         "thumbnails": ["resources/80015-spui-dord/schetsontwerp-30.jpg","resources/80015-spui-dord/perspectief-10.jpg","resources/80015-spui-dord/luchtfoto-kleur-30.jpg","resources/80015-spui-dord/tek1-10.jpg","resources/80015-spui-dord/tek2-10.jpg","resources/80015-spui-dord/tek3-10.jpg","resources/80015-spui-dord/tek4-10.jpg","resources/80015-spui-dord/tek5-10.jpg","resources/80015-spui-dord/f1-20.jpg","resources/80015-spui-dord/f2-20.jpg","resources/80015-spui-dord/f3-20.jpg","resources/80015-spui-dord/f4-30.jpg","resources/80015-spui-dord/f5-20.jpg"],
         "highres": ["resources/80015-spui-dord/schetsontwerp.jpg","resources/80015-spui-dord/perspectief-70.jpg","resources/80015-spui-dord/luchtfoto-kleur.jpg","resources/80015-spui-dord/tek1.jpg","resources/80015-spui-dord/tek2.jpg","resources/80015-spui-dord/tek3.jpg","resources/80015-spui-dord/tek4.jpg","resources/80015-spui-dord/tek5.jpg","resources/80015-spui-dord/f1.jpg","resources/80015-spui-dord/f2.jpg","resources/80015-spui-dord/f3.jpg","resources/80015-spui-dord/f4.jpg","resources/80015-spui-dord/f5.jpg"],
@@ -319,10 +319,10 @@
     {
         "id": "80025",
         "title": "Jongerenhuisvesting Kruisplein, Rotterdam",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "1982",
         "genre": "prijsvraag (niet gerealiseerd)",
-        "label": "architektenburo ir J.W. van der Weerd bv",
+        "label": "architektenburo ir j.w. van der weerd bv",
         "cover": "resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg",
         "thumbnails": [
             "resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg",
@@ -385,10 +385,10 @@
     {
         "id": "WHT",
         "title": "Westelijk Handelsterrein, Rotterdam",
-        "artist": "Jan van der Weerd & Henk Klunder",
+        "artist": "J.W. (Jan) van der Weerd & H. (Henk) Klunder",
         "year": "1998",
         "genre": "gerealiseerd",
-        "label": "architektenburo ir J.W. van der Weerd bv",
+        "label": "architektenburo van der weerd bv",
         "cover": "resources/WHT/wht-doorsneden-gevels-40.jpg",
         "thumbnails": [
             "resources/WHT/B0000026.jpg",
@@ -412,10 +412,10 @@
     {
         "id": "NLR-TRS",
         "title": "NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)",
-        "artist": "Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd",
         "year": "1999",
         "genre": "gerealiseerd",
-        "label": "architektenburo ir J.W. van der Weerd bv",
+        "label": "architektenburo van der weerd bv",
         "cover": "resources/99012-nlr-trs/TRS-gevels-cropped.jpg",
         "thumbnails": [
             "resources/99012-nlr-trs/H03-30.jpg",
@@ -453,10 +453,10 @@
     {
         "id": "westerstraat",
         "title": "Westerstraat Rotterdam",
-        "artist": "Henk Klunder, Jan van der Weerd",
+        "artist": "J.W. (Jan) van der Weerd & H. (Henk) Klunder",
         "year": "2000",
         "genre": "gerealiseerd",
-        "label": "Henk Klunder & Jan van der Weerd",
+        "label": "architektenburo van der weerd bv ",
         "cover": "resources/westerstraat/westerstraat perspektief.jpg",
         "thumbnails": [
             "resources/westerstraat/B0000022.jpg",
@@ -480,10 +480,10 @@
     {
         "id": "eco-compact",
         "title": "ECO compact woningconcept",
-        "artist": "Henk Klunder, Jan van der Weerd",
+        "artist": "H. (Henk) Klunder & J.W. (Jan) van der Weerd",
         "year": "2012",
         "genre": "studie",
-        "label": "Henk Klunder & Jan van der Weerd",
+        "label": "Henk Klunder en Jan van der Weerd architecten",
         "cover": "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
         "thumbnails": [
             "resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg",
