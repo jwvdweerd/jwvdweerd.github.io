@@ -260,10 +260,38 @@
         "label": "van Dommelen Kroos van der Weerd architekten",
         "cover": "resources/75046-raads-amst/schets-BW.png",
         "thumbnails": [
-            "resources/75046-raads-amst/Raadhuis aan het water.jpg"
+            "resources/75046-raads-amst/97-situatie-cr-5.jpg",
+            "resources/75046-raads-amst/96-doorsneden-cr-5.jpg",
+            "resources/75046-raads-amst/98-Noordoostgevel-cr-5.jpg",
+            "resources/75046-raads-amst/99-zuidgevel-cr-5.jpg",
+            "resources/75046-raads-amst/92-plattegrond1e-5.jpg",
+            "resources/75046-raads-amst/schets.png",
+            "resources/75046-raads-amst/luchtfoto_1.png",
+            "resources/75046-raads-amst/voorzijde_1.png",
+            "resources/75046-raads-amst/waterzijde.jpg",
+            "resources/75046-raads-amst/waterzijde_1.png",
+            "resources/75046-raads-amst/Raadhuis aan het water.jpg",
+            "resources/75046-raads-amst/NRC-12-nov-1976.jpg",
+            "resources/75046-raads-amst/maaskant_ontw_1.png",
+            "resources/75046-raads-amst/maaskant_ontw_2_maq.png",
+            "resources/75046-raads-amst/dommelen_ontw_1_maq.png"
         ],
         "highres": [
-            "resources/75046-raads-amst/Raadhuis aan het water.jpg"
+            "resources/75046-raads-amst/97-situatie-cr-30.jpg",
+            "resources/75046-raads-amst/96-doorsneden-cr-30.jpg",
+            "resources/75046-raads-amst/98-Noordoostgevel-cr-30.jpg",
+            "resources/75046-raads-amst/99-zuidgevel-cr-30.jpg",
+            "resources/75046-raads-amst/92-plattegrond1e-30.jpg",
+            "resources/75046-raads-amst/schets.png",
+            "resources/75046-raads-amst/luchtfoto_1.png",
+            "resources/75046-raads-amst/voorzijde_1.png",
+            "resources/75046-raads-amst/waterzijde.jpg",
+            "resources/75046-raads-amst/waterzijde_1.png",
+            "resources/75046-raads-amst/Raadhuis aan het water.jpg",
+            "resources/75046-raads-amst/NRC-12-nov-1976.jpg",
+            "resources/75046-raads-amst/maaskant_ontw_1.png",
+            "resources/75046-raads-amst/maaskant_ontw_2_maq.png",
+            "resources/75046-raads-amst/dommelen_ontw_1_maq.png"
         ],
         "info": "",
         "release": "https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/60/prj_id/416"
@@ -271,7 +299,7 @@
     {
         "id": "76014",
         "title": "ABN Amro, Zwolle",
-        "artist": "Piet (P.W.) van Dommelen & J.W. (Jan) van der Weerd",
+        "artist": "P.W. (Piet) van Dommelen & J.W. (Jan) van der Weerd",
         "year": "1978",
         "genre": "gerealiseerd",
         "label": "van Dommelen Kroos van der Weerd architekten",
@@ -310,7 +338,7 @@
     {
         "id": "78044",
         "title": "ABN Amro, Dordrecht",
-        "artist": "J.W. (Jan) van der Weerd & Piet (P.W.) van Dommelen",
+        "artist": "J.W. (Jan) van der Weerd & P.W. (Piet) van Dommelen",
         "year": "1978-1979",
         "genre": "gerealiseerd",
         "label": "van Dommelen Kroos van der Weerd architekten",
