@@ -696,6 +696,21 @@ footer img {
     text-align: left;
 }
 
+.category-break {
+    position: relative;
+    margin-top: 24px;
+    padding-top: 24px;
+}
+
+.category-break::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 120px;
+    border-top: 1px solid #777;
+}
+
 .image {
     height: 250px;
     width: auto;
