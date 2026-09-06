@@ -10,6 +10,7 @@ Static archival/portfolio site for architect Jan Willem van der Weerd.
   - High-res viewer with keyboard navigation, wrap-around, drag-pan, zoom (desktop) and native pinch-zoom (touch)
   - Reduced UI for mobile
 - Lazy-loaded images for performance
+- Service worker caching for offline access to visited pages and same-origin assets
 - Graceful loading / error message for project data
 - External link shown only when a valid URL exists
 - Basic accessibility: focusable records, aria-labels, status region, focus outlines
@@ -39,11 +40,17 @@ IDs should be unique (duplicate 744 split into 744-stedenbouw and 744-hoogbouw).
 - High-res modal can be closed with Escape.
 - Navigation / zoom controls have visible focus outlines.
 
+## Caching and offline behavior
+The root service worker (`sw.js`) precaches the core shell, uses network-first
+requests for HTML and JSON, and uses cache-first requests for same-origin
+images, scripts, stylesheets, and PDFs after they have been visited. Cached
+pages remain available offline, with the home page as the fallback for an
+uncached navigation. External resources such as pdf.js are not cached by the
+service worker.
+
 ## Future ideas
 - Multi-page PDF navigation
-- Image captions/metadata
 - Filtering by year range or tag pills
-- Service worker caching
 
 ## License
 Content © 2024 R. van der Weerd (see footer CC BY-NC 4.0 image). Code examples permissive.

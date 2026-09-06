@@ -1,3 +1,11 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(error => {
+            console.error('Service worker registration failed:', error);
+        });
+    });
+}
+
 // Inject shared top navigation and mark active link
 document.addEventListener('DOMContentLoaded', async () => {
     const header = document.querySelector('header');
