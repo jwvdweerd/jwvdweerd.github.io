@@ -18,6 +18,11 @@ function normalizeText(value) {
     return String(value ?? '').trim();
 }
 
+function imageSource(image) {
+    if (typeof image === 'string') return image;
+    return image && typeof image.src === 'string' ? image.src : '';
+}
+
 function descriptionFrom(record) {
     const info = normalizeText(record.info);
     if (info && !/^\.{1,3}$/.test(info)) {
@@ -30,11 +35,11 @@ function projectImageMarkup(record) {
     const thumbnails = Array.isArray(record.thumbnails) ? record.thumbnails : [];
     const highres = Array.isArray(record.highres) ? record.highres : [];
     return thumbnails.map((thumbnail, index) => {
-        const fullImage = highres[index] || thumbnail;
+        const thumbnailSource = imageSource(thumbnail);
         return `
             <figure class="project-image-card">
                 <button type="button" class="project-image-trigger" data-index="${index}">
-                    <img src="/${encodeURI(thumbnail)}" alt="${escapeHtml(record.title)} image ${index + 1}" loading="lazy">
+                    <img src="/${encodeURI(thumbnailSource)}" alt="${escapeHtml(record.title)} image ${index + 1}" loading="lazy">
                 </button>
             </figure>`;
     }).join('\n');

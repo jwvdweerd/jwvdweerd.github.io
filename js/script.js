@@ -24,6 +24,79 @@ const pdfState = {
 // Cache loaded PDF documents by URL to avoid re-fetch and re-parse on reopen
 const PDF_DOC_CACHE = new Map();
 let pendingTargetPdfPage = null; // if deep-link requests a certain page
+let highResCaptionHidden = false;
+
+function getImageSource(image) {
+    if (typeof image === 'string') return image;
+    if (image && typeof image.src === 'string') return image.src;
+    return '';
+}
+
+function getImageMetadata(image) {
+    if (!image || typeof image !== 'object') return null;
+    return image.metadata || null;
+}
+
+function normalizeImageEntry(image) {
+    const source = getImageSource(image);
+    if (!source) return image;
+    const normalizedSource = source.startsWith('/') || /^https?:\/\//i.test(source)
+        ? source
+        : '/' + source.replace(/^\/+/, '');
+    if (typeof image === 'string') return normalizedSource;
+    return { ...image, src: normalizedSource };
+}
+
+function renderHighResCaption(image) {
+    const highResImage = document.getElementById('highResImage');
+    if (!highResImage) return;
+    const oldCaption = highResImage.querySelector('.high-res-caption');
+    if (oldCaption) oldCaption.remove();
+
+    const caption = image && typeof image === 'object' ? image.caption : '';
+    const metadata = getImageMetadata(image);
+    if ((!caption || !String(caption).trim()) && !metadata) return;
+
+    const captionPanel = document.createElement('div');
+    captionPanel.className = 'high-res-caption';
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'high-res-caption-close';
+    closeButton.setAttribute('aria-label', 'Verberg afbeeldingsinformatie');
+    closeButton.textContent = '×';
+    closeButton.addEventListener('click', () => {
+        highResCaptionHidden = true;
+        captionPanel.remove();
+    });
+    captionPanel.appendChild(closeButton);
+
+    if (caption && String(caption).trim()) {
+        const captionText = document.createElement('div');
+        captionText.className = 'high-res-caption-text';
+        captionText.textContent = caption;
+        captionPanel.appendChild(captionText);
+    }
+    if (metadata) {
+        const metadataList = document.createElement('dl');
+        metadataList.className = 'high-res-metadata';
+        if (typeof metadata === 'object') {
+            Object.entries(metadata).forEach(([label, value]) => {
+                if (value === null || value === undefined || value === '') return;
+                const term = document.createElement('dt');
+                term.textContent = label;
+                const detail = document.createElement('dd');
+                detail.textContent = value;
+                metadataList.append(term, detail);
+            });
+        } else {
+            const detail = document.createElement('dd');
+            detail.textContent = metadata;
+            metadataList.appendChild(detail);
+        }
+        if (metadataList.children.length) captionPanel.appendChild(metadataList);
+    }
+    if (!highResCaptionHidden) highResImage.appendChild(captionPanel);
+}
 
 // Check if PDF.js library is available
 function isPdfJsAvailable() {
@@ -249,7 +322,7 @@ function openModal(record) {
     const genre = record.getAttribute('data-genre');
     const label = record.getAttribute('data-label');
     const thumbnails = JSON.parse(record.getAttribute('data-thumbnails'));
-    highResImages = JSON.parse(record.getAttribute('data-highres')); // Store the high-res images
+    highResImages = JSON.parse(record.getAttribute('data-highres')).map(normalizeImageEntry); // Store the high-res images
     const info = record.getAttribute('data-info');
     const release = record.getAttribute('data-release'); // Get the release URL
 
@@ -266,7 +339,8 @@ function openModal(record) {
     const thumbWrapper = document.createElement('div');
     thumbWrapper.className = 'thumbnails';
     thumbnails.forEach((thumbnail, index) => {
-        if (thumbnail.endsWith('.pdf')) {
+        const thumbnailSource = getImageSource(thumbnail);
+        if (thumbnailSource.endsWith('.pdf')) {
             const btn = document.createElement('button');
             btn.className = 'pdf-thumbnail';
             btn.setAttribute('aria-label', `Open PDF ${index + 1}`);
@@ -279,7 +353,7 @@ function openModal(record) {
             thumbWrapper.appendChild(btn);
         } else {
             const img = document.createElement('img');
-            img.src = thumbnail;
+            img.src = thumbnailSource;
             img.alt = `${title} miniatuur ${index + 1}`;
             img.className = 'thumbnail';
             img.tabIndex = 0;
@@ -484,11 +558,7 @@ function setCenterFitState(isCenterFit, container = document.getElementById('hig
 
 function openHighResViewer(images, index = 0, options = {}) {
     if (!Array.isArray(images) || images.length === 0) return;
-    highResImages = images.map((imageUrl) => {
-        if (typeof imageUrl !== 'string') return imageUrl;
-        if (imageUrl.startsWith('/') || /^https?:\/\//i.test(imageUrl)) return imageUrl;
-        return '/' + imageUrl.replace(/^\/+/, '');
-    });
+    highResImages = images.map(normalizeImageEntry);
     currentHighResIndex = Math.max(0, Math.min(index, highResImages.length - 1));
     currentRecordId = options.recordId || null;
     const normalizedPdfUrl = typeof options.pdfUrl === 'string' && options.pdfUrl.trim() !== ''
@@ -526,6 +596,7 @@ function openHighResViewer(images, index = 0, options = {}) {
 // Open high-resolution image modal
 function openHighResImage(index) {
     currentHighResIndex = index; // Set the current high-res image index
+    highResCaptionHidden = false;
     const highResModal = document.getElementById('highResModal');
     const highResImage = document.getElementById('highResImage');
     highResModal.style.display = 'block';
@@ -547,8 +618,10 @@ function openHighResImage(index) {
     // Reset PDF state
     resetPdfState();
     
-    if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        renderPDF(highResImages[currentHighResIndex], highResImage);
+    const currentImage = highResImages[currentHighResIndex];
+    const currentSource = getImageSource(currentImage);
+    if (currentSource.endsWith('.pdf')) {
+        renderPDF(currentSource, highResImage);
         // After initial render, restore per-item zoom if any
         setTimeout(restoreZoomForCurrentItemIfAny, 0);
     } else {
@@ -556,14 +629,16 @@ function openHighResImage(index) {
         highResImage.innerHTML = '';
         
         // Create and add screen-fitted image
-        createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
+        createScreenFittedImage(currentSource).then(img => {
             highResImage.appendChild(img);
+            renderHighResCaption(currentImage);
             // Center vertically at baseline
             setCenterFitState(true);
             restoreZoomForCurrentItemIfAny();
         });
         // On mobile, image pinch zoom is supported via global handlers
     }
+    if (currentSource.endsWith('.pdf')) renderHighResCaption(currentImage);
     // Update hash with image index (#id:index)
     if (currentRecordId) {
         const combined = '#'+encodeURIComponent(currentRecordId)+':'+currentHighResIndex;
@@ -1084,8 +1159,10 @@ function navigateHighResImage(direction) {
     }
     resetPdfState();
     
-    if (highResImages[currentHighResIndex].endsWith('.pdf')) {
-        renderPDF(highResImages[currentHighResIndex], highResImage);
+    const currentImage = highResImages[currentHighResIndex];
+    const currentSource = getImageSource(currentImage);
+    if (currentSource.endsWith('.pdf')) {
+        renderPDF(currentSource, highResImage);
         // After PDF render kicks off, attempt to restore zoom shortly after
         setTimeout(restoreZoomForCurrentItemIfAny, 0);
     } else {
@@ -1093,13 +1170,15 @@ function navigateHighResImage(direction) {
         highResImage.innerHTML = '';
         
         // Create and add screen-fitted image
-        createScreenFittedImage(highResImages[currentHighResIndex]).then(img => {
+        createScreenFittedImage(currentSource).then(img => {
             highResImage.appendChild(img);
+            renderHighResCaption(currentImage);
             // Center vertically at baseline
             setCenterFitState(true);
             restoreZoomForCurrentItemIfAny();
         });
     }
+    if (currentSource.endsWith('.pdf')) renderHighResCaption(currentImage);
     if (currentRecordId) {
         const combined = '#'+encodeURIComponent(currentRecordId)+':'+currentHighResIndex;
         if (location.hash !== combined) scheduleHashUpdate(combined);
@@ -1891,7 +1970,7 @@ function preloadAdjacentHighRes() {
     const nextIndex = (currentHighResIndex + 1) % highResImages.length;
     const prevIndex = (currentHighResIndex - 1 + highResImages.length) % highResImages.length;
     [nextIndex, prevIndex].forEach(i => {
-        const src = highResImages[i];
+        const src = getImageSource(highResImages[i]);
         if (!src || src.endsWith('.pdf')) return; // skip PDFs
         const img = new Image();
         img.decoding = 'async';
@@ -2036,7 +2115,7 @@ function onDoubleTapToggleZoom(e) {
 }
 function zoomKeyForCurrentItem() {
     if (currentRecordId != null && typeof currentHighResIndex === 'number') return currentRecordId + ':' + currentHighResIndex;
-    if (highResImages && typeof currentHighResIndex === 'number') return 'url:' + (highResImages[currentHighResIndex] || '');
+    if (highResImages && typeof currentHighResIndex === 'number') return 'url:' + getImageSource(highResImages[currentHighResIndex]);
     return null;
 }
 function persistZoomForCurrentItem() {

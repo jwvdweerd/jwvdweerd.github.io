@@ -984,6 +984,59 @@ body.modal-open {
     padding: 0;
 }
 
+.high-res-caption {
+    position: fixed;
+    left: calc(15px + var(--safe-left));
+    bottom: calc(15px + var(--safe-bottom));
+    z-index: 3500;
+    max-width: min(34rem, calc(100vw - 30px));
+    padding: 0.55rem 0.75rem 0.6rem 2rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 0.85rem;
+    line-height: 1.35;
+    text-align: left;
+    pointer-events: auto;
+}
+
+.high-res-caption-close {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    background: transparent;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.high-res-caption-close:hover,
+.high-res-caption-close:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.high-res-caption-text {
+    margin: 0;
+}
+
+.high-res-metadata {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.1rem 0.6rem;
+    margin: 0.25rem 0 0;
+}
+
+.high-res-metadata dt {
+    font-weight: 700;
+}
+
+.high-res-metadata dd {
+    margin: 0;
+}
+
 #highResImage:active {
     cursor: grabbing;
 }
