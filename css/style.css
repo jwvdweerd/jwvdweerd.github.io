@@ -933,6 +933,13 @@ body.modal-open {
     outline-offset: 0;
 }
 
+.touch-device .record.is-selected,
+.touch-device .record:focus-visible,
+.touch-device .thumbnail.is-selected,
+.touch-device .thumbnail:focus-visible {
+    outline: none;
+}
+
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
     position: fixed;
