@@ -265,6 +265,31 @@
         "release": "."
     },
     {
+        "id": "gray",
+        "title": "Gray",
+        "artist": "Jan van der Weerd",
+        "year": "2003",
+        "genre": "fotografie",
+        "label": "-",
+        "cover": "resources/gray/E1027-2-BW.jpg",
+        "thumbnails": [
+            "resources/gray/E1027-1.jpg",
+            "resources/gray/E1027-2.jpg",
+            "resources/gray/E1027-3.jpg",
+            "resources/gray/E1027-4.jpg",
+            "resources/gray/E1027-5.jpg"
+        ],
+        "highres": [
+            "resources/gray/E1027-1.jpg",
+            "resources/gray/E1027-2.jpg",
+            "resources/gray/E1027-3.jpg",
+            "resources/gray/E1027-4.jpg",
+            "resources/gray/E1027-5.jpg"
+        ],
+        "info": "Ville E-1027 van Eileen Gray, opnames 2003, voor de restauratie van de villa (2014-2020).",
+        "release": "https://youtu.be/qKTYzYUjSXE"
+    },
+    {
         "id": "montrouge",
         "title": "Atelier de Montrouge",
         "artist": "Jan van der Weerd",
