@@ -185,6 +185,45 @@ function navigateRecords(event, record) {
     nextRecord.focus({ preventScroll: false });
 }
 
+function navigateModalThumbnails(event, thumbnail) {
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+
+    const thumbnails = [...document.querySelectorAll('#modal .thumbnail')];
+    const currentRect = thumbnail.getBoundingClientRect();
+    const currentCenterX = currentRect.left + currentRect.width / 2;
+    const currentCenterY = currentRect.top + currentRect.height / 2;
+    let candidates = thumbnails.filter(item => item !== thumbnail);
+
+    candidates = candidates.filter(item => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        if (event.key === 'ArrowLeft') return centerX < currentCenterX;
+        if (event.key === 'ArrowRight') return centerX > currentCenterX;
+        if (event.key === 'ArrowUp') return centerY < currentCenterY;
+        return centerY > currentCenterY;
+    });
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const sameRow = candidates.filter(item => {
+            const rect = item.getBoundingClientRect();
+            return Math.abs((rect.top + rect.height / 2) - currentCenterY) < currentRect.height / 2;
+        });
+        if (sameRow.length) candidates = sameRow;
+    }
+
+    event.preventDefault();
+    if (!candidates.length) return;
+    const nextThumbnail = candidates.reduce((closest, item) => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(centerX - currentCenterX, centerY - currentCenterY);
+        return !closest || distance < closest.distance ? { item, distance } : closest;
+    }, null).item;
+    nextThumbnail.focus({ preventScroll: false });
+}
+
 // Open modal function for album details
 function openModal(record) {
     const modal = document.getElementById('modal');
@@ -243,12 +282,33 @@ function openModal(record) {
             img.src = thumbnail;
             img.alt = `${title} miniatuur ${index + 1}`;
             img.className = 'thumbnail';
+            img.tabIndex = 0;
+            img.setAttribute('role', 'button');
             img.loading = 'lazy';
             img.addEventListener('click', () => openHighResImage(index));
+            img.addEventListener('focus', () => {
+                thumbWrapper.querySelectorAll('.thumbnail.is-selected').forEach(selected => {
+                    if (selected !== img) selected.classList.remove('is-selected');
+                });
+                img.classList.add('is-selected');
+            });
+            img.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openHighResImage(index);
+                } else {
+                    navigateModalThumbnails(event, img);
+                }
+            });
             thumbWrapper.appendChild(img);
         }
     });
     modalBody.appendChild(thumbWrapper);
+
+    const firstThumbnail = thumbWrapper.querySelector('.thumbnail');
+    if (firstThumbnail) {
+        firstThumbnail.classList.add('is-selected');
+    }
 
     // Details heading
     const detailsHeading = document.createElement('h3');
@@ -326,8 +386,8 @@ function openModal(record) {
         modalBody.removeAttribute('aria-describedby');
     }
 
-    // Focus the heading for accessibility
-    setTimeout(() => heading.focus(), 0);
+    // Focus the first thumbnail so the modal has an immediate keyboard target
+    setTimeout(() => (firstThumbnail || heading).focus(), 0);
 }
 
 // Helper function to create a properly sized image that fits the screen

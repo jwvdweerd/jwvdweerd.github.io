@@ -927,6 +927,12 @@ body.modal-open {
     /*cursor: pointer;*/
 }
 
+.thumbnail.is-selected,
+.thumbnail:focus-visible {
+    outline: 1px solid #ff8c00;
+    outline-offset: 0;
+}
+
 /* High-Resolution Image Modal Styles */
 .high-res-modal-content {
     position: fixed;
