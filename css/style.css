@@ -748,6 +748,12 @@ footer img {
     cursor: pointer;
 }
 
+.record.is-selected,
+.record:focus-visible {
+    outline: 1px solid #ff8c00;
+    outline-offset: 0;
+}
+
 .album-cover {
     width: calc(100% - 2rem);
     height: 180px;

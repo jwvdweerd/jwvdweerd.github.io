@@ -87,6 +87,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('aria-label', `Project: ${record.title}. Klik voor details.`);
                 recordDiv.addEventListener('click', () => openModal(recordDiv));
                 recordDiv.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(recordDiv);} });
+                recordDiv.addEventListener('focus', () => selectRecord(recordDiv));
+                recordDiv.addEventListener('keydown', (e) => navigateRecords(e, recordDiv));
                 // Ensure we have an id / slug for deep linking
                 let recId = record.id || generateSlug(record.title || 'project');
                 recordDiv.setAttribute('data-id', recId);
@@ -120,6 +122,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>`;
                 collectionGrid.appendChild(recordDiv);
             });
+            const firstRecord = collectionGrid.querySelector('.record');
+            if (firstRecord) {
+                firstRecord.classList.add('is-selected');
+                firstRecord.focus({ preventScroll: true });
+            }
             // After building grid, process deep link (hash) if any
             processDeepLink();
             window.addEventListener('hashchange', handleHashChange);
@@ -129,6 +136,54 @@ document.addEventListener("DOMContentLoaded", function() {
             statusEl.textContent = 'Kon projecten niet laden.';
         });
 });
+
+function selectRecord(record) {
+    document.querySelectorAll('#collection-grid .record.is-selected').forEach(selected => {
+        if (selected !== record) selected.classList.remove('is-selected');
+    });
+    record.classList.add('is-selected');
+}
+
+function navigateRecords(event, record) {
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+
+    const records = [...document.querySelectorAll('#collection-grid .record')]
+        .filter(item => item.offsetParent !== null);
+    const currentRect = record.getBoundingClientRect();
+    const currentCenterX = currentRect.left + currentRect.width / 2;
+    const currentCenterY = currentRect.top + currentRect.height / 2;
+    let candidates = records.filter(item => item !== record);
+
+    candidates = candidates.filter(item => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        if (event.key === 'ArrowLeft') return centerX < currentCenterX;
+        if (event.key === 'ArrowRight') return centerX > currentCenterX;
+        if (event.key === 'ArrowUp') return centerY < currentCenterY;
+        return centerY > currentCenterY;
+    });
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const sameRow = candidates.filter(item => {
+            const rect = item.getBoundingClientRect();
+            return Math.abs((rect.top + rect.height / 2) - currentCenterY) < currentRect.height / 2;
+        });
+        if (sameRow.length) candidates = sameRow;
+    }
+
+    if (!candidates.length) return;
+    const nextRecord = candidates.reduce((closest, item) => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(centerX - currentCenterX, centerY - currentCenterY);
+        return !closest || distance < closest.distance ? { item, distance } : closest;
+    }, null).item;
+
+    event.preventDefault();
+    nextRecord.focus({ preventScroll: false });
+}
 
 // Open modal function for album details
 function openModal(record) {
