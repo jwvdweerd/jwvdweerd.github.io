@@ -44,18 +44,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             toggleBtn.addEventListener('click', () => {
                 const isOpen = navLinks.classList.toggle('open');
                 toggleBtn.setAttribute('aria-expanded', String(isOpen));
-                setHeaderHeight();
+                setLayoutHeights();
             });
             // Close menu when a link is clicked (mobile UX)
             navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
         }
-        // Update CSS var for header height (to ensure content clears fixed header)
-        const setHeaderHeight = () => {
-            const h = header.getBoundingClientRect().height;
-            document.documentElement.style.setProperty('--header-height', h + 'px');
+        // Update fixed layout offsets so content clears the header and footer.
+        const setLayoutHeights = () => {
+            const root = document.documentElement;
+            root.style.setProperty('--header-height', header.getBoundingClientRect().height + 'px');
+            if (footer) root.style.setProperty('--footer-height', footer.getBoundingClientRect().height + 'px');
         };
-        setHeaderHeight();
-        window.addEventListener('resize', setHeaderHeight);
+        const footer = document.querySelector('footer');
+        setLayoutHeights();
+        window.addEventListener('resize', setLayoutHeights);
+        window.addEventListener('load', setLayoutHeights);
+        if (footer && 'ResizeObserver' in window) {
+            new ResizeObserver(setLayoutHeights).observe(footer);
+        }
     } catch (e) {
         console.error('Nav include error:', e);
     }
