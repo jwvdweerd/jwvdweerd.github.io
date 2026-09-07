@@ -338,16 +338,18 @@
             "resources/arch-div/beaudouin-suresnes3-50.jpg", 
             "resources/arch-div/beaudouin-suresnes4-50.jpg", 
             "resources/arch-div/beaudouin-suresnes-50.jpg", 
-            "resources/arch-div/beaudouin-suresnes2-50.jpg"
+            "resources/arch-div/beaudouin-suresnes2-50.jpg",
+            "resources/arch-div/maison-du-peuple.jpg"
         ],
         "highres": [
             "resources/arch-div/beaudouin-suresnes5.jpg", 
             "resources/arch-div/beaudouin-suresnes3.jpg", 
             "resources/arch-div/beaudouin-suresnes4.jpg", 
             "resources/arch-div/beaudouin-suresnes.jpg", 
-            "resources/arch-div/beaudouin-suresnes2.jpg"
+            "resources/arch-div/beaudouin-suresnes2.jpg",
+            "resources/arch-div/maison-du-peuple.jpg"
         ],
-        "info": "École de Plein-air, Suresnes, Frankrijk, van Eugène Beaudouin en Marcel Lods (1935).",
+        "info": "École de Plein-air, Suresnes, Frankrijk, van Eugène Beaudouin en Marcel Lods (1935). Maison du Peuple, Clichy, Frankrijk, van Eugène Beaudouin en Marcel Lods (architecten), Bodiansky en Prouve (constructeurs) (1939).",
         "release": "https://fr.wikipedia.org/wiki/%C3%89cole_de_plein_air_de_Suresnes"
     },
     {

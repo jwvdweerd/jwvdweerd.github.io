@@ -523,7 +523,7 @@
             "resources/99012-nlr-trs/TRS-gevels-doorsneden.pdf",
             "resources/99012-nlr-trs/99012-03_noord_zuidgevel.pdf"
         ],
-        "info": "Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) in gehuisvest.",
+        "info": "Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) is gehuisvest.",
         "release": "https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/"
     },
     {
@@ -553,6 +553,39 @@
         "info": "",
         "release": ""
     },
+    {
+        "id": "nlr-portier",
+        "title": "NLR, Noordoostpolder, portiersgebouw",
+        "artist": "J.W. (Jan) van der Weerd",
+        "year": "2005",
+        "genre": "studie",
+        "label": "architektenburo van der weerd bv",
+        "cover": "resources/25014-nlr-port/portiersloge-versie2.jpg",
+        "thumbnails": [
+            "resources/25014-nlr-port/25014 schets_1-2005.jpg",
+            "resources/25014-nlr-port/25014 schets_2.jpg",
+            "resources/25014-nlr-port/25014 schets_3.jpg",
+            "resources/25014-nlr-port/25014 schets_4.jpg",
+            "resources/25014-nlr-port/78024-3 NLR NOP portiersloge bestektek.jpg"
+        ],
+        "highres": [
+            "resources/25014-nlr-port/25014 schets_1-2005.pdf",
+            "resources/25014-nlr-port/25014 schets_2.pdf",
+            "resources/25014-nlr-port/25014 schets_3.pdf",
+            "resources/25014-nlr-port/25014 schets_4.pdf",
+            {
+                "src": "resources/25014-nlr-port/78024-3 NLR NOP portiersloge bestektek.jpg",
+                "caption": "Oorspronkelijk ontwerp",
+                "metadata": {
+                    "jaar": "1978",
+                    "type": "Bestektekening"
+                }
+            }
+        ],
+        "info": "",
+        "release": "",
+        "pdf": ""
+    },    
     {
         "id": "eco-compact",
         "title": "ECO compact woningconcept",
