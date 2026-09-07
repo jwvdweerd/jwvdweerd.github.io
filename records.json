@@ -459,6 +459,35 @@
         "pdf": "resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boekA.pdf"
     },
     {
+        "id": "92012-hilton",
+        "title": "Luifel Hilton Hotel, Rotterdam",
+        "artist": "J.W. (Jan) van der Weerd",
+        "year": "1992",
+        "genre": "studie",
+        "label": "architektenburo ir j.w. van der weerd bv",
+        "cover": "resources/hilton/hilton-luifel.jpg",
+        "thumbnails": [
+            "resources/hilton/92012 situatie.jpg",
+            "resources/hilton/92012 bovenaanzicht.jpg",
+            "resources/hilton/92012 noordgevel.jpg",
+            "resources/hilton/92012 doorsnede.jpg",
+            "resources/hilton/92012 perspectief-2.jpg",
+            "resources/hilton/92012 perspectief-3.jpg",
+            "resources/hilton/92012 bord-logo.jpg"
+        ],
+        "highres": [
+            "resources/hilton/92012 situatie.jpg",
+            "resources/hilton/92012 bovenaanzicht.jpg",
+            "resources/hilton/92012 noordgevel.jpg",
+            "resources/hilton/92012 doorsnede.jpg",
+            "resources/hilton/92012 perspectief-2.jpg",
+            "resources/hilton/92012 perspectief-3.jpg",
+            "resources/hilton/92012 bord-logo.jpg"
+        ],
+        "info": "",
+        "release": ""
+    },
+    {
         "id": "WHT",
         "title": "Westelijk Handelsterrein, Rotterdam",
         "artist": "J.W. (Jan) van der Weerd & H. (Henk) Klunder",
