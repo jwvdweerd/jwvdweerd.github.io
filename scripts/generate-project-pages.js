@@ -2,8 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
-const records = JSON.parse(fs.readFileSync(path.join(rootDir, 'records.json'), 'utf8'));
-const projectsDir = path.join(rootDir, 'projects');
 
 function escapeHtml(value) {
     return String(value ?? '')
@@ -81,8 +79,11 @@ function projectModalMarkup() {
     </div>`;
 }
 
-function projectPageTemplate(record) {
-    const projectUrl = `projects/${record.id}/index.html`;
+function projectPageTemplate(record, options = {}) {
+    const outputDir = options.outputDir || 'projects';
+    const backlinkUrl = options.backlinkUrl || 'collection.html';
+    const backlinkLabel = options.backlinkLabel || 'Back to project index';
+    const projectUrl = `${outputDir}/${record.id}/index.html`;
     const description = descriptionFrom(record);
     const info = normalizeText(record.info);
     const release = normalizeText(record.release);
@@ -111,7 +112,7 @@ function projectPageTemplate(record) {
         <nav></nav>
     </header>
     <main class="project-page">
-        <p class="project-backlink"><a href="/collection.html">Back to project index</a></p>
+        <p class="project-backlink"><a href="/${backlinkUrl}">${escapeHtml(backlinkLabel)}</a></p>
         <article class="project-detail">
             <h1 class="project-title">${escapeHtml(record.title)}</h1>
             <div class="project-hero">
@@ -166,12 +167,24 @@ function projectPageTemplate(record) {
 `;
 }
 
-fs.mkdirSync(projectsDir, { recursive: true });
+function generatePages({ dataFile = 'records.json', outputDir = 'projects', backlinkUrl, backlinkLabel } = {}) {
+    const records = JSON.parse(fs.readFileSync(path.join(rootDir, dataFile), 'utf8'));
+    const pagesDir = path.join(rootDir, outputDir);
+    fs.mkdirSync(pagesDir, { recursive: true });
 
-for (const record of records) {
-    const projectDir = path.join(projectsDir, record.id);
-    fs.mkdirSync(projectDir, { recursive: true });
-    fs.writeFileSync(path.join(projectDir, 'index.html'), projectPageTemplate(record), 'utf8');
+    for (const record of records) {
+        const projectDir = path.join(pagesDir, record.id);
+        fs.mkdirSync(projectDir, { recursive: true });
+        fs.writeFileSync(path.join(projectDir, 'index.html'), projectPageTemplate(record, {
+            outputDir,
+            backlinkUrl,
+            backlinkLabel
+        }), 'utf8');
+    }
+
+    console.log(`Generated ${records.length} project pages in ${pagesDir}`);
 }
 
-console.log(`Generated ${records.length} project pages in ${projectsDir}`);
+if (require.main === module) generatePages();
+
+module.exports = { generatePages };

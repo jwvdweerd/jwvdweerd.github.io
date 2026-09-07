@@ -34,6 +34,7 @@ IDs should be unique (duplicate 744 split into 744-stedenbouw and 744-hoogbouw).
 2. Add thumbnails (low/medium), highres (full), cover (thumbnail path) to `records.json`.
 3. Optionally fill `info` and `release` (set `release` to `.` or omit if none).
 4. Run `node scripts/generate-project-pages.js` to refresh the standalone project pages.
+5. Run `node scripts/generate-fotografie-pages.js` to refresh the standalone photography pages.
 
 ## Accessibility notes
 - Records are keyboard-activatable (Enter/Space).
