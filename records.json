@@ -69,6 +69,23 @@
         "release": "."
     },
     {
+        "id": "71-vrieseweg",
+        "title": "Interieur woonkamer, Dordrecht",
+        "artist": "J.W. (Jan) van der Weerd",
+        "year": "1971",
+        "genre": "studie",
+        "label": "-",
+        "cover": "resources/71-vrieseweg/vrieseweg Z-20.jpg",
+        "thumbnails": [
+            "resources/71-vrieseweg/vrieseweg Z-20.jpg"
+        ],
+        "highres": [
+            "resources/71-vrieseweg/vrieseweg Z.jpg"
+        ],
+        "info": "V.d. Berg / Vrieseweg, Dordrecht. Interieurstudie van de woonkamer. Het ontwerp is niet gerealiseerd.",
+        "release": ""
+    },
+    {
         "id": "744-stedenbouw",
         "title": "Sterrenburg 3, Dordrecht - Stedenbouw",
         "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
