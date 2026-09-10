@@ -476,6 +476,31 @@
         "pdf": "resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boekA.pdf"
     },
     {
+        "id": "89012-park-cc",
+        "title": "Parkeergarage Confectiecentrum, Amsterdam",
+        "artist": "J.W. (Jan) van der Weerd",
+        "year": "1989",
+        "genre": "gerealiseerd",
+        "label": "architektenburo ir j.w. van der weerd bv",
+        "cover": "resources/89012-park-cc/perspectief.jpg",
+        "thumbnails": [
+            "resources/89012-park-cc/doorsnede.jpg",
+            "resources/89012-park-cc/page1_r.jpg",
+            "resources/89012-park-cc/page2_r.jpg",
+            "resources/89012-park-cc/page3_.jpg",
+            "resources/89012-park-cc/perspectief.jpg"
+        ],
+        "highres": [
+            "resources/89012-park-cc/doorsnede.pdf",
+            "resources/89012-park-cc/page1_r.jpg",
+            "resources/89012-park-cc/page2_r.jpg",
+            "resources/89012-park-cc/page3_.jpg",
+            "resources/89012-park-cc/perspectief.jpg"
+        ],
+        "info": "",
+        "release": ""
+    },
+    {
         "id": "92012-hilton",
         "title": "Luifel Hilton Hotel, Rotterdam",
         "artist": "J.W. (Jan) van der Weerd",
