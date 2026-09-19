@@ -158,7 +158,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.tabIndex = 0;
                 recordDiv.setAttribute('role','button');
                 recordDiv.setAttribute('aria-label', `Project: ${record.title}. Klik voor details.`);
-                recordDiv.addEventListener('click', () => openModal(recordDiv));
+                recordDiv.addEventListener('click', (event) => {
+                    if (event.target.closest('a')) return;
+                    openModal(recordDiv);
+                });
                 recordDiv.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(recordDiv);} });
                 recordDiv.addEventListener('focus', () => selectRecord(recordDiv));
                 recordDiv.addEventListener('keydown', (e) => navigateRecords(e, recordDiv));
@@ -182,10 +185,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-release', record.release);
 
                 const safeTitle = record.title.replace(/&/g, '&amp;');
+                const projectHref = `/projects/${recId}/index.html`;
                 recordDiv.innerHTML = `
-                    <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
+                    <a class="record-project-link" href="${projectHref}" aria-label="Open ${safeTitle}">
+                        <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
+                    </a>
                     <div class="info">
-                        <h3 class="data-title">${safeTitle}</h3>
+                        <h3 class="data-title"><a class="record-project-link" href="${projectHref}">${safeTitle}</a></h3>
                         <p><strong>Artist:</strong> <span class="data-artist">${record.artist.replace(/&/g, '&<br>')}</span></p>
                         <p><strong>Year:</strong> <span class="data-year">${record.year}</span></p>
                         <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
