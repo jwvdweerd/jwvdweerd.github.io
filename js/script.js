@@ -188,11 +188,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 const projectOutputDir = window.COLLECTION_OUTPUT_DIR || 'projects';
                 const projectHref = `/${projectOutputDir}/${recId}/index.html`;
                 recordDiv.innerHTML = `
-                    <a class="record-project-link" href="${projectHref}" aria-label="Open ${safeTitle}">
-                        <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
-                    </a>
+                    <a class="record-project-link visually-hidden" href="${projectHref}" tabindex="-1" aria-hidden="true">Open ${safeTitle}</a>
+                    <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
                     <div class="info">
-                        <h3 class="data-title"><a class="record-project-link" href="${projectHref}">${safeTitle}</a></h3>
+                        <h3 class="data-title">${safeTitle}</h3>
                         <p><strong>Artist:</strong> <span class="data-artist">${record.artist.replace(/&/g, '&<br>')}</span></p>
                         <p><strong>Year:</strong> <span class="data-year">${record.year}</span></p>
                         <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
