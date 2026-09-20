@@ -185,7 +185,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 recordDiv.setAttribute('data-release', record.release);
 
                 const safeTitle = record.title.replace(/&/g, '&amp;');
-                const projectHref = `/projects/${recId}/index.html`;
+                const projectOutputDir = window.COLLECTION_OUTPUT_DIR || 'projects';
+                const projectHref = `/${projectOutputDir}/${recId}/index.html`;
                 recordDiv.innerHTML = `
                     <a class="record-project-link" href="${projectHref}" aria-label="Open ${safeTitle}">
                         <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
