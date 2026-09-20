@@ -84,6 +84,7 @@ function projectPageTemplate(record, options = {}) {
     const backlinkUrl = options.backlinkUrl || 'collection.html';
     const backlinkLabel = options.backlinkLabel || 'Back to project index';
     const projectUrl = `${outputDir}/${record.id}/index.html`;
+    const pageTitle = record.seoTitle || `${record.title} - Jan Willem van der Weerd`;
     const description = descriptionFrom(record);
     const info = normalizeText(record.info);
     const release = normalizeText(record.release);
@@ -99,7 +100,7 @@ function projectPageTemplate(record, options = {}) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light">
-    <title>${escapeHtml(record.title)} - Jan Willem van der Weerd</title>
+    <title>${escapeHtml(pageTitle)}</title>
     <meta name="description" content="${escapeHtml(description)}">
     <link rel="canonical" href="/${projectUrl}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -110,7 +111,7 @@ function projectPageTemplate(record, options = {}) {
 </head>
 <body>
     <header>
-        <h1>Jan Willem van der Weerd (1943-2024) - architect</h1>
+        <p class="site-title">Jan Willem van der Weerd (1943-2024) - architect</p>
         <nav></nav>
     </header>
     <main class="project-page">

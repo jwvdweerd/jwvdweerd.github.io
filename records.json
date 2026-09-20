@@ -38,6 +38,7 @@
         {
         "id": "tud-stations",
         "title": "TU Delft studie - Stationsgebieden Delft en Leiden-Noord",
+        "seoTitle": "TU Delft studie: Stationsgebieden Delft en Leiden-Noord",
         "artist": "J.W. (Jan) van der Weerd",
         "year": "ca. 1969",
         "genre": "studie",
@@ -115,6 +116,7 @@
     {
         "id": "744-patiowoningen",
         "title": "Sterrenburg 3, Dordrecht - E7 Patiowoningen",
+        "seoTitle": "Sterrenburg 3 Dordrecht: E7 Patiowoningen",
         "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
@@ -154,6 +156,7 @@
         {
         "id": "744-terraswoningen",
         "title": "Sterrenburg 3, Dordrecht - M5 Terraswoningen",
+        "seoTitle": "Sterrenburg 3 Dordrecht: M5 Terraswoningen",
         "artist": "H.P.C. (Herman) Haan & J.W. (Jan) van der Weerd",
         "year": "1974",
         "genre": "gerealiseerd",
@@ -559,6 +562,7 @@
     {
         "id": "NLR-TRS",
         "title": "NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)",
+        "seoTitle": "NLR Tower Research Simulator (TRS/NARSIM): Amsterdam",
         "artist": "J.W. (Jan) van der Weerd",
         "year": "1999",
         "genre": "gerealiseerd",
