@@ -785,7 +785,8 @@ footer img {
 }
 
 .info {
-    width: 100%;
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
 }
 
 .project-description {
@@ -815,7 +816,7 @@ footer img {
 }
 
 .info strong {
-    width: 100px;
+    width: 5rem;
     display: inline-block;
     vertical-align: top;
     flex-shrink: 0;
