@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'site-v2';
+const CACHE_VERSION = 'site-v3';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const OFFLINE_URL = '/index.html';
@@ -92,7 +92,8 @@ self.addEventListener('fetch', event => {
     }
 
     if (isStaticAsset(request)) {
-        event.respondWith(cacheFirst(request));
+        const isCodeAsset = /\.(?:css|js)$/i.test(url.pathname);
+        event.respondWith(isCodeAsset ? networkFirst(request, RUNTIME_CACHE) : cacheFirst(request));
         return;
     }
 

@@ -943,7 +943,11 @@ body.modal-open {
 }
 
 .touch-device .record.is-selected,
-.touch-device .record:focus-visible,
+.touch-device .record:focus-visible {
+    outline: 1px solid #ff8c00;
+    outline-offset: 0;
+}
+
 .touch-device .thumbnail.is-selected,
 .touch-device .thumbnail:focus-visible {
     outline: none;

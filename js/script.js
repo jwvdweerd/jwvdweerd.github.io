@@ -152,6 +152,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
             statusEl.textContent = '';
+            const staticIndex = document.getElementById('project-index');
+            if (staticIndex) staticIndex.hidden = true;
             data.forEach(record => {
                 const recordDiv = document.createElement('div');
                 recordDiv.className = 'record';
