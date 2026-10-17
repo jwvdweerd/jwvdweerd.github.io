@@ -383,7 +383,7 @@
             "resources/76014-abna-zwol/606_1440.avif",
             "resources/76014-abna-zwol/614_1440.avif"
         ],
-        "info": "ABN Amro kantoor Zwolle, stationsplein. Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau.",
+        "info": "ABN Amro kantoor Zwolle (stationsplein). Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau.",
         "release": ".."
     },
     {
@@ -394,9 +394,34 @@
         "genre": "gerealiseerd",
         "label": "van Dommelen Kroos van der Weerd architekten",
         "cover": "resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg",
-        "thumbnails": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg","resources/78044-abna-dord/B0000152-40.jpg","resources/78044-abna-dord/B0000153-40.jpg","resources/78044-abna-dord/B0000154-40.jpg","resources/78044-abna-dord/B0000155-40.jpg"],
-        "highres": ["resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg","resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg","resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg","resources/78044-abna-dord/B0000152.jpg","resources/78044-abna-dord/B0000153.jpg","resources/78044-abna-dord/B0000154.jpg","resources/78044-abna-dord/B0000155.jpg"],
-        "info": "ABN Amro kantoor Dordrecht, Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau Maaskant van Dommelen Kroos (dat gedurende de ontwikkeling overging in bureau van Dommelen Kroos van der Weerd architekten). Het gebouw is gerealiseerd in 1979.",
+        "thumbnails": [
+            "resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg",
+            "resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg",
+            "resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg",
+            "resources/78044-abna-dord/B0000152-40.jpg","resources/78044-abna-dord/B0000153-40.jpg",
+            "resources/78044-abna-dord/B0000154-40.jpg","resources/78044-abna-dord/B0000155-40.jpg",
+            "resources/78044-abna-dord/dnaar-15.JPG",
+            "resources/78044-abna-dord/vrijev-15.JPG"
+        ],
+        "highres": [
+            "resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg",
+            "resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg",
+            "resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg",
+            "resources/78044-abna-dord/B0000152.jpg",
+            {
+                "src": "resources/78044-abna-dord/B0000153.jpg",
+                "caption": "De binnenplaats met de 150 oude rode beuk.",
+                "metadata": {
+                    "jaar": "1981",
+                    "type": ""
+                }
+            },
+            "resources/78044-abna-dord/B0000154.jpg",
+            "resources/78044-abna-dord/B0000155.jpg",
+            "resources/78044-abna-dord/dnaar.JPG",
+            "resources/78044-abna-dord/vrijev.JPG"
+        ],
+        "info": "ABN Amro kantoor Dordrecht (Stationsweg 2, hoek Nicolas Maessingel), Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau van Dommelen Kroos van der Weerd architekten. Het gebouw is gerealiseerd in 1980.\n \nBij het ontwerp is rekening gehouden met een boomgoep waaronder een 150 jaar oude rode beuk, die bij de realisatie van het naastgelegen Tomado een verplaatsing al had overleefd.",
         "release": ".."
     },
     {
