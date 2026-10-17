@@ -129,7 +129,53 @@ function getContainerContentSize(container) {
     };
 }
 
-// Fetch and display records
+function hydrateRecordData(recordDiv, record) {
+    const recordId = record.id || generateSlug(record.title || 'project');
+    recordDiv.setAttribute('data-id', recordId);
+    recordDiv.setAttribute('data-title', record.title || '');
+    recordDiv.setAttribute('data-artist', record.artist || '');
+    recordDiv.setAttribute('data-year', record.year || '');
+    recordDiv.setAttribute('data-genre', record.genre || '');
+    recordDiv.setAttribute('data-label', record.label || '');
+    recordDiv.setAttribute('data-thumbnails', JSON.stringify(record.thumbnails || []));
+    recordDiv.setAttribute('data-highres', JSON.stringify(record.highres || []));
+    recordDiv.setAttribute('data-info', record.info || '');
+    recordDiv.setAttribute('data-release', record.release || '');
+    if (record.pdf && typeof record.pdf === 'string' && record.pdf.trim() !== '') {
+        recordDiv.setAttribute('data-pdf', record.pdf);
+    }
+    return recordDiv;
+}
+
+function enhanceRecord(recordDiv) {
+    recordDiv.addEventListener('click', (event) => {
+        const summary = event.target.closest('summary');
+        if (summary) {
+            event.preventDefault();
+            const summaryRect = summary.getBoundingClientRect();
+            const clickedArrow = event.clientX - summaryRect.left <= 28;
+            if (clickedArrow) {
+                summary.parentElement.open = !summary.parentElement.open;
+            } else {
+                openModal(recordDiv);
+            }
+            return;
+        }
+        if (event.target.closest('a')) return;
+        openModal(recordDiv);
+    });
+    recordDiv.addEventListener('keypress', (event) => {
+        if (event.target.closest('summary')) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openModal(recordDiv);
+        }
+    });
+    recordDiv.addEventListener('focus', () => selectRecord(recordDiv));
+    recordDiv.addEventListener('keydown', (event) => navigateRecords(event, recordDiv));
+}
+
+// Enhance the build-time generated records without rebuilding the grid.
 document.addEventListener("DOMContentLoaded", function() {
     const collectionGrid = document.getElementById('collection-grid');
     if (!collectionGrid) return; // Only run on collection page
@@ -152,56 +198,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
             statusEl.textContent = '';
-            const staticIndex = document.getElementById('project-index');
-            if (staticIndex) staticIndex.hidden = true;
+            const generatedRecords = new Map(
+                [...collectionGrid.querySelectorAll('.record')]
+                    .map(recordDiv => [recordDiv.getAttribute('data-id'), recordDiv])
+            );
             data.forEach(record => {
-                const recordDiv = document.createElement('div');
-                recordDiv.className = 'record';
-                recordDiv.tabIndex = 0;
-                recordDiv.setAttribute('role','button');
-                recordDiv.setAttribute('aria-label', `Project: ${record.title}. Klik voor details.`);
-                recordDiv.addEventListener('click', (event) => {
-                    if (event.target.closest('a')) return;
-                    openModal(recordDiv);
-                });
-                recordDiv.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(recordDiv);} });
-                recordDiv.addEventListener('focus', () => selectRecord(recordDiv));
-                recordDiv.addEventListener('keydown', (e) => navigateRecords(e, recordDiv));
-                // Ensure we have an id / slug for deep linking
-                let recId = record.id || generateSlug(record.title || 'project');
-                recordDiv.setAttribute('data-id', recId);
-                recordDiv.setAttribute('data-title', record.title);
-                recordDiv.setAttribute('data-artist', record.artist);
-                recordDiv.setAttribute('data-year', record.year);
-                recordDiv.setAttribute('data-genre', record.genre);
-                recordDiv.setAttribute('data-label', record.label);
-                recordDiv.setAttribute('data-thumbnails', JSON.stringify(record.thumbnails));
-                    recordDiv.setAttribute('data-highres', JSON.stringify(record.highres)); // Store the high-res images
-                    // If a 'pdf' property is present, show a visible link for Google and users
-                    let pdfLinkHtml = '';
-                    if (record.pdf && typeof record.pdf === 'string' && record.pdf.trim() !== '') {
-                        pdfLinkHtml = `<a href="${record.pdf}" class="pdf-link" target="_blank" rel="noopener noreferrer">Open PDF</a>`;
-                        recordDiv.setAttribute('data-pdf', record.pdf);
-                    }
-                recordDiv.setAttribute('data-info', record.info);
-                recordDiv.setAttribute('data-release', record.release);
-
-                const safeTitle = record.title.replace(/&/g, '&amp;');
-                const projectOutputDir = window.COLLECTION_OUTPUT_DIR || 'projects';
-                const projectHref = `/${projectOutputDir}/${recId}/index.html`;
-                recordDiv.innerHTML = `
-                    <a class="record-project-link visually-hidden" href="${projectHref}" tabindex="-1" aria-hidden="true">Open ${safeTitle}</a>
-                    <img src="${record.cover}" alt="${safeTitle}" class="album-cover" loading="lazy">
-                    <div class="info">
-                        <h3 class="data-title">${safeTitle}</h3>
-                        <p><strong>Artist:</strong> <span class="data-artist">${record.artist.replace(/&/g, '&<br>')}</span></p>
-                        <p><strong>Year:</strong> <span class="data-year">${record.year}</span></p>
-                        <p><strong>Genre:</strong> <span class="data-genre">${record.genre}</span></p>
-                        <p><strong>Record Label:</strong> <span class="data-label">${record.label}</span></p>
-                        <p><strong>Release:</strong> <span class="data-release">Klik voor details</span></p>
-                        ${pdfLinkHtml}
-                    </div>`;
-                collectionGrid.appendChild(recordDiv);
+                const recordId = record.id || generateSlug(record.title || 'project');
+                const recordDiv = generatedRecords.get(recordId);
+                if (!recordDiv) return;
+                hydrateRecordData(recordDiv, record);
+                enhanceRecord(recordDiv);
             });
             const firstRecord = collectionGrid.querySelector('.record');
             if (firstRecord) {

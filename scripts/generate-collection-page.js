@@ -31,38 +31,53 @@ function formatInfo(value) {
     return escapeHtml(value).replace(/[ \t]+$/gm, '');
 }
 
-function projectIndexMarkup(records) {
-    const projects = records.map(record => {
+function projectIndexMarkup(records, { outputDir = 'projects' } = {}) {
+    const projects = records.map((record, index) => {
         const info = normalizeText(record.info);
         const release = normalizeText(record.release);
         const pdf = normalizeText(record.pdf);
         const cover = imageSource(record.cover);
-        const projectUrl = `projects/${record.id}/index.html`;
-        const metadata = [
-            ['Artist', record.artist],
-            ['Year', record.year],
-            ['Genre', record.genre],
-            ['Label', record.label]
-        ].map(([label, value]) => `<strong>${label}:</strong> ${escapeHtml(value)}`).join('<br>');
-
-        return `            <article class="seo-project" id="seo-${escapeHtml(record.id)}">
-                <a class="seo-project-link" href="${escapeHtml(encodeURI(projectUrl))}" aria-label="Open ${escapeHtml(record.title)}">
-                    <img src="/${escapeHtml(encodeURI(cover))}" alt="${escapeHtml(record.title)}" loading="lazy">
-                    <h3>${escapeHtml(record.title)}</h3>
-                </a>
-                <p class="seo-project-meta">${metadata}</p>
-${!isPlaceholder(info) ? `                <p class="seo-project-info">${formatInfo(info)}</p>\n` : ''}${!isPlaceholder(release) ? `                <p class="seo-project-release"><a href="${escapeHtml(release)}" target="_blank" rel="noopener noreferrer">External reference</a></p>\n` : ''}${pdf ? `                <p class="seo-project-pdf"><a href="/${escapeHtml(encodeURI(pdf))}" target="_blank" rel="noopener noreferrer">Open PDF</a></p>\n` : ''}            </article>`;
+        const projectUrl = `${outputDir}/${record.id}/index.html`;
+        const selectedClass = index === 0 ? 'record is-selected' : 'record';
+        return `            <article class="${selectedClass}" id="seo-${escapeHtml(record.id)}" tabindex="0" role="button" aria-label="Project: ${escapeHtml(record.title)}. Klik voor details."
+                data-id="${escapeHtml(record.id)}"
+                data-title="${escapeHtml(record.title)}"
+                data-artist="${escapeHtml(record.artist)}"
+                data-year="${escapeHtml(record.year)}"
+                data-genre="${escapeHtml(record.genre)}"
+                data-label="${escapeHtml(record.label)}"
+                data-thumbnails="${escapeHtml(JSON.stringify(record.thumbnails || []))}"
+                data-highres="${escapeHtml(JSON.stringify(record.highres || []))}"
+                data-info="${escapeHtml(info)}"
+                data-release="${escapeHtml(release)}"${pdf ? `
+                data-pdf="${escapeHtml(pdf)}"` : ''}>
+                <a class="record-project-link visually-hidden" href="/${escapeHtml(encodeURI(projectUrl))}" tabindex="-1" aria-hidden="true">Open ${escapeHtml(record.title)}</a>
+                <img src="/${escapeHtml(encodeURI(cover))}" alt="${escapeHtml(record.title)}" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">${escapeHtml(record.title)}</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">${escapeHtml(record.artist).replace(/&amp;/g, '&amp;<br>')}</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">${escapeHtml(record.year)}</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">${escapeHtml(record.genre)}</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">${escapeHtml(record.label)}</span></p>
+                </div>
+${!isPlaceholder(info) ? `                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>${formatInfo(info)}</p>
+                </details>\n` : ''}
+            </article>`;
     }).join('\n');
 
     return `
         <section id="project-index" class="project-index" aria-label="Project index">
             <h2 class="project-index-title">Project index</h2>
-            <p class="project-index-lead">Crawlable overview of the archive. Each item links to the interactive project view below.</p>
+            <input type="text" id="searchInput" placeholder="Zoek projecten..." onkeyup="filterAlbums()" style="margin: 0 0 1rem;">
+            <div id="collection-grid" aria-live="polite">
 ${projects}
+            </div>
         </section>`.replace(/^\s+$/gm, '');
 }
 
-function generateCollectionPage({ dataFile = 'records.json', pageFile = 'collection.html' } = {}) {
+function generateCollectionPage({ dataFile = 'records.json', pageFile = 'collection.html', outputDir = 'projects' } = {}) {
     const records = JSON.parse(fs.readFileSync(path.join(rootDir, dataFile), 'utf8'));
     const pagePath = path.join(rootDir, pageFile);
     const page = fs.readFileSync(pagePath, 'utf8');
@@ -72,7 +87,7 @@ function generateCollectionPage({ dataFile = 'records.json', pageFile = 'collect
         throw new Error(`Could not find collection markers in ${pageFile}`);
     }
 
-    const generatedSection = `${startMarker}${projectIndexMarkup(records)}\n        ${endMarker}`
+    const generatedSection = `${startMarker}${projectIndexMarkup(records, { outputDir })}\n        ${endMarker}`
         .replace(/^\s+$/gm, '');
     fs.writeFileSync(pagePath, page.replace(markerPattern, generatedSection), 'utf8');
     console.log(`Generated collection index with ${records.length} projects in ${pagePath}`);

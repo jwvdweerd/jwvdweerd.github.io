@@ -788,6 +788,25 @@ footer img {
     width: 100%;
 }
 
+.project-description {
+    width: 100%;
+    margin-top: 0.75rem;
+    border-top: 1px solid #d8d8d8;
+    padding: 0.75rem 0;
+}
+
+.project-description summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.project-description p {
+    max-width: 75ch;
+    margin: 0.75rem 0 0;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
 .info h3 {
     margin: 0 0 0.3rem 0;
     padding: 0;

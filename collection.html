@@ -22,137 +22,387 @@
     <main>
         <!-- Placeholder for future archive content -->
             <div class="archive-notice" style="margin-bottom: 1rem;">
-                <p>Projecten worden geleidelijk toegevoegd.</p>
-            <p>©1966-2024 Archief J.W. van der Weerd.  Alle rechten voorbehouden. Reproductie of gebruik van beeldmateriaal uitsluitend na voorafgaande schriftelijke toestemming.</p>
+            <p>©1966-2024 Archief J.W. van der Weerd.  Alle rechten voorbehouden. Reproductie of gebruik van beeldmateriaal uitsluitend na voorafgaande schriftelijke toestemming. Projecten worden geleidelijk toegevoegd.</p>
         </div>
                 <!-- PROJECT_INDEX_START -->
         <section id="project-index" class="project-index" aria-label="Project index">
             <h2 class="project-index-title">Project index</h2>
-            <p class="project-index-lead">Crawlable overview of the archive. Each item links to the interactive project view below.</p>
-            <article class="seo-project" id="seo-tud-schuilhut">
-                <a class="seo-project-link" href="projects/tud-schuilhut/index.html" aria-label="Open TU Delft studie - Schuilhut">
-                    <img src="/resources/tud-schuilhut/TUD%20vissershut%20perspectief%20Z-20.jpg" alt="TU Delft studie - Schuilhut" loading="lazy">
-                    <h3>TU Delft studie - Schuilhut</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> ca. 1966<br><strong>Genre:</strong> studie<br><strong>Label:</strong> TU Delft - Faculteit Bouwkunde</p>
+            <input type="text" id="searchInput" placeholder="Zoek projecten..." onkeyup="filterAlbums()" style="margin: 0 0 1rem;">
+            <div id="collection-grid" aria-live="polite">
+            <article class="record is-selected" id="seo-tud-schuilhut" tabindex="0" role="button" aria-label="Project: TU Delft studie - Schuilhut. Klik voor details."
+                data-id="tud-schuilhut"
+                data-title="TU Delft studie - Schuilhut"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="ca. 1966"
+                data-genre="studie"
+                data-label="TU Delft - Faculteit Bouwkunde"
+                data-thumbnails="[&quot;resources/tud-schuilhut/TUD vissershut Z-20.jpg&quot;,&quot;resources/tud-schuilhut/TUD vissershut perspectief Z-20.jpg&quot;]"
+                data-highres="[&quot;resources/tud-schuilhut/TUD vissershut Z-70.jpg&quot;,{&quot;src&quot;:&quot;resources/tud-schuilhut/TUD vissershut perspectief Z-70.jpg&quot;,&quot;caption&quot;:&quot;Tekenoefening TU Delft, vissershut.&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;ca. 1966&quot;,&quot;type&quot;:&quot;Perspectieftekening&quot;}}]"
+                data-info="."
+                data-release=".">
+                <a class="record-project-link visually-hidden" href="/projects/tud-schuilhut/index.html" tabindex="-1" aria-hidden="true">Open TU Delft studie - Schuilhut</a>
+                <img src="/resources/tud-schuilhut/TUD%20vissershut%20perspectief%20Z-20.jpg" alt="TU Delft studie - Schuilhut" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">TU Delft studie - Schuilhut</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">ca. 1966</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">TU Delft - Faculteit Bouwkunde</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-tud-roeipaviljoen">
-                <a class="seo-project-link" href="projects/tud-roeipaviljoen/index.html" aria-label="Open TU Delft studie - Roeipaviljoen">
-                    <img src="/resources/tud-roeipaviljoen/TUD%20roeipaviljoen%20blad%203%20Z-20.jpg" alt="TU Delft studie - Roeipaviljoen" loading="lazy">
-                    <h3>TU Delft studie - Roeipaviljoen</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> ca. 1967<br><strong>Genre:</strong> studie<br><strong>Label:</strong> TU Delft - Faculteit Bouwkunde</p>
+            <article class="record" id="seo-tud-roeipaviljoen" tabindex="0" role="button" aria-label="Project: TU Delft studie - Roeipaviljoen. Klik voor details."
+                data-id="tud-roeipaviljoen"
+                data-title="TU Delft studie - Roeipaviljoen"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="ca. 1967"
+                data-genre="studie"
+                data-label="TU Delft - Faculteit Bouwkunde"
+                data-thumbnails="[&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 3 Z-20.jpg&quot;,&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 1 Z-20.jpg&quot;,&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 2 Z-20.jpg&quot;]"
+                data-highres="[&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 3 Z-70.jpg&quot;,&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 1 Z-70.jpg&quot;,&quot;resources/tud-roeipaviljoen/TUD roeipaviljoen blad 2 Z-70.jpg&quot;]"
+                data-info="."
+                data-release=".">
+                <a class="record-project-link visually-hidden" href="/projects/tud-roeipaviljoen/index.html" tabindex="-1" aria-hidden="true">Open TU Delft studie - Roeipaviljoen</a>
+                <img src="/resources/tud-roeipaviljoen/TUD%20roeipaviljoen%20blad%203%20Z-20.jpg" alt="TU Delft studie - Roeipaviljoen" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">TU Delft studie - Roeipaviljoen</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">ca. 1967</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">TU Delft - Faculteit Bouwkunde</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-tud-stations">
-                <a class="seo-project-link" href="projects/tud-stations/index.html" aria-label="Open TU Delft studie - Stationsgebieden Delft en Leiden-Noord">
-                    <img src="/resources/tud-stations/TUD%20A10%20stationsgebied%20delft-20.jpg" alt="TU Delft studie - Stationsgebieden Delft en Leiden-Noord" loading="lazy">
-                    <h3>TU Delft studie - Stationsgebieden Delft en Leiden-Noord</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> ca. 1969<br><strong>Genre:</strong> studie<br><strong>Label:</strong> TU Delft - Faculteit Bouwkunde</p>
+            <article class="record" id="seo-tud-stations" tabindex="0" role="button" aria-label="Project: TU Delft studie - Stationsgebieden Delft en Leiden-Noord. Klik voor details."
+                data-id="tud-stations"
+                data-title="TU Delft studie - Stationsgebieden Delft en Leiden-Noord"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="ca. 1969"
+                data-genre="studie"
+                data-label="TU Delft - Faculteit Bouwkunde"
+                data-thumbnails="[&quot;resources/tud-stations/TUD A10 stationsgebied delft-20.jpg&quot;,&quot;resources/tud-stations/TUD A10 stationsgebied delft interieurfacetten-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord doorsneden Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord begane grond Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord details Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord dsn Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord konstruktie Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord perron-niveau Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12-8 station leiden-noord ruimtevakwerk Z-20.jpg&quot;,&quot;resources/tud-stations/TUD A12-9 station leiden-noord houten vouwdak Z-20.jpg&quot;]"
+                data-highres="[&quot;resources/tud-stations/TUD A10 stationsgebied delft-70.jpg&quot;,&quot;resources/tud-stations/TUD A10 stationsgebied delft interieurfacetten-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord doorsneden Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord begane grond Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord details Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord dsn Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord konstruktie Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12 station leiden-noord perron-niveau Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12-8 station leiden-noord ruimtevakwerk Z-70.jpg&quot;,&quot;resources/tud-stations/TUD A12-9 station leiden-noord houten vouwdak Z-70.jpg&quot;]"
+                data-info="."
+                data-release=".">
+                <a class="record-project-link visually-hidden" href="/projects/tud-stations/index.html" tabindex="-1" aria-hidden="true">Open TU Delft studie - Stationsgebieden Delft en Leiden-Noord</a>
+                <img src="/resources/tud-stations/TUD%20A10%20stationsgebied%20delft-20.jpg" alt="TU Delft studie - Stationsgebieden Delft en Leiden-Noord" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">TU Delft studie - Stationsgebieden Delft en Leiden-Noord</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">ca. 1969</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">TU Delft - Faculteit Bouwkunde</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-71-vrieseweg">
-                <a class="seo-project-link" href="projects/71-vrieseweg/index.html" aria-label="Open Interieur woonkamer, Dordrecht">
-                    <img src="/resources/71-vrieseweg/vrieseweg%20Z-brightened-20.jpg" alt="Interieur woonkamer, Dordrecht" loading="lazy">
-                    <h3>Interieur woonkamer, Dordrecht</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1971<br><strong>Genre:</strong> studie<br><strong>Label:</strong> -</p>
-                <p class="seo-project-info">V.d. Berg / Vrieseweg, Dordrecht. Interieurstudie van de woonkamer. Het ontwerp is niet gerealiseerd.</p>
+            <article class="record" id="seo-71-vrieseweg" tabindex="0" role="button" aria-label="Project: Interieur woonkamer, Dordrecht. Klik voor details."
+                data-id="71-vrieseweg"
+                data-title="Interieur woonkamer, Dordrecht"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1971"
+                data-genre="studie"
+                data-label="Prive opdracht"
+                data-thumbnails="[&quot;resources/71-vrieseweg/vrieseweg Z-20.jpg&quot;]"
+                data-highres="[&quot;resources/71-vrieseweg/vrieseweg Z.jpg&quot;]"
+                data-info="V.d. Berg / Vrieseweg, Dordrecht. Interieurstudie van de woonkamer. Het ontwerp is niet gerealiseerd."
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/71-vrieseweg/index.html" tabindex="-1" aria-hidden="true">Open Interieur woonkamer, Dordrecht</a>
+                <img src="/resources/71-vrieseweg/vrieseweg%20Z-brightened-20.jpg" alt="Interieur woonkamer, Dordrecht" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Interieur woonkamer, Dordrecht</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1971</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Prive opdracht</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>V.d. Berg / Vrieseweg, Dordrecht. Interieurstudie van de woonkamer. Het ontwerp is niet gerealiseerd.</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-744-stedenbouw">
-                <a class="seo-project-link" href="projects/744-stedenbouw/index.html" aria-label="Open Sterrenburg 3, Dordrecht - Stedenbouw">
-                    <img src="/resources/744/Stedenbouw/deelplan%201B%20Z-10.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw" loading="lazy">
-                    <h3>Sterrenburg 3, Dordrecht - Stedenbouw</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1974<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> Atelier A architecten</p>
-                <p class="seo-project-info">Dit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sector), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.</p>
-                <p class="seo-project-release"><a href="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot" target="_blank" rel="noopener noreferrer">External reference</a></p>
+            <article class="record" id="seo-744-stedenbouw" tabindex="0" role="button" aria-label="Project: Sterrenburg 3, Dordrecht - Stedenbouw. Klik voor details."
+                data-id="744-stedenbouw"
+                data-title="Sterrenburg 3, Dordrecht - Stedenbouw"
+                data-artist="H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd"
+                data-year="1974"
+                data-genre="gerealiseerd"
+                data-label="Atelier A architecten"
+                data-thumbnails="[&quot;resources/744/Stedenbouw/deelplan 1b E7-E8_M5 kleur-20.jpg&quot;,&quot;resources/744/Stedenbouw/H1 situatie-10-R.jpg&quot;,&quot;resources/744/Stedenbouw/sat-10.png&quot;,&quot;resources/744/Stedenbouw/B0000166.jpg&quot;,&quot;resources/744/Stedenbouw/B0000167.jpg&quot;,&quot;resources/744/Stedenbouw/B0000217.jpg&quot;]"
+                data-highres="[&quot;resources/744/Stedenbouw/deelplan 1b E7-E8_M5 kleur.jpg&quot;,&quot;resources/744/Stedenbouw/H1 situatie-70-R.jpg&quot;,&quot;resources/744/Stedenbouw/sat-50.png&quot;,&quot;resources/744/Stedenbouw/B0000166.jpg&quot;,&quot;resources/744/Stedenbouw/B0000167.jpg&quot;,&quot;resources/744/Stedenbouw/B0000217.jpg&quot;]"
+                data-info="Dit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sector), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976."
+                data-release="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot">
+                <a class="record-project-link visually-hidden" href="/projects/744-stedenbouw/index.html" tabindex="-1" aria-hidden="true">Open Sterrenburg 3, Dordrecht - Stedenbouw</a>
+                <img src="/resources/744/Stedenbouw/deelplan%201B%20Z-10.jpg" alt="Sterrenburg 3, Dordrecht - Stedenbouw" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Sterrenburg 3, Dordrecht - Stedenbouw</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H.P.C. (Herman) Haan &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1974</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Atelier A architecten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>Dit project betreft een uitbreiding aan de zuidrand van Dordrecht met een capaciteit van 4000 woningen. Door Atelier A architecten (Herman Haan, Jan van der Weerd) zijn 3 deelplannen ontworpen, met daarin 145 woningen laagbouw (premie), 128 patiowoningen (vrije sector), 136 woningen middelhoogbouw (premie), 180 woningen hoogbouw (premie). Bouwjaar 1976.</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-744-patiowoningen">
-                <a class="seo-project-link" href="projects/744-patiowoningen/index.html" aria-label="Open Sterrenburg 3, Dordrecht - E7 Patiowoningen">
-                    <img src="/resources/744/E7-patiowoningen/E7%20isometrie%20Z-20.jpg" alt="Sterrenburg 3, Dordrecht - E7 Patiowoningen" loading="lazy">
-                    <h3>Sterrenburg 3, Dordrecht - E7 Patiowoningen</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1974<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> Atelier A architecten</p>
-                <p class="seo-project-release"><a href="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot" target="_blank" rel="noopener noreferrer">External reference</a></p>
+            <article class="record" id="seo-744-patiowoningen" tabindex="0" role="button" aria-label="Project: Sterrenburg 3, Dordrecht - E7 Patiowoningen. Klik voor details."
+                data-id="744-patiowoningen"
+                data-title="Sterrenburg 3, Dordrecht - E7 Patiowoningen"
+                data-artist="H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd"
+                data-year="1974"
+                data-genre="gerealiseerd"
+                data-label="Atelier A architecten"
+                data-thumbnails="[&quot;resources/744/E7-patiowoningen/E7 perspectief vogelvl-20.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 perspectief.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 gevels.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 isometrie Z-20.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 ovz woningtypen-2 Z-20.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000211.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 keuzenkamp012-20.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000100.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000104.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000106.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000108.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000168.jpg&quot;]"
+                data-highres="[&quot;resources/744/E7-patiowoningen/E7 perspectief vogelvl.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 perspectief.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 gevels.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 isometrie Z.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 ovz woningtypen-2 Z.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000211.jpg&quot;,&quot;resources/744/E7-patiowoningen/E7 keuzenkamp012.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000100.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000104.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000106.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000108.jpg&quot;,&quot;resources/744/E7-patiowoningen/B0000168.jpg&quot;]"
+                data-info=""
+                data-release="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot">
+                <a class="record-project-link visually-hidden" href="/projects/744-patiowoningen/index.html" tabindex="-1" aria-hidden="true">Open Sterrenburg 3, Dordrecht - E7 Patiowoningen</a>
+                <img src="/resources/744/E7-patiowoningen/E7%20isometrie%20Z-20.jpg" alt="Sterrenburg 3, Dordrecht - E7 Patiowoningen" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Sterrenburg 3, Dordrecht - E7 Patiowoningen</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H.P.C. (Herman) Haan &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1974</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Atelier A architecten</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-744-terraswoningen">
-                <a class="seo-project-link" href="projects/744-terraswoningen/index.html" aria-label="Open Sterrenburg 3, Dordrecht - M5 Terraswoningen">
-                    <img src="/resources/744/M5-terrasw/M5%20gevels001-10.jpg" alt="Sterrenburg 3, Dordrecht - M5 Terraswoningen" loading="lazy">
-                    <h3>Sterrenburg 3, Dordrecht - M5 Terraswoningen</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1974<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> Atelier A architecten</p>
-                <p class="seo-project-info">De gestapelde woningen zijn gesitueerd langs de wijkverzamelwegen, met het doel om het verkeer zoveel mogelijk uit de woonbuurt te houden en als ruimtelijk structurerend element in de wijk.
+            <article class="record" id="seo-744-terraswoningen" tabindex="0" role="button" aria-label="Project: Sterrenburg 3, Dordrecht - M5 Terraswoningen. Klik voor details."
+                data-id="744-terraswoningen"
+                data-title="Sterrenburg 3, Dordrecht - M5 Terraswoningen"
+                data-artist="H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd"
+                data-year="1974"
+                data-genre="gerealiseerd"
+                data-label="Atelier A architecten"
+                data-thumbnails="[&quot;resources/744/M5-terrasw/M5 doorsneden001-10.jpg&quot;,&quot;resources/744/M5-terrasw/M5 gevels001-10.jpg&quot;,&quot;resources/744/M5-terrasw/M5 verkaveling001-10.jpg&quot;,&quot;resources/744/M5-terrasw/M5 typenovz001-10.jpg&quot;,&quot;resources/744/M5-terrasw/B0000091.jpg&quot;,&quot;resources/744/M5-terrasw/M5 vogelvlucht1-SMALL.jpg&quot;,&quot;resources/744/M5-terrasw/B0000125.jpg&quot;,&quot;resources/744/M5-terrasw/B0000127.jpg&quot;,&quot;resources/744/M5-terrasw/B0000134.jpg&quot;,&quot;resources/744/M5-terrasw/B0000164.jpg&quot;,&quot;resources/744/M5-terrasw/B0000181.jpg&quot;,&quot;resources/744/M5-terrasw/B0000184.jpg&quot;,&quot;resources/744/M5-terrasw/B0000186.jpg&quot;,&quot;resources/744/M5-terrasw/B0000190.jpg&quot;,&quot;resources/744/M5-terrasw/B0000199.jpg&quot;,&quot;resources/744/M5-terrasw/B0000202.jpg&quot;,&quot;resources/744/M5-terrasw/B0000203.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-1 a-SMALL.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-2 a-SMALL.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-3 a-SMALL.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-4 a-SMALL.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-5 a-SMALL.jpg&quot;]"
+                data-highres="[&quot;resources/744/M5-terrasw/M5 doorsneden001-70.jpg&quot;,&quot;resources/744/M5-terrasw/M5 gevels001-70.jpg&quot;,&quot;resources/744/M5-terrasw/M5 verkaveling001-70.jpg&quot;,&quot;resources/744/M5-terrasw/M5 typenovz001-70.jpg&quot;,&quot;resources/744/M5-terrasw/B0000091.jpg&quot;,&quot;resources/744/M5-terrasw/M5 vogelvlucht1.jpg&quot;,&quot;resources/744/M5-terrasw/B0000125.jpg&quot;,&quot;resources/744/M5-terrasw/B0000127.jpg&quot;,&quot;resources/744/M5-terrasw/B0000134.jpg&quot;,&quot;resources/744/M5-terrasw/B0000164.jpg&quot;,&quot;resources/744/M5-terrasw/B0000181.jpg&quot;,&quot;resources/744/M5-terrasw/B0000184.jpg&quot;,&quot;resources/744/M5-terrasw/B0000186.jpg&quot;,&quot;resources/744/M5-terrasw/B0000190.jpg&quot;,&quot;resources/744/M5-terrasw/B0000199.jpg&quot;,&quot;resources/744/M5-terrasw/B0000202.jpg&quot;,&quot;resources/744/M5-terrasw/B0000203.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-1 a.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-2 a.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-3 a.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-4 a.jpg&quot;,&quot;resources/744/M5-terrasw/M5 dia-5 a.jpg&quot;]"
+                data-info="De gestapelde woningen zijn gesitueerd langs de wijkverzamelwegen, met het doel om het verkeer zoveel mogelijk uit de woonbuurt te houden en als ruimtelijk structurerend element in de wijk.
+
+De toegangen van de woningen zijn zoveel mogelijk geconcentreerd op de eerste verdieping, waardoor een voetgangersniveau ontstaat dat meer betekenis heeft dan een galerij. Dit voetgangersniveau verbindt de blokken onderling en de overige etagebouw in de verschillende deelplannen, waarbij een verkeersvrije oversteek over de wijkverzamelweg beschikbaar is.
+
+De terrasserende opbouw van het blok, gecombineerd met een  naar de einden aflopende bouwhoogte, maakt het mogelijk de etagewoningen te integreren met de omringende laagbouw. Het vormt a.h.w. een verheviging van de bebouwing, zonder zich te verzelfstandigen t.o.v. de omgeving. Dit effect is nog  versterkt door de materiaal- en kleurtoepassing, die aansluit bij een deel van de laagbouwwoningen.
+
+Het parkeren is half verdiept ondergebracht onder de bebouwing, waarmee wordt verhinderd dat de woonomgeving wordt gedomineerd door auto&#39;s. Uitgangspunt bij het ontwerp van de woningen was dat ook etagebouw zou moeten zijn voorzien van een bruikbare buitenruimte. Deze is aanwezig in de vorm van een halfoverdekt terras (buitenkamer)"
+                data-release="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot">
+                <a class="record-project-link visually-hidden" href="/projects/744-terraswoningen/index.html" tabindex="-1" aria-hidden="true">Open Sterrenburg 3, Dordrecht - M5 Terraswoningen</a>
+                <img src="/resources/744/M5-terrasw/M5%20gevels001-10.jpg" alt="Sterrenburg 3, Dordrecht - M5 Terraswoningen" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Sterrenburg 3, Dordrecht - M5 Terraswoningen</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H.P.C. (Herman) Haan &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1974</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Atelier A architecten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>De gestapelde woningen zijn gesitueerd langs de wijkverzamelwegen, met het doel om het verkeer zoveel mogelijk uit de woonbuurt te houden en als ruimtelijk structurerend element in de wijk.
 
 De toegangen van de woningen zijn zoveel mogelijk geconcentreerd op de eerste verdieping, waardoor een voetgangersniveau ontstaat dat meer betekenis heeft dan een galerij. Dit voetgangersniveau verbindt de blokken onderling en de overige etagebouw in de verschillende deelplannen, waarbij een verkeersvrije oversteek over de wijkverzamelweg beschikbaar is.
 
 De terrasserende opbouw van het blok, gecombineerd met een  naar de einden aflopende bouwhoogte, maakt het mogelijk de etagewoningen te integreren met de omringende laagbouw. Het vormt a.h.w. een verheviging van de bebouwing, zonder zich te verzelfstandigen t.o.v. de omgeving. Dit effect is nog  versterkt door de materiaal- en kleurtoepassing, die aansluit bij een deel van de laagbouwwoningen.
 
 Het parkeren is half verdiept ondergebracht onder de bebouwing, waarmee wordt verhinderd dat de woonomgeving wordt gedomineerd door auto&#39;s. Uitgangspunt bij het ontwerp van de woningen was dat ook etagebouw zou moeten zijn voorzien van een bruikbare buitenruimte. Deze is aanwezig in de vorm van een halfoverdekt terras (buitenkamer)</p>
-                <p class="seo-project-release"><a href="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot" target="_blank" rel="noopener noreferrer">External reference</a></p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-744-hoogbouw">
-                <a class="seo-project-link" href="projects/744-hoogbouw/index.html" aria-label="Open Sterrenburg 3, Dordrecht - H1 Hoogbouw">
-                    <img src="/resources/744/H1-Hoogbouw/H1%20perspectief%20Z-10.jpg" alt="Sterrenburg 3, Dordrecht - H1 Hoogbouw" loading="lazy">
-                    <h3>Sterrenburg 3, Dordrecht - H1 Hoogbouw</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1974<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> Atelier A architecten</p>
-                <p class="seo-project-info">De hoogbouw is gesitueerd in het centrum van de wijk, nabij het centrale plein en het winkelcentrum, en vormt zodoende een ruimtelijk accent.
+            <article class="record" id="seo-744-hoogbouw" tabindex="0" role="button" aria-label="Project: Sterrenburg 3, Dordrecht - H1 Hoogbouw. Klik voor details."
+                data-id="744-hoogbouw"
+                data-title="Sterrenburg 3, Dordrecht - H1 Hoogbouw"
+                data-artist="H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd"
+                data-year="1974"
+                data-genre="gerealiseerd"
+                data-label="Atelier A architecten"
+                data-thumbnails="[&quot;resources/744/H1-Hoogbouw/01-H1 situatie-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/02-H1 doorsneden Z-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/03-H1 verd 0-1-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/04-H1 verd 2-3-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/05-H1 verd 4-5-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/06-H1 verd 6-9-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/07-H1 sauna-zwembad Z-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/H1 perspectief Z-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/09-B0000207-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/10-B0000208-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/11-B0000210-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/12-bw1-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/13-bw2-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/14-birdeye1-10.jpg&quot;,&quot;resources/744/H1-Hoogbouw/15-B0000000-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/16-B0000058-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/17-B0000162-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg&quot;]"
+                data-highres="[&quot;resources/744/H1-Hoogbouw/01-H1 situatie-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/02-H1 doorsneden Z-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/03-H1 verd 0-1-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/04-H1 verd 2-3-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/05-H1 verd 4-5-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/06-H1 verd 6-9-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/07-H1 sauna-zwembad Z-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/H1 perspectief Z-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/09-B0000207.jpg&quot;,&quot;resources/744/H1-Hoogbouw/10-B0000208.jpg&quot;,&quot;resources/744/H1-Hoogbouw/11-B0000210.jpg&quot;,&quot;resources/744/H1-Hoogbouw/12-bw1-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/13-bw2-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/14-birdeye1-70.jpg&quot;,&quot;resources/744/H1-Hoogbouw/15-B0000000.jpg&quot;,&quot;resources/744/H1-Hoogbouw/16-B0000058.jpg&quot;,&quot;resources/744/H1-Hoogbouw/17-B0000162.jpg&quot;,&quot;resources/744/H1-Hoogbouw/H1 krantenartikel001.jpg&quot;]"
+                data-info="De hoogbouw is gesitueerd in het centrum van de wijk, nabij het centrale plein en het winkelcentrum, en vormt zodoende een ruimtelijk accent. 
+
+Wat is vermeld over de terraswoningen geldt eveneens voor de hoogbouw; in feite vormt deze een verbijzondering van de middelhoogbouw. De eerste 4 bouwlagen zijn identiek en daarbij zijn de bouwblokken zo geplaatst dat op het knooppunt kon worden verdergebouwd tot 9 verdiepingen. 
+
+Door de piramidale opbouw ontstaat in het hart een inpandige ruimte, welke wordt benut voor gemeenschappelijke voorzieningen. Het parkeren vindt ook hier onder het gebouw plaats."
+                data-release="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot">
+                <a class="record-project-link visually-hidden" href="/projects/744-hoogbouw/index.html" tabindex="-1" aria-hidden="true">Open Sterrenburg 3, Dordrecht - H1 Hoogbouw</a>
+                <img src="/resources/744/H1-Hoogbouw/H1%20perspectief%20Z-10.jpg" alt="Sterrenburg 3, Dordrecht - H1 Hoogbouw" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Sterrenburg 3, Dordrecht - H1 Hoogbouw</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H.P.C. (Herman) Haan &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1974</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Atelier A architecten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>De hoogbouw is gesitueerd in het centrum van de wijk, nabij het centrale plein en het winkelcentrum, en vormt zodoende een ruimtelijk accent.
 
 Wat is vermeld over de terraswoningen geldt eveneens voor de hoogbouw; in feite vormt deze een verbijzondering van de middelhoogbouw. De eerste 4 bouwlagen zijn identiek en daarbij zijn de bouwblokken zo geplaatst dat op het knooppunt kon worden verdergebouwd tot 9 verdiepingen.
 
 Door de piramidale opbouw ontstaat in het hart een inpandige ruimte, welke wordt benut voor gemeenschappelijke voorzieningen. Het parkeren vindt ook hier onder het gebouw plaats.</p>
-                <p class="seo-project-release"><a href="https://www.rtvdordrecht.nl/nieuws/stad/unieke-wijk-sterrenburg-bestaat-zestig-jaar-woonplezier-is-nog-altijd-groot" target="_blank" rel="noopener noreferrer">External reference</a></p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-75-WS">
-                <a class="seo-project-link" href="projects/75-WS/index.html" aria-label="Open Woningbouw, Willemstad">
-                    <img src="/resources/75-willemstad/willemstad%20iso%20Z-10.jpg" alt="Woningbouw, Willemstad" loading="lazy">
-                    <h3>Woningbouw, Willemstad</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1975<br><strong>Genre:</strong> studie<br><strong>Label:</strong> Atelier A architecten</p>
+            <article class="record" id="seo-75-WS" tabindex="0" role="button" aria-label="Project: Woningbouw, Willemstad. Klik voor details."
+                data-id="75-WS"
+                data-title="Woningbouw, Willemstad"
+                data-artist="H.P.C. (Herman) Haan &amp; J.W. (Jan) van der Weerd"
+                data-year="1975"
+                data-genre="studie"
+                data-label="Atelier A architecten"
+                data-thumbnails="[&quot;resources/75-willemstad/willemstad verkaveling Z-10.jpg&quot;,&quot;resources/75-willemstad/willemstad iso Z-10.jpg&quot;]"
+                data-highres="[&quot;resources/75-willemstad/willemstad verkaveling Z.jpg&quot;,&quot;resources/75-willemstad/willemstad iso Z.jpg&quot;]"
+                data-info=""
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/75-WS/index.html" tabindex="-1" aria-hidden="true">Open Woningbouw, Willemstad</a>
+                <img src="/resources/75-willemstad/willemstad%20iso%20Z-10.jpg" alt="Woningbouw, Willemstad" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Woningbouw, Willemstad</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H.P.C. (Herman) Haan &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1975</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Atelier A architecten</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-75046">
-                <a class="seo-project-link" href="projects/75046/index.html" aria-label="Open Raadshuis Amstelveen">
-                    <img src="/resources/75046-raads-amst/schets-BW.png" alt="Raadshuis Amstelveen" loading="lazy">
-                    <h3>Raadshuis Amstelveen</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> P.W. (Piet) van Dommelen &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1975-1980<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> van Dommelen Kroos van der Weerd architekten</p>
-                <p class="seo-project-info">In de periode 1969–1972 maakte architect Hugh Maaskant twee ontwerpen voor een nieuw raadhuis voor het gemeente Amstelveen. Dit waren grootschalige, brutalistische ontwerpen met duidelijke invloeden van Le Corbusier (zie de eerste twee maquette foto&#39;s). De welstandscommissie wees dit plan echter resoluut af; het ontwerp werd bestempeld als massaal en arrogant.
+            <article class="record" id="seo-75046" tabindex="0" role="button" aria-label="Project: Raadshuis Amstelveen. Klik voor details."
+                data-id="75046"
+                data-title="Raadshuis Amstelveen"
+                data-artist="P.W. (Piet) van Dommelen &amp; J.W. (Jan) van der Weerd"
+                data-year="1975-1980"
+                data-genre="gerealiseerd"
+                data-label="van Dommelen Kroos van der Weerd architekten"
+                data-thumbnails="[&quot;resources/75046-raads-amst/97-situatie-cr-5.jpg&quot;,&quot;resources/75046-raads-amst/96-doorsneden-cr-5.jpg&quot;,&quot;resources/75046-raads-amst/98-Noordoostgevel-cr-5.jpg&quot;,&quot;resources/75046-raads-amst/99-zuidgevel-cr-5.jpg&quot;,&quot;resources/75046-raads-amst/92-plattegrond1e-5.jpg&quot;,&quot;resources/75046-raads-amst/schets.png&quot;,&quot;resources/75046-raads-amst/luchtfoto_1.png&quot;,&quot;resources/75046-raads-amst/voorzijde_1.png&quot;,&quot;resources/75046-raads-amst/waterzijde.jpg&quot;,&quot;resources/75046-raads-amst/waterzijde_1.png&quot;,&quot;resources/75046-raads-amst/Raadhuis aan het water.jpg&quot;,&quot;resources/75046-raads-amst/NRC-12-nov-1976.jpg&quot;,&quot;resources/75046-raads-amst/maaskant_ontw_1.png&quot;,&quot;resources/75046-raads-amst/maaskant_ontw_2_maq.png&quot;,&quot;resources/75046-raads-amst/dommelen_ontw_1_maq.png&quot;]"
+                data-highres="[&quot;resources/75046-raads-amst/97-situatie-cr-30.jpg&quot;,&quot;resources/75046-raads-amst/96-doorsneden-cr-30.jpg&quot;,&quot;resources/75046-raads-amst/98-Noordoostgevel-cr-30.jpg&quot;,&quot;resources/75046-raads-amst/99-zuidgevel-cr-30.jpg&quot;,&quot;resources/75046-raads-amst/92-plattegrond1e-30.jpg&quot;,&quot;resources/75046-raads-amst/schets.png&quot;,&quot;resources/75046-raads-amst/luchtfoto_1.png&quot;,&quot;resources/75046-raads-amst/voorzijde_1.png&quot;,&quot;resources/75046-raads-amst/waterzijde.jpg&quot;,&quot;resources/75046-raads-amst/waterzijde_1.png&quot;,&quot;resources/75046-raads-amst/Raadhuis aan het water.jpg&quot;,&quot;resources/75046-raads-amst/NRC-12-nov-1976.jpg&quot;,{&quot;src&quot;:&quot;resources/75046-raads-amst/maaskant_ontw_1.png&quot;,&quot;caption&quot;:&quot;Eerste ontwerp van Maaskant (afgekeurd).&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;ca. 1969&quot;,&quot;type&quot;:&quot;Foto van maquette&quot;}},{&quot;src&quot;:&quot;resources/75046-raads-amst/maaskant_ontw_2_maq.png&quot;,&quot;caption&quot;:&quot;Tweede ontwerp van Maaskant (afgekeurd).&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;ca. 1972&quot;,&quot;type&quot;:&quot;Foto van maquette&quot;}},{&quot;src&quot;:&quot;resources/75046-raads-amst/dommelen_ontw_1_maq.png&quot;,&quot;caption&quot;:&quot;Het uiteindelijke gerealiseerde ontwerp van Van Dommelen.&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;ca. 1975&quot;,&quot;type&quot;:&quot;Foto van maquette&quot;}}]"
+                data-info="In de periode 1969–1972 maakte architect Hugh Maaskant twee ontwerpen voor een nieuw raadhuis voor het gemeente Amstelveen. Dit waren grootschalige, brutalistische ontwerpen met duidelijke invloeden van Le Corbusier (zie de eerste twee maquette foto&#39;s). De welstandscommissie wees dit plan echter resoluut af; het ontwerp werd bestempeld als massaal en arrogant. 
+
+Het uiteindelijke Raadhuis van Amstelveen werd ontworpen door Maaskants partners Van Dommelen, Kroos en Van der Weerd. Zij kozen voor een structuralistische opzet gebaseerd op een stramien van 8 bij 8 meter met een hoekverdraaiing van 45 graden. De betonnen structuur is ingevuld met baksteen, houten geveldelen en glazen puien. Het gebouw heeft een getrapte opbouw die oploopt naar landzijde. Dit resulteerde in de karakteristieke, verspringende blokkenstructuur van baksteen, hout en glas direct aan het water van de Poel. Het is een schoolvoorbeeld van de destijds gewenste menselijke maat en kleinschaligheid in de openbare architectuur."
+                data-release="https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/60/prj_id/416">
+                <a class="record-project-link visually-hidden" href="/projects/75046/index.html" tabindex="-1" aria-hidden="true">Open Raadshuis Amstelveen</a>
+                <img src="/resources/75046-raads-amst/schets-BW.png" alt="Raadshuis Amstelveen" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Raadshuis Amstelveen</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">P.W. (Piet) van Dommelen &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1975-1980</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">van Dommelen Kroos van der Weerd architekten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>In de periode 1969–1972 maakte architect Hugh Maaskant twee ontwerpen voor een nieuw raadhuis voor het gemeente Amstelveen. Dit waren grootschalige, brutalistische ontwerpen met duidelijke invloeden van Le Corbusier (zie de eerste twee maquette foto&#39;s). De welstandscommissie wees dit plan echter resoluut af; het ontwerp werd bestempeld als massaal en arrogant.
 
 Het uiteindelijke Raadhuis van Amstelveen werd ontworpen door Maaskants partners Van Dommelen, Kroos en Van der Weerd. Zij kozen voor een structuralistische opzet gebaseerd op een stramien van 8 bij 8 meter met een hoekverdraaiing van 45 graden. De betonnen structuur is ingevuld met baksteen, houten geveldelen en glazen puien. Het gebouw heeft een getrapte opbouw die oploopt naar landzijde. Dit resulteerde in de karakteristieke, verspringende blokkenstructuur van baksteen, hout en glas direct aan het water van de Poel. Het is een schoolvoorbeeld van de destijds gewenste menselijke maat en kleinschaligheid in de openbare architectuur.</p>
-                <p class="seo-project-release"><a href="https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/60/prj_id/416" target="_blank" rel="noopener noreferrer">External reference</a></p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-76014">
-                <a class="seo-project-link" href="projects/76014/index.html" aria-label="Open ABN Amro, Zwolle">
-                    <img src="/resources/76014-abna-zwol/perspectief.jpg" alt="ABN Amro, Zwolle" loading="lazy">
-                    <h3>ABN Amro, Zwolle</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> P.W. (Piet) van Dommelen &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1978<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> van Dommelen Kroos van der Weerd architekten</p>
-                <p class="seo-project-info">ABN Amro kantoor Zwolle (stationsplein). Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau.</p>
+            <article class="record" id="seo-76014" tabindex="0" role="button" aria-label="Project: ABN Amro, Zwolle. Klik voor details."
+                data-id="76014"
+                data-title="ABN Amro, Zwolle"
+                data-artist="P.W. (Piet) van Dommelen &amp; J.W. (Jan) van der Weerd"
+                data-year="1978"
+                data-genre="gerealiseerd"
+                data-label="van Dommelen Kroos van der Weerd architekten"
+                data-thumbnails="[&quot;resources/76014-abna-zwol/76014-58 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/76014-59 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/76014-60 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/B0000157.jpg&quot;,&quot;resources/76014-abna-zwol/600_1440.avif&quot;,&quot;resources/76014-abna-zwol/B0000156.jpg&quot;,&quot;resources/76014-abna-zwol/613_1440.avif&quot;,&quot;resources/76014-abna-zwol/602_1440.avif&quot;,&quot;resources/76014-abna-zwol/603_1440.avif&quot;,&quot;resources/76014-abna-zwol/605_1440.avif&quot;,&quot;resources/76014-abna-zwol/606_1440.avif&quot;,&quot;resources/76014-abna-zwol/614_1440.avif&quot;]"
+                data-highres="[&quot;resources/76014-abna-zwol/76014-58 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/76014-59 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/76014-60 amro zwolle.jpg&quot;,&quot;resources/76014-abna-zwol/B0000157.jpg&quot;,&quot;resources/76014-abna-zwol/600_1440.avif&quot;,&quot;resources/76014-abna-zwol/B0000156.jpg&quot;,&quot;resources/76014-abna-zwol/613_1440.avif&quot;,&quot;resources/76014-abna-zwol/602_1440.avif&quot;,&quot;resources/76014-abna-zwol/603_1440.avif&quot;,&quot;resources/76014-abna-zwol/605_1440.avif&quot;,&quot;resources/76014-abna-zwol/606_1440.avif&quot;,&quot;resources/76014-abna-zwol/614_1440.avif&quot;]"
+                data-info="ABN Amro kantoor Zwolle (stationsplein). Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau."
+                data-release="..">
+                <a class="record-project-link visually-hidden" href="/projects/76014/index.html" tabindex="-1" aria-hidden="true">Open ABN Amro, Zwolle</a>
+                <img src="/resources/76014-abna-zwol/perspectief.jpg" alt="ABN Amro, Zwolle" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">ABN Amro, Zwolle</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">P.W. (Piet) van Dommelen &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1978</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">van Dommelen Kroos van der Weerd architekten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>ABN Amro kantoor Zwolle (stationsplein). Ontwerp van Piet van Dommelen en Jan van der Weerd (projectarchitect), bureau Maaskant van Dommelen Kroos. Oorspronkelijk uitgevoerd in baksteen. De gevel is later (ca. 2020) aangepast zonder medewerking bureau.</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-78044">
-                <a class="seo-project-link" href="projects/78044/index.html" aria-label="Open ABN Amro, Dordrecht">
-                    <img src="/resources/78044-abna-dord/78044-4%20amro%20dordrecht%20isometrie%20Z-10.jpg" alt="ABN Amro, Dordrecht" loading="lazy">
-                    <h3>ABN Amro, Dordrecht</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd &amp; P.W. (Piet) van Dommelen<br><strong>Year:</strong> 1978-1979<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> van Dommelen Kroos van der Weerd architekten</p>
-                <p class="seo-project-info">ABN Amro kantoor Dordrecht (Stationsweg 2, hoek Nicolas Maessingel), Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau van Dommelen Kroos van der Weerd architekten. Het gebouw is gerealiseerd in 1980.
+            <article class="record" id="seo-78044" tabindex="0" role="button" aria-label="Project: ABN Amro, Dordrecht. Klik voor details."
+                data-id="78044"
+                data-title="ABN Amro, Dordrecht"
+                data-artist="J.W. (Jan) van der Weerd &amp; P.W. (Piet) van Dommelen"
+                data-year="1978-1979"
+                data-genre="gerealiseerd"
+                data-label="van Dommelen Kroos van der Weerd architekten"
+                data-thumbnails="[&quot;resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z-20.jpg&quot;,&quot;resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-10.jpg&quot;,&quot;resources/78044-abna-dord/78044 amro dordrecht perspectief Z-10.jpg&quot;,&quot;resources/78044-abna-dord/B0000152-40.jpg&quot;,&quot;resources/78044-abna-dord/B0000153-40.jpg&quot;,&quot;resources/78044-abna-dord/B0000154-40.jpg&quot;,&quot;resources/78044-abna-dord/B0000155-40.jpg&quot;,&quot;resources/78044-abna-dord/dnaar-15.JPG&quot;,&quot;resources/78044-abna-dord/vrijev-15.JPG&quot;]"
+                data-highres="[&quot;resources/78044-abna-dord/78044-12 amro dordrecht noordgevel Z.jpg&quot;,&quot;resources/78044-abna-dord/78044-4 amro dordrecht isometrie Z-70.jpg&quot;,&quot;resources/78044-abna-dord/78044 amro dordrecht perspectief Z-70.jpg&quot;,&quot;resources/78044-abna-dord/B0000152.jpg&quot;,{&quot;src&quot;:&quot;resources/78044-abna-dord/B0000153.jpg&quot;,&quot;caption&quot;:&quot;De binnenplaats met de 150 oude rode beuk.&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;1981&quot;,&quot;type&quot;:&quot;&quot;}},&quot;resources/78044-abna-dord/B0000154.jpg&quot;,&quot;resources/78044-abna-dord/B0000155.jpg&quot;,&quot;resources/78044-abna-dord/dnaar.JPG&quot;,&quot;resources/78044-abna-dord/vrijev.JPG&quot;]"
+                data-info="ABN Amro kantoor Dordrecht (Stationsweg 2, hoek Nicolas Maessingel), Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau van Dommelen Kroos van der Weerd architekten. Het gebouw is gerealiseerd in 1980.
+
+Bij het ontwerp is rekening gehouden met een boomgoep waaronder een 150 jaar oude rode beuk, die bij de realisatie van het naastgelegen Tomado een verplaatsing al had overleefd."
+                data-release="..">
+                <a class="record-project-link visually-hidden" href="/projects/78044/index.html" tabindex="-1" aria-hidden="true">Open ABN Amro, Dordrecht</a>
+                <img src="/resources/78044-abna-dord/78044-4%20amro%20dordrecht%20isometrie%20Z-10.jpg" alt="ABN Amro, Dordrecht" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">ABN Amro, Dordrecht</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd &amp;<br> P.W. (Piet) van Dommelen</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1978-1979</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">van Dommelen Kroos van der Weerd architekten</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>ABN Amro kantoor Dordrecht (Stationsweg 2, hoek Nicolas Maessingel), Ontwerp van Jan van der Weerd en Piet van Dommelen, bureau van Dommelen Kroos van der Weerd architekten. Het gebouw is gerealiseerd in 1980.
 
 Bij het ontwerp is rekening gehouden met een boomgoep waaronder een 150 jaar oude rode beuk, die bij de realisatie van het naastgelegen Tomado een verplaatsing al had overleefd.</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-80015">
-                <a class="seo-project-link" href="projects/80015/index.html" aria-label="Open Kantoorgebouw Spuiboulevard, Dordrecht">
-                    <img src="/resources/80015-spui-dord/schetsontwerp-30.jpg" alt="Kantoorgebouw Spuiboulevard, Dordrecht" loading="lazy">
-                    <h3>Kantoorgebouw Spuiboulevard, Dordrecht</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1980-1982<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> architektenburo ir j.w. van der weerd bv</p>
+            <article class="record" id="seo-80015" tabindex="0" role="button" aria-label="Project: Kantoorgebouw Spuiboulevard, Dordrecht. Klik voor details."
+                data-id="80015"
+                data-title="Kantoorgebouw Spuiboulevard, Dordrecht"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1980-1982"
+                data-genre="gerealiseerd"
+                data-label="architektenburo ir j.w. van der weerd bv"
+                data-thumbnails="[&quot;resources/80015-spui-dord/schetsontwerp-30.jpg&quot;,&quot;resources/80015-spui-dord/perspectief-10.jpg&quot;,&quot;resources/80015-spui-dord/luchtfoto-kleur-30.jpg&quot;,&quot;resources/80015-spui-dord/tek1-10.jpg&quot;,&quot;resources/80015-spui-dord/tek2-10.jpg&quot;,&quot;resources/80015-spui-dord/tek3-10.jpg&quot;,&quot;resources/80015-spui-dord/tek4-10.jpg&quot;,&quot;resources/80015-spui-dord/tek5-10.jpg&quot;,&quot;resources/80015-spui-dord/f1-20.jpg&quot;,&quot;resources/80015-spui-dord/f2-20.jpg&quot;,&quot;resources/80015-spui-dord/f3-20.jpg&quot;,&quot;resources/80015-spui-dord/f4-30.jpg&quot;,&quot;resources/80015-spui-dord/f5-20.jpg&quot;]"
+                data-highres="[&quot;resources/80015-spui-dord/schetsontwerp.jpg&quot;,&quot;resources/80015-spui-dord/perspectief-70.jpg&quot;,&quot;resources/80015-spui-dord/luchtfoto-kleur.jpg&quot;,&quot;resources/80015-spui-dord/tek1.jpg&quot;,&quot;resources/80015-spui-dord/tek2.jpg&quot;,&quot;resources/80015-spui-dord/tek3.jpg&quot;,&quot;resources/80015-spui-dord/tek4.jpg&quot;,&quot;resources/80015-spui-dord/tek5.jpg&quot;,&quot;resources/80015-spui-dord/f1.jpg&quot;,&quot;resources/80015-spui-dord/f2.jpg&quot;,&quot;resources/80015-spui-dord/f3.jpg&quot;,&quot;resources/80015-spui-dord/f4.jpg&quot;,&quot;resources/80015-spui-dord/f5.jpg&quot;]"
+                data-info="."
+                data-release="...">
+                <a class="record-project-link visually-hidden" href="/projects/80015/index.html" tabindex="-1" aria-hidden="true">Open Kantoorgebouw Spuiboulevard, Dordrecht</a>
+                <img src="/resources/80015-spui-dord/schetsontwerp-30.jpg" alt="Kantoorgebouw Spuiboulevard, Dordrecht" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Kantoorgebouw Spuiboulevard, Dordrecht</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1980-1982</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo ir j.w. van der weerd bv</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-80025">
-                <a class="seo-project-link" href="projects/80025/index.html" aria-label="Open Jongerenhuisvesting Kruisplein, Rotterdam">
-                    <img src="/resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg" alt="Jongerenhuisvesting Kruisplein, Rotterdam" loading="lazy">
-                    <h3>Jongerenhuisvesting Kruisplein, Rotterdam</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1982<br><strong>Genre:</strong> prijsvraag (niet gerealiseerd)<br><strong>Label:</strong> architektenburo ir j.w. van der weerd bv</p>
-                <p class="seo-project-info">Het plan vormt de inzending voor een prijsvraag, georganiseerd door Stichting Volkswoningen en de projektgroep Het Oude Westen te Rotterdam.
+            <article class="record" id="seo-80025" tabindex="0" role="button" aria-label="Project: Jongerenhuisvesting Kruisplein, Rotterdam. Klik voor details."
+                data-id="80025"
+                data-title="Jongerenhuisvesting Kruisplein, Rotterdam"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1982"
+                data-genre="prijsvraag (niet gerealiseerd)"
+                data-label="architektenburo ir j.w. van der weerd bv"
+                data-thumbnails="[&quot;resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_1_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_2_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_3_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_4_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_5_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_6_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_7_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_8_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_9_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_10_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_11_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_12_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_13_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_14_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_15_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_16_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_17_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_18_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_19_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_20_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_21_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_22_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_23_thumb.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/mec-vs-vdw.png&quot;]"
+                data-highres="[&quot;resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_1.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_2.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_3.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_4.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_5.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_6.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_7.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_8.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_9.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_10.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_11.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_12.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_13.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_14.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_15.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_16.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_17.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_18.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_19.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_20.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_21.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_22.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boeken_page_23.pdf&quot;,&quot;resources/80025-prijsvraag-kruisplein-rdam/tekeningen/mec-vs-vdw.png&quot;]"
+                data-info="Het plan vormt de inzending voor een prijsvraag, georganiseerd door Stichting Volkswoningen en de projektgroep Het Oude Westen te Rotterdam. 
+
+De opgave bestond uit het ontwerpen van een wooncomplex aan het Kruisplein hoek Diergaardesingel met als bijzonderheid dat daarin huisvesting voor jongeren in verschillende woninggrootten en met verschillende mate van gemeenschappelijkheid gerealiseerd moest worden. Bovendien werd een grote mate van veranderbaarheid gevraagd, in die zin dat het mogelijk moest zijn de kleinere woningtypen samen te voegen tot grotere en omgekeerd. 
+
+Het plan bestaat uit geschakelde blokken van 3 tot 9 bouwlagen, in de vorm van een in elkaar gevouwen strokenverkaveling. Door deze opzet treedt een schaalverschuiving op van Kruisplein naar Diergaarde-singel. Hierbij vormt het hoogste bouwblok een ruimtelijke begrenzing van het Kruisplein en ontstaan er in de straat enkele verwijdingen in de vorm van openbare ruimten. 
+
+De twee trappehuizen geven toegang tot galerijen aan de noordzijde, die waar de stroken elkaar ontmoeten overgaan in een binnengang. Aan de koppen van de blokken zijn steeds de, ook van buiten herkenbare, gemeenschappelijke ruimten gesitueerd. Op de begane grond bevinden zich naast parkeervoorzieningen en enkele winkels nog ruimten voor lokale voorzieningen. 
+
+De prijsvraag werd niet gewonnen maar gegund aan het bureau Mecanoo (zie vergelijking in laatste foto, projectlink hieronder)."
+                data-release="https://www.mecanoo.nl/Projects/project/141/Kruisplein"
+                data-pdf="resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boekA.pdf">
+                <a class="record-project-link visually-hidden" href="/projects/80025/index.html" tabindex="-1" aria-hidden="true">Open Jongerenhuisvesting Kruisplein, Rotterdam</a>
+                <img src="/resources/80025-prijsvraag-kruisplein-rdam/B0000145.jpg" alt="Jongerenhuisvesting Kruisplein, Rotterdam" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Jongerenhuisvesting Kruisplein, Rotterdam</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1982</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">prijsvraag (niet gerealiseerd)</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo ir j.w. van der weerd bv</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>Het plan vormt de inzending voor een prijsvraag, georganiseerd door Stichting Volkswoningen en de projektgroep Het Oude Westen te Rotterdam.
 
 De opgave bestond uit het ontwerpen van een wooncomplex aan het Kruisplein hoek Diergaardesingel met als bijzonderheid dat daarin huisvesting voor jongeren in verschillende woninggrootten en met verschillende mate van gemeenschappelijkheid gerealiseerd moest worden. Bovendien werd een grote mate van veranderbaarheid gevraagd, in die zin dat het mogelijk moest zijn de kleinere woningtypen samen te voegen tot grotere en omgekeerd.
 
@@ -161,69 +411,178 @@ Het plan bestaat uit geschakelde blokken van 3 tot 9 bouwlagen, in de vorm van e
 De twee trappehuizen geven toegang tot galerijen aan de noordzijde, die waar de stroken elkaar ontmoeten overgaan in een binnengang. Aan de koppen van de blokken zijn steeds de, ook van buiten herkenbare, gemeenschappelijke ruimten gesitueerd. Op de begane grond bevinden zich naast parkeervoorzieningen en enkele winkels nog ruimten voor lokale voorzieningen.
 
 De prijsvraag werd niet gewonnen maar gegund aan het bureau Mecanoo (zie vergelijking in laatste foto, projectlink hieronder).</p>
-                <p class="seo-project-release"><a href="https://www.mecanoo.nl/Projects/project/141/Kruisplein" target="_blank" rel="noopener noreferrer">External reference</a></p>
-                <p class="seo-project-pdf"><a href="/resources/80025-prijsvraag-kruisplein-rdam/tekeningen/80025-kruisplein-boekA.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a></p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-89012-park-cc">
-                <a class="seo-project-link" href="projects/89012-park-cc/index.html" aria-label="Open Parkeergarage Confectiecentrum, Amsterdam">
-                    <img src="/resources/89012-park-cc/perspectief.jpg" alt="Parkeergarage Confectiecentrum, Amsterdam" loading="lazy">
-                    <h3>Parkeergarage Confectiecentrum, Amsterdam</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1989<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> architektenburo ir j.w. van der weerd bv</p>
+            <article class="record" id="seo-89012-park-cc" tabindex="0" role="button" aria-label="Project: Parkeergarage Confectiecentrum, Amsterdam. Klik voor details."
+                data-id="89012-park-cc"
+                data-title="Parkeergarage Confectiecentrum, Amsterdam"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1989"
+                data-genre="gerealiseerd"
+                data-label="architektenburo ir j.w. van der weerd bv"
+                data-thumbnails="[&quot;resources/89012-park-cc/doorsnede.jpg&quot;,&quot;resources/89012-park-cc/page1_r.jpg&quot;,&quot;resources/89012-park-cc/page2_r.jpg&quot;,&quot;resources/89012-park-cc/page3_.jpg&quot;,&quot;resources/89012-park-cc/perspectief.jpg&quot;]"
+                data-highres="[&quot;resources/89012-park-cc/doorsnede.pdf&quot;,&quot;resources/89012-park-cc/page1_r.jpg&quot;,&quot;resources/89012-park-cc/page2_r.jpg&quot;,&quot;resources/89012-park-cc/page3_.jpg&quot;,&quot;resources/89012-park-cc/perspectief.jpg&quot;]"
+                data-info=""
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/89012-park-cc/index.html" tabindex="-1" aria-hidden="true">Open Parkeergarage Confectiecentrum, Amsterdam</a>
+                <img src="/resources/89012-park-cc/perspectief.jpg" alt="Parkeergarage Confectiecentrum, Amsterdam" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Parkeergarage Confectiecentrum, Amsterdam</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1989</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo ir j.w. van der weerd bv</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-92012-hilton">
-                <a class="seo-project-link" href="projects/92012-hilton/index.html" aria-label="Open Luifel Hilton Hotel, Rotterdam">
-                    <img src="/resources/hilton/hilton-luifel.jpg" alt="Luifel Hilton Hotel, Rotterdam" loading="lazy">
-                    <h3>Luifel Hilton Hotel, Rotterdam</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1992<br><strong>Genre:</strong> studie<br><strong>Label:</strong> architektenburo ir j.w. van der weerd bv</p>
+            <article class="record" id="seo-92012-hilton" tabindex="0" role="button" aria-label="Project: Luifel Hilton Hotel, Rotterdam. Klik voor details."
+                data-id="92012-hilton"
+                data-title="Luifel Hilton Hotel, Rotterdam"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1992"
+                data-genre="studie"
+                data-label="architektenburo ir j.w. van der weerd bv"
+                data-thumbnails="[&quot;resources/hilton/92012 situatie.jpg&quot;,&quot;resources/hilton/92012 bovenaanzicht.jpg&quot;,&quot;resources/hilton/92012 noordgevel.jpg&quot;,&quot;resources/hilton/92012 doorsnede.jpg&quot;,&quot;resources/hilton/92012 perspectief-2.jpg&quot;,&quot;resources/hilton/92012 perspectief-3.jpg&quot;,&quot;resources/hilton/92012 bord-logo.jpg&quot;]"
+                data-highres="[&quot;resources/hilton/92012 situatie.jpg&quot;,&quot;resources/hilton/92012 bovenaanzicht.jpg&quot;,&quot;resources/hilton/92012 noordgevel.jpg&quot;,&quot;resources/hilton/92012 doorsnede.jpg&quot;,&quot;resources/hilton/92012 perspectief-2.jpg&quot;,&quot;resources/hilton/92012 perspectief-3.jpg&quot;,&quot;resources/hilton/92012 bord-logo.jpg&quot;]"
+                data-info=""
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/92012-hilton/index.html" tabindex="-1" aria-hidden="true">Open Luifel Hilton Hotel, Rotterdam</a>
+                <img src="/resources/hilton/hilton-luifel.jpg" alt="Luifel Hilton Hotel, Rotterdam" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Luifel Hilton Hotel, Rotterdam</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1992</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo ir j.w. van der weerd bv</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-WHT">
-                <a class="seo-project-link" href="projects/WHT/index.html" aria-label="Open Westelijk Handelsterrein, Rotterdam">
-                    <img src="/resources/WHT/wht-doorsneden-gevels-40.jpg" alt="Westelijk Handelsterrein, Rotterdam" loading="lazy">
-                    <h3>Westelijk Handelsterrein, Rotterdam</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd &amp; H. (Henk) Klunder<br><strong>Year:</strong> 1998<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> architektenburo van der weerd bv</p>
-                <p class="seo-project-info">Dakconstructie door Octatube bv / Mick Eeckhout</p>
-                <p class="seo-project-release"><a href="https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/1265/prj_id/1576" target="_blank" rel="noopener noreferrer">External reference</a></p>
+            <article class="record" id="seo-WHT" tabindex="0" role="button" aria-label="Project: Westelijk Handelsterrein, Rotterdam. Klik voor details."
+                data-id="WHT"
+                data-title="Westelijk Handelsterrein, Rotterdam"
+                data-artist="J.W. (Jan) van der Weerd &amp; H. (Henk) Klunder"
+                data-year="1998"
+                data-genre="gerealiseerd"
+                data-label="architektenburo van der weerd bv"
+                data-thumbnails="[&quot;resources/WHT/B0000026.jpg&quot;,&quot;resources/WHT/B0000030.jpg&quot;,&quot;resources/WHT/B0000031.jpg&quot;,&quot;resources/WHT/B0000032.jpg&quot;,&quot;resources/WHT/B0000035.jpg&quot;,&quot;resources/WHT/wht-doorsneden-gevels-40.jpg&quot;]"
+                data-highres="[&quot;resources/WHT/B0000026.jpg&quot;,&quot;resources/WHT/B0000030.jpg&quot;,&quot;resources/WHT/B0000031.jpg&quot;,&quot;resources/WHT/B0000032.jpg&quot;,&quot;resources/WHT/B0000035.jpg&quot;,&quot;resources/WHT/wht-doorsneden-gevels.pdf&quot;]"
+                data-info="Dakconstructie door Octatube bv / Mick Eeckhout"
+                data-release="https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/1265/prj_id/1576">
+                <a class="record-project-link visually-hidden" href="/projects/WHT/index.html" tabindex="-1" aria-hidden="true">Open Westelijk Handelsterrein, Rotterdam</a>
+                <img src="/resources/WHT/wht-doorsneden-gevels-40.jpg" alt="Westelijk Handelsterrein, Rotterdam" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Westelijk Handelsterrein, Rotterdam</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd &amp;<br> H. (Henk) Klunder</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1998</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo van der weerd bv</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>Dakconstructie door Octatube bv / Mick Eeckhout</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-NLR-TRS">
-                <a class="seo-project-link" href="projects/NLR-TRS/index.html" aria-label="Open NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)">
-                    <img src="/resources/99012-nlr-trs/TRS-gevels-cropped.jpg" alt="NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)" loading="lazy">
-                    <h3>NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 1999<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> architektenburo van der weerd bv</p>
-                <p class="seo-project-info">Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) is gehuisvest.</p>
-                <p class="seo-project-release"><a href="https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/" target="_blank" rel="noopener noreferrer">External reference</a></p>
+            <article class="record" id="seo-NLR-TRS" tabindex="0" role="button" aria-label="Project: NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM). Klik voor details."
+                data-id="NLR-TRS"
+                data-title="NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="1999"
+                data-genre="gerealiseerd"
+                data-label="architektenburo van der weerd bv"
+                data-thumbnails="[&quot;resources/99012-nlr-trs/H03-30.jpg&quot;,&quot;resources/99012-nlr-trs/B0000039-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000040-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000043-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000044-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000045-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000047-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000048-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000049-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000050-20.jpg&quot;,&quot;resources/99012-nlr-trs/B0000051-20.jpg&quot;,&quot;resources/99012-nlr-trs/TRS-gevels-doorsneden.jpg&quot;,&quot;resources/99012-nlr-trs/99012-03_noord_zuidgevel-50.jpg&quot;]"
+                data-highres="[&quot;resources/99012-nlr-trs/H03.jpg&quot;,&quot;resources/99012-nlr-trs/B0000039.jpg&quot;,&quot;resources/99012-nlr-trs/B0000040.jpg&quot;,&quot;resources/99012-nlr-trs/B0000043.jpg&quot;,&quot;resources/99012-nlr-trs/B0000044.jpg&quot;,&quot;resources/99012-nlr-trs/B0000045.jpg&quot;,&quot;resources/99012-nlr-trs/B0000047.jpg&quot;,&quot;resources/99012-nlr-trs/B0000048.jpg&quot;,&quot;resources/99012-nlr-trs/B0000049.jpg&quot;,&quot;resources/99012-nlr-trs/B0000050.jpg&quot;,&quot;resources/99012-nlr-trs/B0000051.jpg&quot;,&quot;resources/99012-nlr-trs/TRS-gevels-doorsneden.pdf&quot;,&quot;resources/99012-nlr-trs/99012-03_noord_zuidgevel.pdf&quot;]"
+                data-info="Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) is gehuisvest."
+                data-release="https://www.nlr.org/civil-aviation/ansps/air-traffic-management-simulation/">
+                <a class="record-project-link visually-hidden" href="/projects/NLR-TRS/index.html" tabindex="-1" aria-hidden="true">Open NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)</a>
+                <img src="/resources/99012-nlr-trs/TRS-gevels-cropped.jpg" alt="NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">NLR, Amsterdam,Tower Research Simulator (TRS/NARSIM)</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">1999</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo van der weerd bv</span></p>
+                </div>
+                <details class="project-description">
+                    <summary>Beschrijving</summary>
+                    <p>Uitbreiding van de hoofdvestiging van het Nationaal Lucht- en Ruimtevaartlaboratorium (oorspronkelijk ontwerp van Hugh Maaskant) aan de Anthony Fokkerweg 2 in Amsterdam met het Tower Research Simulator (TRS) gebouw waar de NLR Air Traffic Control Research Simulator (NARSIM) is gehuisvest.</p>
+                </details>
+
             </article>
-            <article class="seo-project" id="seo-westerstraat">
-                <a class="seo-project-link" href="projects/westerstraat/index.html" aria-label="Open Westerstraat Rotterdam">
-                    <img src="/resources/westerstraat/westerstraat%20perspektief.jpg" alt="Westerstraat Rotterdam" loading="lazy">
-                    <h3>Westerstraat Rotterdam</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H. (Henk) Klunder &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 2000<br><strong>Genre:</strong> gerealiseerd<br><strong>Label:</strong> architektenburo van der weerd bv </p>
+            <article class="record" id="seo-westerstraat" tabindex="0" role="button" aria-label="Project: Westerstraat Rotterdam. Klik voor details."
+                data-id="westerstraat"
+                data-title="Westerstraat Rotterdam"
+                data-artist="H. (Henk) Klunder &amp; J.W. (Jan) van der Weerd"
+                data-year="2000"
+                data-genre="gerealiseerd"
+                data-label="architektenburo van der weerd bv "
+                data-thumbnails="[&quot;resources/westerstraat/B0000022.jpg&quot;,&quot;resources/westerstraat/G-01.jpg&quot;,&quot;resources/westerstraat/99011 gevels dsn-10.jpg&quot;,&quot;resources/westerstraat/99011 plattegronden-10.jpg&quot;,&quot;resources/westerstraat/B0000003.jpg&quot;,&quot;resources/westerstraat/westerstraat perspektief.jpg&quot;]"
+                data-highres="[&quot;resources/westerstraat/B0000022.jpg&quot;,&quot;resources/westerstraat/G-01.jpg&quot;,&quot;resources/westerstraat/99011 gevels dsn.pdf&quot;,&quot;resources/westerstraat/99011 plattegronden.pdf&quot;,&quot;resources/westerstraat/B0000003.jpg&quot;,&quot;resources/westerstraat/westerstraat perspektief.jpg&quot;]"
+                data-info=""
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/westerstraat/index.html" tabindex="-1" aria-hidden="true">Open Westerstraat Rotterdam</a>
+                <img src="/resources/westerstraat/westerstraat%20perspektief.jpg" alt="Westerstraat Rotterdam" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">Westerstraat Rotterdam</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H. (Henk) Klunder &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">2000</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">gerealiseerd</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo van der weerd bv </span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-nlr-portier">
-                <a class="seo-project-link" href="projects/nlr-portier/index.html" aria-label="Open NLR, Noordoostpolder, portiersgebouw">
-                    <img src="/resources/25014-nlr-port/portiersloge-versie2.jpg" alt="NLR, Noordoostpolder, portiersgebouw" loading="lazy">
-                    <h3>NLR, Noordoostpolder, portiersgebouw</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> J.W. (Jan) van der Weerd<br><strong>Year:</strong> 2005<br><strong>Genre:</strong> studie<br><strong>Label:</strong> architektenburo van der weerd bv</p>
+            <article class="record" id="seo-nlr-portier" tabindex="0" role="button" aria-label="Project: NLR, Noordoostpolder, portiersgebouw. Klik voor details."
+                data-id="nlr-portier"
+                data-title="NLR, Noordoostpolder, portiersgebouw"
+                data-artist="J.W. (Jan) van der Weerd"
+                data-year="2005"
+                data-genre="studie"
+                data-label="architektenburo van der weerd bv"
+                data-thumbnails="[&quot;resources/25014-nlr-port/25014 schets_1-2005.jpg&quot;,&quot;resources/25014-nlr-port/25014 schets_2.jpg&quot;,&quot;resources/25014-nlr-port/25014 schets_3.jpg&quot;,&quot;resources/25014-nlr-port/25014 schets_4.jpg&quot;,&quot;resources/25014-nlr-port/78024-3 NLR NOP portiersloge bestektek.jpg&quot;]"
+                data-highres="[&quot;resources/25014-nlr-port/25014 schets_1-2005.pdf&quot;,&quot;resources/25014-nlr-port/25014 schets_2.pdf&quot;,&quot;resources/25014-nlr-port/25014 schets_3.pdf&quot;,&quot;resources/25014-nlr-port/25014 schets_4.pdf&quot;,{&quot;src&quot;:&quot;resources/25014-nlr-port/78024-3 NLR NOP portiersloge bestektek.jpg&quot;,&quot;caption&quot;:&quot;Oorspronkelijk ontwerp&quot;,&quot;metadata&quot;:{&quot;jaar&quot;:&quot;1978&quot;,&quot;type&quot;:&quot;Bestektekening&quot;}}]"
+                data-info=""
+                data-release="">
+                <a class="record-project-link visually-hidden" href="/projects/nlr-portier/index.html" tabindex="-1" aria-hidden="true">Open NLR, Noordoostpolder, portiersgebouw</a>
+                <img src="/resources/25014-nlr-port/portiersloge-versie2.jpg" alt="NLR, Noordoostpolder, portiersgebouw" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">NLR, Noordoostpolder, portiersgebouw</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">2005</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">architektenburo van der weerd bv</span></p>
+                </div>
+
             </article>
-            <article class="seo-project" id="seo-eco-compact">
-                <a class="seo-project-link" href="projects/eco-compact/index.html" aria-label="Open ECO compact woningconcept">
-                    <img src="/resources/eco-compact/boekje%20v12-b%207-05-2012_page_1_thumb.jpg" alt="ECO compact woningconcept" loading="lazy">
-                    <h3>ECO compact woningconcept</h3>
-                </a>
-                <p class="seo-project-meta"><strong>Artist:</strong> H. (Henk) Klunder &amp; J.W. (Jan) van der Weerd<br><strong>Year:</strong> 2012<br><strong>Genre:</strong> studie<br><strong>Label:</strong> Henk Klunder en Jan van der Weerd architecten</p>
-                <p class="seo-project-pdf"><a href="/resources/eco-compact/boekje%20v12-b%207-05-2012.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a></p>
+            <article class="record" id="seo-eco-compact" tabindex="0" role="button" aria-label="Project: ECO compact woningconcept. Klik voor details."
+                data-id="eco-compact"
+                data-title="ECO compact woningconcept"
+                data-artist="H. (Henk) Klunder &amp; J.W. (Jan) van der Weerd"
+                data-year="2012"
+                data-genre="studie"
+                data-label="Henk Klunder en Jan van der Weerd architecten"
+                data-thumbnails="[&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_1_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_2_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_3_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_4_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_5_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_6_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_7_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_8_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_9_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_10_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_11_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_12_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_13_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_14_thumb.jpg&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_15_thumb.jpg&quot;]"
+                data-highres="[&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_1.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_2.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_3.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_4.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_5.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_6.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_7.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_8.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_9.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_10.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_11.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_12.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_13.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_14.pdf&quot;,&quot;resources/eco-compact/boekje v12-b 7-05-2012_page_15.pdf&quot;]"
+                data-info=""
+                data-release=""
+                data-pdf="resources/eco-compact/boekje v12-b 7-05-2012.pdf">
+                <a class="record-project-link visually-hidden" href="/projects/eco-compact/index.html" tabindex="-1" aria-hidden="true">Open ECO compact woningconcept</a>
+                <img src="/resources/eco-compact/boekje%20v12-b%207-05-2012_page_1_thumb.jpg" alt="ECO compact woningconcept" class="album-cover" loading="lazy">
+                <div class="info">
+                    <h3 class="data-title">ECO compact woningconcept</h3>
+                    <p><strong>Ontwerp:</strong> <span class="data-artist">H. (Henk) Klunder &amp;<br> J.W. (Jan) van der Weerd</span></p>
+                    <p><strong>Jaar:</strong> <span class="data-year">2012</span></p>
+                    <p><strong>Status:</strong> <span class="data-genre">studie</span></p>
+                    <p><strong>Bureau:</strong> <span class="data-label">Henk Klunder en Jan van der Weerd architecten</span></p>
+                </div>
+
             </article>
+            </div>
         </section>
         <!-- PROJECT_INDEX_END -->
         <!-- <h2>Werk</h2>
         <p>Aan deze pagina wordt nog gewerkt...</p> -->
         <!-- Search Bar -->
-        <input type="text" id="searchInput" placeholder="Zoek projecten..." onkeyup="filterAlbums()" style="margin-top: 1rem;">    <div id="collection-grid" aria-live="polite"></div>
     </main>
     <footer>
         <p>&copy; 1966-2026 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>

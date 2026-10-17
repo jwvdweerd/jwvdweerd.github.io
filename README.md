@@ -36,6 +36,7 @@ IDs should be unique (duplicate 744 split into 744-stedenbouw and 744-hoogbouw).
 4. Run `node scripts/generate-project-pages.js` to refresh the standalone project pages.
 5. Run `node scripts/generate-collection-page.js` to refresh the crawlable project index in `collection.html`.
 6. Run `node scripts/generate-fotografie-pages.js` to refresh the standalone photography pages.
+7. Run `node scripts/generate-fotografie-index.js` to refresh the photography index in `fotografie.html`.
 
 ## Accessibility notes
 - Records are keyboard-activatable (Enter/Space).
