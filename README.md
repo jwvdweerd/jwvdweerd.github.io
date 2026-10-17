@@ -38,6 +38,8 @@ IDs should be unique (duplicate 744 split into 744-stedenbouw and 744-hoogbouw).
 6. Run `node scripts/generate-fotografie-pages.js` to refresh the standalone photography pages.
 7. Run `node scripts/generate-fotografie-index.js` to refresh the photography index in `fotografie.html`.
 
+To run all page generators at once, use `./update-pages.sh` from the repository root.
+
 ## Accessibility notes
 - Records are keyboard-activatable (Enter/Space).
 - High-res modal can be closed with Escape.

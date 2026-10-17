@@ -261,6 +261,7 @@ nav {
     background: transparent;
     border: none;
     padding: 0.25rem;
+    margin-top: 0;
     margin-right: 0.5rem;
     cursor: pointer;
 }
@@ -524,6 +525,11 @@ footer img {
 
 /* Smaller footer for mobile devices */
 @media (max-width: 768px) {
+    :root {
+        --header-height: 76px;
+        --footer-height: 44px;
+    }
+
     /* Ensure high-res modal sits above header/footer on mobile */
     #highResModal { z-index: 3500; }
     /* Position PDF UI on small screens */
@@ -569,7 +575,7 @@ footer img {
     header h1,
     header .site-title {
         font-size: 1.2rem;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.15rem 0;
     }
     
     nav a {
@@ -625,6 +631,29 @@ footer img {
     .high-res-modal-content {
         padding: 0;
         margin: 0;
+    }
+}
+
+/* Compact fixed chrome for phones held in landscape orientation. */
+@media (orientation: landscape) and (max-height: 600px) {
+    :root {
+        --header-height: 64px;
+        --footer-height: 36px;
+    }
+
+    header {
+        padding: calc(0.25rem + var(--safe-top)) 0.75rem 0.25rem;
+    }
+
+    header h1,
+    header .site-title {
+        font-size: 1rem;
+        margin: 0 0 0.15rem;
+    }
+
+    footer {
+        padding: 0.25rem 0.5rem calc(0.25rem + var(--safe-bottom));
+        font-size: 0.75rem;
     }
 }
 
