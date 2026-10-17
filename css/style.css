@@ -846,6 +846,7 @@ footer img {
     z-index: 3000;
     background-color: rgba(0, 0, 0, 1); /* Solid black background */
     overflow: hidden;
+    touch-action: pan-x pan-y;
 }
 
 /* Prevent body scrolling when modal is open */
@@ -997,7 +998,7 @@ body.modal-open {
     pointer-events: auto;
     overflow: auto;
     position: relative;
-    touch-action: manipulation; /* Enable pinch-zoom and pan on mobile */
+    touch-action: pan-x pan-y;
     cursor: grab;
     display: block;
     overscroll-behavior: contain; /* prevent scroll chaining to page */
@@ -1313,7 +1314,7 @@ button:hover {
     
     #highResImage img,
     #highResImage canvas {
-        touch-action: manipulation;
+        touch-action: pan-x pan-y;
         user-select: none;
         -webkit-user-select: none;
         -moz-user-select: none;

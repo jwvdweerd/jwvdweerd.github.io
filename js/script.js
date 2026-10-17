@@ -508,7 +508,6 @@ function createScreenFittedImage(imageSrc) {
             const fittedHeight = imageHeight * scale;
             
             if (isMobileDevice()) {
-                // Mobile/tablet: Use full available dimensions with native zoom capabilities
                 img.style.cssText = `
                     width: 100%;
                     height: 100%;
@@ -518,7 +517,7 @@ function createScreenFittedImage(imageSrc) {
                     object-position: center;
                     display: block;
                     margin: 0;
-                    touch-action: manipulation;
+                    touch-action: pan-x pan-y;
                     user-select: none;
                 `;
             } else {
