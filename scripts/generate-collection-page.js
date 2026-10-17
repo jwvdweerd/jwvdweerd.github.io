@@ -61,7 +61,7 @@ function projectIndexMarkup(records, { outputDir = 'projects' } = {}) {
                     <p><strong>Bureau:</strong> <span class="data-label">${escapeHtml(record.label)}</span></p>
                 </div>
 ${!isPlaceholder(info) ? `                <details class="project-description">
-                    <summary>Beschrijving</summary>
+                    <summary><span class="description-arrow" aria-hidden="true"></span><span>Beschrijving</span></summary>
                     <p>${formatInfo(info)}</p>
                 </details>\n` : ''}
             </article>`;

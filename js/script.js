@@ -152,8 +152,7 @@ function enhanceRecord(recordDiv) {
         const summary = event.target.closest('summary');
         if (summary) {
             event.preventDefault();
-            const summaryRect = summary.getBoundingClientRect();
-            const clickedArrow = event.clientX - summaryRect.left <= 28;
+            const clickedArrow = Boolean(event.target.closest('.description-arrow'));
             if (clickedArrow) {
                 summary.parentElement.open = !summary.parentElement.open;
             } else {

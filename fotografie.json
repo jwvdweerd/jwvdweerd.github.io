@@ -1,11 +1,11 @@
 [
     {
         "id": "scharoun-scriptie_",
-        "title": "Scharoun TU Delft scriptie K2-examen",
+        "title": "Scharoun essay",
         "artist": "Jan van der Weerd",
         "year": "1969",
-        "genre": "scriptie",
-        "label": "-",
+        "genre": "Scriptie K2-examen",
+        "label": "TU Delft studie bouwkunde",
         "cover": "resources/scharoun/omslagtekst.jpg",
         "thumbnails": [
             "resources/scharoun/Scharoun-origineel_page_1_thumb.jpg",
@@ -81,7 +81,7 @@
         "artist": "Jan van der Weerd",
         "year": "1974",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/mali/12-10-20.jpg",
         "thumbnails": [
             "resources/mali/90-1_00.jpg", 
@@ -154,7 +154,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/spanje/39-07-20.jpg",
         "thumbnails": [
             "resources/spanje/39-10-20.jpg", 
@@ -221,7 +221,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/corbusier/corbusier-savoye-poissy3-20.jpg",
         "thumbnails": [
             "resources/corbusier/corbusier-savoye-poissy-20.jpg",
@@ -270,7 +270,7 @@
         "artist": "Jan van der Weerd",
         "year": "2003",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/gray/E1027-2-BW.jpg",
         "thumbnails": [
             "resources/gray/E1027-1.jpg",
@@ -295,7 +295,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/montrouge-ivry-sur-seine-50.jpg",
         "thumbnails": [
             "resources/arch-div/montrouge-ivry-sur-seine-50.jpg",
@@ -314,7 +314,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/parent-iran-cite-int-univ-paris-50.jpg",
         "thumbnails": [
             "resources/arch-div/parent-iran-cite-int-univ-paris-50.jpg"
@@ -331,7 +331,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/beaudouin-suresnes4-50.jpg",
         "thumbnails": [
             "resources/arch-div/beaudouin-suresnes5-50.jpg", 
@@ -358,7 +358,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/chareau-verre-paris-50.jpg",
         "thumbnails": [
             "resources/arch-div/chareau-verre-paris-50.jpg",
@@ -377,7 +377,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/edf-oficentro-vigo-50.jpg",
         "thumbnails": [
             "resources/arch-div/edf-oficentro-vigo-50.jpg"
@@ -394,7 +394,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/prouve-ffb-50.jpg",
         "thumbnails": [
             "resources/arch-div/prouve-ffb-50.jpg"
@@ -411,7 +411,7 @@
         "artist": "Jan van der Weerd",
         "year": "1970",
         "genre": "fotografie",
-        "label": "-",
+        "label": "Prive",
         "cover": "resources/arch-div/sauvage-50.jpg",
         "thumbnails": [
             "resources/arch-div/sauv-50.jpg", 
