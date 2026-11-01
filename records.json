@@ -571,7 +571,11 @@
             "resources/WHT/B0000031.jpg",
             "resources/WHT/B0000032.jpg",
             "resources/WHT/B0000035.jpg",
-            "resources/WHT/wht-doorsneden-gevels-40.jpg"
+            "resources/WHT/plattegrond.jpg",
+            "resources/WHT/wht-doorsneden-gevels-40.jpg",
+            "resources/WHT/vroegindeweij.jpeg",
+            "resources/WHT/ylstra-fax.jpeg",
+            "resources/WHT/stitched-pen-boards_opt2-10.png"
         ],
         "highres": [
             "resources/WHT/B0000026.jpg",
@@ -579,9 +583,34 @@
             "resources/WHT/B0000031.jpg",
             "resources/WHT/B0000032.jpg",
             "resources/WHT/B0000035.jpg",
-            "resources/WHT/wht-doorsneden-gevels.pdf"
+            "resources/WHT/plattegrond.pdf",
+            "resources/WHT/wht-doorsneden-gevels.pdf",
+            {
+                "src": "resources/WHT/vroegindeweij.jpeg",
+                "caption": "Tekst van Rien Vroegindeweij.",
+                "metadata": {
+                    "jaar": "2001",
+                    "type": "RVS sculptuur"
+                }
+            },
+            {
+                "src": "resources/WHT/ylstra-fax.jpeg",
+                "caption": "Beeld bij entree, ontworpen door Bouke Ylstra.",
+                "metadata": {
+                    "jaar": "2002",
+                    "type": "RVS sculptuur"
+                }
+            },
+            {
+                "src": "resources/WHT/stitched-pen-boards_opt2.png",
+                "caption": "Beeld bij entree (samengesteld beeld wijkt af van origineel), ontworpen door Bouke Ylstra.",
+                "metadata": {
+                    "jaar": "2002",
+                    "type": "RVS sculptuur"
+                }
+            }
         ],
-        "info": "Dakconstructie door Octatube bv / Mick Eeckhout",
+        "info": "Dakconstructie door Octatube bv / Mick Eeckhout. Beeldende kunst van Bouke Ylstra en Rien Vroegindeweij.",
         "release": "https://www.architectuurgids.nl/project/list_projects_of_architect/arc_id/1265/prj_id/1576"
     },
     {
