@@ -762,6 +762,33 @@
         "info": "",
         "release": "",
         "pdf": "resources/eco-compact/boekje v12-b 7-05-2012.pdf"
+    },
+    {
+        "id": "HIG",
+        "title": "Luifel Het Industriegebouw, Rotterdam",
+        "artist": "J.W. (Jan) van der Weerd",
+        "year": "2017",
+        "genre": "studie",
+        "label": "architektenburo van der weerd bv",
+        "cover": "resources/HIG/luifel-3-2_tekening.jpg",
+        "thumbnails": [
+            "resources/HIG/luifel-3-2_tekening.jpg",
+            "resources/HIG/schets luifel HIG.jpg",
+            "resources/HIG/luifel-4 getekend totaal.jpg",
+            "resources/HIG/luifel-5-2 A-3 blad.jpg",
+            "resources/HIG/luifel-6 scan tek A3 .jpg",
+            "resources/HIG/HIG luifel v5.jpg"
+        ],
+        "highres": [
+            "resources/HIG/luifel-3-2_tekening.jpg",
+            "resources/HIG/schets luifel HIG.jpg",
+            "resources/HIG/luifel-4 getekend totaal.jpg",
+            "resources/HIG/luifel-5-2 A-3 blad.jpg",
+            "resources/HIG/luifel-6 scan tek A3 .jpg",
+            "resources/HIG/HIG luifel v5.jpg"
+        ],
+        "info": "Jan van der Weerd heeft geadviseerd bij veschillende (bouwkundige) aanpassingen van het Industriegebouw in Rotterdam nadat het gebouw in 2015 werd gekocht door een groep Rotterdamse investeerders. Hun doel was om dit icoon van de Rotterdamse wederopbouw in ere herstellen en terug te brengen naar zijn oorspronkelijke functie als bruisend bedrijfsverzamelgebouw.",
+        "release": "https://hetindustriegebouw.nl/historie/"
     }    
 ]
 
